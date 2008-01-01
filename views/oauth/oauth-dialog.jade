@@ -1,0 +1,22 @@
+extends ../layouts/default
+
+block body
+  .logo
+    img(src='/app/img/bn-logo-small-bw.png', alt='')
+  .content
+    h1.text-center(style="color: black") Action Required!
+    p.text-center
+      | Hello #{user.email}
+    p.text-center
+      | An application (#{oauth_client.name}) is requesting permission.
+    form(action="/oauth/authorize/decision",method="post")
+      input(name="transaction_id" ,type="hidden", value="#{transactionId}")
+      div
+        button#allow.btn.btn-success.btn-block(type="submit", value="Allow") Allow
+        button#deny.btn.btn-danger.btn-block(type="submit", value="Deny", name="cancel") Deny
+        //
+          input(type="submit",value="Allow",id="allow")
+          input(type="submit",value="Deny",name="cancel",id="deny")
+
+    script(type="text/javascript").
+      window.user = !{user};
