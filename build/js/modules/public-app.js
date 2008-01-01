@@ -17,13 +17,31 @@ var app = angular.module('ixitApp',[
 app.config(function ($stateProvider, $urlRouterProvider, flowFactoryProvider, $httpProvider) {
   flowFactoryProvider.defaults = {
     target: 'http://127.0.0.1:3001/upload',
-    permanentErrors:[404, 500, 501]
+    simultaneousUploads: 1,
+    permanentErrors:[500, 501],
+    // maxChunkRetries: 1,
+    chunkRetryInterval: 2000
+
   };
   // You can also set default events:
   flowFactoryProvider.on('fileSuccess', function (file, message) {
+    if (message.indexOf('ixid') < 0) {
+      file.error = true;
+      return false;
+    }
     var o = JSON.parse(message);
     file.ixid = o.ixid;
   });
+
+  // You can also set default events:
+  flowFactoryProvider.on('fileError', function (file) {
+    file.status = 'Retry now';
+  });
+  // You can also set default events:
+  flowFactoryProvider.on('fileRetry', function (file) {
+    file.status = 'retrying...';
+  });
+
   $urlRouterProvider.otherwise('/home');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('httpInterceptor');
@@ -37,7 +55,9 @@ app.controller('MainController',
     '$location',
     '$rootScope',
     '$cookies',
-    function($scope, $http, $location, $rootScope, $cookies){
+    '$timeout',
+    '$interval',
+    function($scope, $http, $location, $rootScope, $cookies, $timeout, $interval){
 
   $scope.cuser = $cookies.throne;
 
@@ -54,6 +74,30 @@ app.controller('MainController',
       $( window ).off( "resize.bnViewport" );
     }
   );
+
+  $scope.$on('flow::fileError', function (event, flow, file) {
+    file.retryInterval = 5;
+    var retryInterval = $interval(function () {
+      --file.retryInterval;
+    }, 1000);
+
+    var retryUpload = $timeout(function() {
+      file.retry();
+      $interval.cancel(retryInterval);
+    }, 5000);
+
+    $scope.$on(
+      "$destroy",
+      function() {
+        console.log('timeout cleaned');
+        $timeout.cancel(retryUpload);
+      }
+    );
+  });
+
+  $scope.$on('flow::fileRetry', function (e, flow, file) {
+
+  });
 
 }]);
 
@@ -106,6 +150,7 @@ app.directive('uploadListItem', [function () {
           }
         }
       };
+
       $scope._formatFileSize = function (bytes) {
         if (typeof bytes !== 'number') {
           return '';

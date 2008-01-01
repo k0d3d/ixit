@@ -61,10 +61,14 @@ angular.module('flow.provider', [])
   };
 });
 angular.module('flow.init', ['flow.provider'])
-  .controller('flowCtrl', ['$scope', '$attrs', '$parse', 'flowFactory', '$rootScope',
-  function ($scope, $attrs, $parse, flowFactory, $rootScope) {
+  .controller('flowCtrl', ['$scope', '$attrs', '$parse', 'flowFactory', '$rootScope', '$cookies',
+  function ($scope, $attrs, $parse, flowFactory, $rootScope, $cookies) {
 
-    var options = angular.extend({}, $scope.$eval($attrs.flowInit));
+    var options = angular.extend({
+      generateUniqueIdentifier: function (file) {
+        return $cookies['ixid-anon-session'] + '_' + file.name + '_' + file.size + '_' + file.type;
+      }
+    }, $scope.$eval($attrs.flowInit));
 
     function __initFlowOptions () {
       // use existing flow object or create a new one

@@ -1,15 +1,7 @@
 /**
  * Module dependencies.
  */
- var UserModel = require('../models/user.js'),
- hashr = require('../lib/hash.js'),
- _ = require('underscore'),
- util = require('util'),
- fs = require('fs'),
- path = require('path'),
- rest = require('restler'),
- config =  require('config'),
- passport = require('passport');
+ var hashr = require('../lib/hash.js');
 
 
 
@@ -209,47 +201,30 @@ Users.prototype.register = function (options, cb) {
   // });
 };
 
-//module.exports.users = users;
+module.exports = Users;
 
-module.exports.routes = function(app){
-  var users = new Users();
+// module.exports.routes = function(app){
 
-    //logs out a currently logged in user
-    app.post('/logout', users.signout);
-
-    //Setting up the users api
-    app.post('/api/internal/users', function (req, res) {
-      users.register(req.body, function (r) {
-
-        if (util.isError(r)) {
-            //next(r);
-            return res.json(400, {nextUrl: '/register/failed'} );
-        }
-
-        return res.json(200, r);
-
-      });
-    });
 
 
     //User Login
-    app.post('/api/internal/users/session', function(req, res, next){
-      passport.authenticate('local', function(err, user){
-        if (err) return next(err);
-        if(!user) return res.json(400, {message: 'User not found'});
-        req.logIn(user, function(err){
-          if(err) return next(err);
-          req.user = {
-            username: user.username
-          };
-          if(!_.isUndefined(user.isDeveloper)){
-            req.user.isDeveloper = user.isDeveloper;
-          }
-          console.log(req.session.returnTo);
-          return res.json(200, {returnTo: req.session.returnTo || '/dash', status: 200});
-        });
-      })(req, res, next);
-    });
+    // app.post('/api/v1/users/auth', function(req, res, next){
+    //   passport.authenticate('local', function(err, user){
+    //     if (err) return next(err);
+    //     if(!user) return res.json(400, {message: 'User not found'});
+    //     req.logIn(user, function(err){
+    //       if(err) return next(err);
+    //       req.user = {
+    //         username: user.username
+    //       };
+    //       if(!_.isUndefined(user.isDeveloper)){
+    //         req.user.isDeveloper = user.isDeveloper;
+    //       }
+    //       console.log(req.session.returnTo);
+    //       return res.json(200, {returnTo: req.session.returnTo || '/dash', status: 200});
+    //     });
+    //   })(req, res, next);
+    // });
 
     // app.get('/users/me', users.me);
     // app.get('/users/:userId', users.show);
@@ -335,7 +310,7 @@ module.exports.routes = function(app){
     // });
 
     //Finish with setting up the userId param
-    app.param('userId', users.user);
+  //   app.param('userId', users.user);
 
-  };
+  // };
 

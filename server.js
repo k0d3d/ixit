@@ -43,6 +43,17 @@ app.set('version', pjson.version);
 // port
 var port = process.env.PORT || 3000;
 
+function isApiUri (url) {
+  var t = '/api/internal/';
+  var av1 = '/api/v1/';
+  var av2 = '/api/v2/';
+  var oauth = '/oauth/';
+  if (url.indexOf(t) > -1 || url.indexOf(av1) > -1 || url.indexOf(av2) > -1 || url.indexOf(oauth) > -1) {
+    return true;
+  }
+  return false;
+}
+
 
 function afterResourceFilesLoad(redis_client) {
 
@@ -71,7 +82,7 @@ function afterResourceFilesLoad(redis_client) {
     }));
 
     // efficient favicon return - will enable when we have a favicon
-    app.use(favicon('public/images/favicon.ico'));
+    app.use(favicon('public/favicon.ico'));
 
 
     app.locals.layout = false;
@@ -85,7 +96,7 @@ function afterResourceFilesLoad(redis_client) {
     //   console.log('Error Loading Passport Config...');
     //   console.trace(e);
     // }
-    require('./lib/auth/passport.js')(passport);
+    require('./lib/auth/passport.js')(passport, redis_client);
 
     // set logging level - dev for now, later change for production
     app.use(logger('dev'));
@@ -110,6 +121,8 @@ function afterResourceFilesLoad(redis_client) {
     console.log('setting up session management, please wait...');
     app.use(session({
         secret: config.express.secret,
+        saveUninitialized: true,
+        resave: true,
         store: new MongoStore({
             db: config.db.database,
             host: config.db.server,
@@ -120,6 +133,20 @@ function afterResourceFilesLoad(redis_client) {
             collection: "mongoStoreSessions"
         })
     }));
+
+    app.use(function (req, res, next) {
+      // console.log(req.cookies);
+      // check if client sent cookie
+      var cookie = req.cookies['ixid-anon-session'];
+      if (cookie === undefined && !req.xhr)
+      {
+        // no: set a new cookie
+        var randomNumber=Math.random().toString();
+        randomNumber=randomNumber.substring(2,randomNumber.length);
+        res.cookie('ixid-anon-session',require('./lib/commons').randomString(16), { maxAge: 900000});
+      }
+        next();
+    });
 
     //Initialize Passport
     app.use(passport.initialize());
@@ -135,8 +162,8 @@ function afterResourceFilesLoad(redis_client) {
     app.use(helpers(pjson.name));
 
     // set our default view engine
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
+    // app.set('views', __dirname + '/views');
+    // app.set('view engine', 'jade');
 
 
     //pass in the app config params in to locals
@@ -186,8 +213,8 @@ function afterResourceFilesLoad(redis_client) {
       // error page
       //res.status(500).json({ error: err.stack });
       //res.json(500, err.message);
-      var t = '/api/internal/';
-      if (req.url.indexOf(t) > -1) {
+
+      if (isApiUri(req.url) ) {
         res.json(500, err);
       } else {
         res.status(500).render('500', {
@@ -201,8 +228,7 @@ function afterResourceFilesLoad(redis_client) {
     // assume 404 since no middleware responded
     app.use(function(req, res){
 
-      var t = '/api/internal/';
-      if (req.url.indexOf(t) > -1) {
+      if (isApiUri(req.url)) {
         res.json(404, {message: 'resource not found'});
       } else {
         res.status(404).render('404', {

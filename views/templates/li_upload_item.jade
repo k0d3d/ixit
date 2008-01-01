@@ -10,16 +10,20 @@
     .row
       .col-md-12(style="padding: 0")
 
-        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px", ng-show="file.isComplete()")
-            a.btn.btn-link(type='button', rel='tooltip', title='File Size')
+        .btn-group.btn-group-xs.pull-left(style="margin-top: 2px", ng-show="file.isComplete() && !file.error")
+            a.btn.btn-link(type='button', rel='tooltip', title='File Size', ng-href="http://i-x.it/{{file.ixid}}")
               | /{{file.ixid}}
             button.btn.btn-default(type='button', rel="tooltip", title='Copy to Clipboard') Copy
             button.btn.btn-default(type='button', rel='tooltip', title='Share') Share
-        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px", ng-hide="file.isComplete()")
+        .btn-group.btn-group-xs.pull-left(style="margin-top: 2px", ng-hide="file.isComplete() && !file.error")
             button.btn.btn-default(type='button', rel='tooltip', title='File Size',  disabled="disabled") {{_formatFileSize(file.size)}}
             button.btn.btn-default(type='button', rel="tooltip", title='Upload Speed',  disabled="disabled") {{_formatBitrate(file.averageSpeed)}}
             button.btn.btn-default(type='button', rel='tooltip', title='Time Remaining',  disabled="disabled") {{file.timeRemaining()}}
+        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px", ng-hide="file.isComplete() && !file.error")
+            button.btn.btn-info(type='button', rel='tooltip', title='Upload Status', ng-click="file.retry()", ng-show="file.error")
+              | Retry Now  <span class="label label-default">{{file.retryInterval}}</span>
+
   .col-md-2
     .c-p
       orbicular(progression='file.sizeUploaded()', total='file.size', style="font-size: 56px !important")
-        i.fa(ng-class="{'fa-play': !file.isUploading() && !file.isComplete(), 'fa-pause': file.isUploading(), 'fa-check upload-green': file.isComplete()}", ng-click="pauseOrResume(file)")
+        i.fa(ng-class="{'fa-play': !file.isUploading() && !file.isComplete() && !file.error, 'fa-pause': file.isUploading(), 'fa-check upload-green': file.isComplete() && !file.error, 'fa-exclamation upload-red': file.error}")

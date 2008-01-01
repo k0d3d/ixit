@@ -18,13 +18,15 @@ var UserSchema = new Schema({
     firstname: {type: String},
     lastname: {type: String},
     photo: {type: String, default: 'prettyme.jpg'},
+    phoneNumber: {type: String, trim: true, unique: true, sparse: true, required: true},
     /*
     account credentials
      */
-    email: {type: String, unique:true},
-    username: {type: String, unique:true},
+    email: {type: String, trim: true, unique: true, sparse: true, required: true},
+    username: {type: String, trim: true, unique: true, sparse: true},
     password: String,
     type: { type: String, default: 'user' },
+    password_reset_token: { type: String, unique: true },
     /*
     loggin and audit
      */
@@ -33,8 +35,12 @@ var UserSchema = new Schema({
     lastUpdatedOn: { type: Date },
     verifiedEmailOn: { type: Date },
     verifiedEmailAddress: { type: Boolean, default: false},
-    disabledOn: { type: Date },    
-    enabled: { type: Boolean, default: false }
+    disabledOn: { type: Date },
+    enabled: { type: Boolean, default: false },
+    /*
+    oauth2
+     */
+    reset_token_expires: Date
 });
 
 /**
@@ -91,7 +97,7 @@ UserSchema.methods = {
           return hash;
         });
         //return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
-    }    
+    }
 };
 
 mongoose.model('User', UserSchema);
@@ -105,7 +111,7 @@ var VerificationSchema = new Schema({
   userId : {type: Schema.ObjectId, ref: 'User'},
   token: {type: String},
   //Could be either new registration verifcation
-  //or password reset request i.e. 
+  //or password reset request i.e.
   //registeration or password-reset
   verifyType: {type: String},
   created: {type: Date, default: Date.now}

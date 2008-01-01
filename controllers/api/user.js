@@ -3,9 +3,10 @@ var
     appConfig = require('config').express,
     User = require('../../models/user.js'),
     _ = require('lodash'),
+    util = require('util'),
     passport = require('passport');
 
-module.exports.routes = function (app) {
+module.exports.routes = function (app, redis_client) {
   var users = new User();
 
   app.param('userId', function (req, res, next, id) {
@@ -22,19 +23,17 @@ module.exports.routes = function (app) {
 
 
   //Authentication Api Routes
-  app.route('/api/v1/users/session')
+  app.route('/api/v1/users/auth')
   .post(passport.authenticate('local', { session: false }), function (req, res) {
     if (req.user) {
+      var token = jwt.sign(req.user, appConfig.secret);
+      redis_client.hmset(token, req.user);
       res.json({
-        authorizationToken: jwt.sign(req.user, appConfig.secret, {expiresInMinutes: 60 * 30})
+        authorizationToken: token
       });
     } else {
-      res.json(401, {message: 'Authorized Staffs only.'});
+      res.json(401, {message: 'Authorized only.'});
     }
-  });
-
-  app.get('/api/v1/routetest', function (req, res) {
-    res.json(200, true);
   });
 
   //
@@ -59,4 +58,19 @@ module.exports.routes = function (app) {
       next(err);
     });
   });
+
+  //Setting up the users api
+  app.post('/api/v1/users', function (req, res) {
+    var createUser = users.create(req.body);
+    createUser.then(function (r) {
+      return res.json(200, r);
+    }, function (err) {
+      return res.json(400, err );
+    });
+  });
+
+  //logs out a currently logged in user
+  // app.delete('/api/v1/users/auth', users.signout);
+
+  // app.param('userId', users.user);
 };

@@ -22,17 +22,10 @@ function strip_files_result(m){
   try {
     if(util.isArray(m)){
       return _.map(m, function(v){
-        // var ixid = hashr.hashInt(v.mediaNumber);
-        // var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-        // return _.extend({ixid: ixid}, n);
 
         return _.omit(v, omit);
       });
     }else{
-      //Just one object
-      // var ixid = hashr.hashInt(m.mediaNumber);
-      // var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-      // return _.extend({ixid: ixid}, n);
 
       return _.omit(m, omit);
     }
@@ -244,10 +237,13 @@ K33per.prototype.getUsersFiles = function(userId, callback){
     if(_.isEmpty(data)){
       return callback({}, response);
     }
-    //Remove unecessary propertied and has the mongooseid;
-    strip_files_result(data, function(r){
-      callback(r, response);
-    });
+
+    //Remove unecessary properties and has the mongooseid;
+    // strip_files_result(data, function(r){
+    //   console.log(r);
+    // });
+    callback(strip_files_result(data), response);
+
   }).on('error', function(err){
     callback(err);
   });
@@ -379,7 +375,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   //Request all files in a folder belonging to a user
   //Using the req.query.id to determine what folder is
   //'current'
-  app.get('/api/internal/users/folder', isLoggedIn(), function(req, res, next){
+  app.get('/api/v1/users/folder', function(req, res, next){
     var currentFolder;
     //The parent folder if any
     var parent = req.query.parent;
@@ -427,8 +423,8 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Request all files uploaded by a user
-  app.get('/api/internal/users/files', isLoggedIn(), function(req, res, next){
-    var owner = hashr.hashOid(req.session.passport.user);
+  app.get('/api/v1/users/files', function(req, res, next){
+    var owner = hashr.hashOid(req.user._id);
     k33per.getUsersFiles(owner, function(r){
       if( r instanceof Error){
         next(r);
@@ -438,7 +434,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.get('/api/internal/users/queue', isLoggedIn(), function(req, res, next){
+  app.get('/api/v1/users/queue', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUserQueue(owner, function(r){
       if( r instanceof Error){
@@ -449,7 +445,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
   //Searches for files using filenames and tags
-  app.get('/api/internal/search/:queryString', isLoggedIn(), function(req, res, next){
+  app.get('/api/v1/search/:queryString', function(req, res, next){
     k33per.search(req.params.queryString, function(r){
       if(util.isError(r)){
         next(r);
@@ -459,7 +455,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.get('/api/internal/media/:mediaId/request/', isLoggedIn(), function(req, res, next){
+  app.get('/api/v1/media/:mediaId/request/', function(req, res, next){
     k33per.requestFileDownload(req.params.mediaId, redis_client, function(r){
       if(util.isError(r)){
         next(r);
@@ -470,7 +466,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //calls the method which creates a new folder or subfolder
-  app.post('/api/internal/users/folder', isLoggedIn(), function(req, res, next){
+  app.post('/api/v1/users/folder', function(req, res, next){
     // return res.json(500, false);
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.createFolder( req.body.name, req.body.parentId, req.body.type, owner, function(r){
@@ -483,7 +479,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Update tags for a file
-  app.put('/api/internal/users/files/:fileId/tags', isLoggedIn(), function(req, res, next){
+  app.put('/api/v1/users/files/:fileId/tags', function(req, res, next){
     var tags = req.body.tags;
     var file_id = req.params.fileId;
     var owner = hashr.hashOid(req.session.passport.user);
@@ -497,7 +493,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
 
-  app.del('/api/internal/users/files/:fileId', isLoggedIn(), function(req, res, next){
+  app.del('/api/v1/users/files/:fileId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
@@ -509,7 +505,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.del('/api/internal/users/folder/:folderId', isLoggedIn(), function(req, res, next){
+  app.del('/api/v1/users/folder/:folderId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
@@ -522,7 +518,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Delete a file on the upload queue
-  app.del('/api/internal/users/queue/:queueId', isLoggedIn(), function(req, res, next){
+  app.del('/api/v1/users/queue/:queueId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){
