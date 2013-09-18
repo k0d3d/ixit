@@ -5,24 +5,29 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto'),
     _ = require('underscore'),
-    authTypes = ['github', 'twitter', 'facebook', 'google'];
+    authTypes = ['twitter', 'facebook', 'google']
+    uniqueValidator = require('mongoose-unique-validator');
 
 
 /**
  * User Schema
  */
 var UserSchema = new Schema({
-    name: String,
-    email: String,
-    username: String,
+    email: {type: String, unique:true},
+    username: {type: String, unique:true},
     provider: String,
     hashed_password: String,
     salt: String,
     facebook: {},
     twitter: {},
-    github: {},
     google: {}
 });
+
+/**
+ *  Plugins
+ */
+UserSchema.plugin(uniqueValidator, {mongoose: mongoose});
+
 
 /**
  * Virtuals
@@ -43,24 +48,23 @@ var validatePresenceOf = function(value) {
 };
 
 // the below 4 validations only apply if you are signing up traditionally
-UserSchema.path('name').validate(function(name) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (authTypes.indexOf(this.provider) !== -1) return true;
-    return name.length;
-}, 'Name cannot be blank');
 
+//Check if email address was entered
 UserSchema.path('email').validate(function(email) {
     // if you are authenticating by any of the oauth strategies, don't validate
     if (authTypes.indexOf(this.provider) !== -1) return true;
     return email.length;
 }, 'Email cannot be blank');
 
+//Check if username was entered
 UserSchema.path('username').validate(function(username) {
     // if you are authenticating by any of the oauth strategies, don't validate
     if (authTypes.indexOf(this.provider) !== -1) return true;
+    if(username == 'admin' || username == 'administrator') return false;
     return username.length;
 }, 'Username cannot be blank');
 
+//Check if password was entered
 UserSchema.path('hashed_password').validate(function(hashed_password) {
     // if you are authenticating by any of the oauth strategies, don't validate
     if (authTypes.indexOf(this.provider) !== -1) return true;
@@ -102,7 +106,8 @@ UserSchema.methods = {
      * @api public
      */
     makeSalt: function() {
-        return Math.round((new Date().valueOf() * Math.random())) + '';
+        return crypto.randomBytes(256).toString('base64');
+        //return Math.round((new Date().valueOf() * Math.random())) + '';
     },
 
     /**

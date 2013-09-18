@@ -1,0 +1,48 @@
+#wrap
+    .container
+        .row
+          include ../includes/navigation
+        #_primary.row
+          .col-md-12
+            .row
+              .col-md-offset-4.col-md-4
+                .logo
+                  a(href='/') 
+                    img#imgLogo(src='/img/logo.png')
+                  span.logo-sub shrink, shorten, share everything
+            .row
+              .col-md-offset-4.col-md-4
+                  .register-row.well
+                      h3.text-center Create Account
+                      hr
+                      .bubblingG(ng-show='isLoading')
+                        span#bubblingG_1
+                        span#bubblingG_2
+                        span#bubblingG_3
+                      .alert.fade.in.alert-danger.alert-dismissable(ng-show='flash', ng-bind='flash')
+                      form#auth_register(role='form', ng-submit='signup()', name='registration_form')
+                        .form-group
+                          label(for='email') Username
+                          input#email.form-control(placeholder='frodo_bagginz', name='username', type='text', ng-model='form.username', required='required')
+                          span.help-block(ng-show='registration_form.username.$error.taken') Username not available.
+                        .form-group
+                          label(for='email') Email Address
+                          input#email.form-control(placeholder='example@example.com', name='email', type='email', ng-model='form.email', required='required')
+                          span.help-block(ng-show='registration_form.email.$error.taken') Email is already registered.
+                        .form-group
+                          label(for='password') Password
+                          input#password.form-control(name='password', type='password', ng-model='form.password', required='required', ng-minlength='6', ng-maxlength='20')
+                          span.help-block Minimun 6 characters and contain a number
+                        .form-group
+                          label(for='password_c') Password Again
+                          input#password_c.form-control(name='password_c', type='password', ng-model='form.passwordalt', valid-password-c='valid-password-c', required='required')
+                          span(ng-show='registration_form.password_c.$error.required && registration_form.password_c.$dirty') Please confirm your password.
+                          span(ng-show='!registration_form.password_c.$error.required && registration_form.password_c.$error.noMatch && registration_form.password.$dirty') Passwords do not match.
+                        .form-group
+                          button.btn.btn-primary(type='submit', ng-disabled='!registration_form.$valid') Sign Up
+                          input(type='hidden', name='antisurf', value='{{$token}}')
+                      h5
+                        | Forgot your password? <a href='/login'> Sign In</a>
+            .row
+              .col-md-offset-4.col-md-4
+script(src='js/modules/login.js')

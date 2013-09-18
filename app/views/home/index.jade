@@ -1,0 +1,36 @@
+#wrap
+  .container
+    .row
+      include ../includes/navigation
+    #_primary.row
+      .col-md-12
+        .row
+          .col-md-offset-4.col-md-4
+            .logo
+              a(href='/') 
+                img#imgLogo(src='/img/logo.png')
+              span.logo-sub shrink, shorten, share everything
+        .row
+          .col-md-offset-2.col-md-8
+            #dropbox
+              #inputpanel
+                .subpanel
+                  input#browsefield.browsefiles.point(type='file', multiple='multiple', data-upload-handler='data-upload-handler', data-upload-drop-zone='.ix-accordion-list', data-upload-files-container='.ix-accordion-list')
+                  button#sayBrowse.btn.btn-inverse.btn-small(type='button', data-ng-click='clickBrowse()') Browse
+                .typebox
+                  textarea#inputbox.typearea(placeholder='Type or paste in a link')
+                  button.chromeless(type='button')
+                    i.icon-chevron-down
+                .subpanel.shrink
+                  button#shrinkbtn.btn.btn-danger.btn-small(type='button') Start!
+              .accordion-pane.point.empty
+                #jp-container.jp-container
+                  #dragndropnotice.noticebox
+                    h3 Drag and Drop!
+                    p
+                      files or links in here to upload and shrink.
+                  ul.ix-accordion-list(data-scroll-bar='data-scroll-bar', data-max-container-height='383')
+                  .filescount
+        .row
+          .col-nd-offset-4.col-md-4
+include ../templates/li_upload_item

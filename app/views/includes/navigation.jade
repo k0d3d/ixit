@@ -1,0 +1,33 @@
+#navPos.offset8.span4(ng-controller='loginController')
+    .topnav
+        ul.nav.nav-pills
+          li
+            a(href='http://hello.i-x.it') How to?
+          li.divider-vertical
+          li.dropdown.signInDD
+            a.dropdown-toggle.signin-tab(href='#', data-toggle='dropdown')
+              span Sign In 
+              strong.caret
+            .dropdown-menu.shiftLeft.signin-well
+              form#login-form(accept-charset='UTF-8', action='', method='post', name='login-form', ng-submit='login()', novalidate='novalidate')
+                .form-group
+                  input#email-input-login(type='email', placeholder='Email', name='logon-username', ng-model='form.email', required='required')
+                .form-group
+                  input#password-input-login(type='password', placeholder='Password', name='logon-password', ng-model='form.password', required='required')
+                .form-group
+                  button#signinBtn.btn.btn-block.btn-success(type='submit') Sign In
+                  button#request-btn.btn.btn-block.btn-info Forgot Something?
+                input(type='hidden', name='antisurf', value='{{$token}}')
+              form#reset-form(accept-charset='UTF-8', action='', method='post')
+                p(style='padding: 5px; background-color: rgb(239, 239, 239); border: thin solid rgb(221, 221, 221);')
+                  | If you have forgotten your I-X.it account password, we can email you a new one.
+                  br
+                  | Type in your email address below and send a request.
+                input#email-reset(style='width: 94%;', type='text', placeholder='Email', name='logon-username', required='required')
+                button#send-request-btn.btn.btn-block.btn-success Send Request
+                button#back-to-login.btn.btn-block.btn-info Back to login
+              .progress.progress-striped.active.progress-warning(style='display: none; margin-top: 10px; margin-bottom: 10px;')
+                .bar(style='width: 100%;')
+          li.dropdown.signUpDD
+            a.dropdown-toggle.registerTab(href='/register', data-toggle='dropdown')
+              span Register 

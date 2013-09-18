@@ -1,6 +1,26 @@
 extends layouts/default
 
-block content
-  section(data-ng-view)
-  script(type="text/javascript").
-    window.user = !{user};
+block body
+  div#wrap(ng-view)
+append modals
+  #emailModal.modal.hide.fade
+      .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h3 Email link
+        .modal-body
+          form.
+            .control-group
+              label.control-label(for='input_email') Email
+              .controls
+                input#input_email(type='text', placeholder='Email')
+            .control-group
+              label.control-label(for='input_subject') Subject
+              .controls
+                input#input_subject(type='text', placeholder='')
+            .control-group
+              label.control-label(for='email_message_area') Message
+              .controls
+                textarea#email_message_area(rows='3')
+        .modal-footer
+          a.btn.close-modal(href='#') Close
+          a.btn.btn-primary.emailBtn(href='#') Send  

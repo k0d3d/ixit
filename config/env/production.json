@@ -1,7 +1,7 @@
 {
-    "db": "mongodb://localhost/mean",
+    "db": "mongodb://localhost/local",
     "app": {
-        "name": "MEAN - A Modern Stack - Production"
+        "name": "IXIT - File Sharing and Hosting"
     },
     "facebook": {
         "clientID": "APP_ID",
