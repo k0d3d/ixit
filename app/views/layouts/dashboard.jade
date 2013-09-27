@@ -1,0 +1,89 @@
+!!! 5
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title #{title}
+    meta(name='description', content='Upload your files to I-X.it. Share files to anyone from your cabinet. Audio, Photos and Office Documents supported with Unlimited Storage.')
+
+    block styles
+      link(href='http://fonts.googleapis.com/css?family=Economica', rel='stylesheet', type='text/css')
+      link(href='/css/bootstrap.min.css', rel='stylesheet', type='text/css')       
+      link(rel='stylesheet', type='text/css', href='/css/layout.css')
+      link(rel='stylesheet', type='text/css', href='/css/elements.css')
+      link(rel='stylesheet', type='text/css', href='/css/icons.css')
+      link(href='/css/bootstrap-overrides.css', type='text/css', rel='stylesheet')
+
+    //
+       libraries 
+    link(href='/css/lib/font-awesome.css', type='text/css', rel='stylesheet')
+    //
+       this page specific styles 
+    link(rel='stylesheet', href='/css/compiled/gallery.css', type='text/css', media='screen')
+    link(rel='stylesheet', href='/css/compiled/tables.css', type='text/css', media='screen')
+    //
+       open sans font 
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+
+    script(src='/js/jquery-1.10.2.min.js')
+
+    script(type='text/javascript').
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4614510-20']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();    
+  body(ng-app='ixitApp')
+    // main container 
+    div(ng-controller='MainController')
+      .drop-overlay
+        .h1t
+          h1 drop 
+          p files and links in here. 
+      // navbar
+      include ../includes/dashboard-top-nav
+      // end navbar 
+      
+      // sidebar 
+      include ../includes/dashboard-side-nav
+      // end sidebar 
+      
+      input#browsefield.browsefiles.point(type='file', multiple='multiple', data-upload-handler='data-upload-handler', data-upload-drop-zone='body', data-upload-files-container='.ix-accordion-list')  
+      .content
+        .container-fluid    
+          block body
+    // end main container 
+    
+    block scripts
+      script(src='/js/bootstrap.min.js')
+      script(src='/js/angular.min.js')
+      script(src='/js/angular-resource.min.js')
+      script(src='/js/angular-sanitize.min.js')
+      script(src='/js/vendor/jquery.ui.widget.js')      
+      script(src='/js/fileupload/jquery.fileupload.js')
+      script(src='/js/fileupload/jquery.fileupload-process.js')
+      script(src='/js/fileupload/jquery.fileupload-audio.js')
+      script(src='/js/fileupload/jquery.fileupload-image.js')
+      script(src='/js/fileupload/jquery.fileupload-validate.js')
+      script(src='/js/fileupload/jquery.fileupload-video.js')
+      script(src='/js/cors/jquery.postmessage-transport.js')
+      script(src='/js/cors/jquery.xdr-transport.js')
+      script(src='/js/moment.min.js')
+      script(src='/js/jquery.slimscroll.min.js')
+      script(src='/js/ICanHaz.min.js')
+      script(src='/js/app.js')      
+      script(src='/js/main.js')      
+      script(src='/js/modules/controllers/dashboardController.js')
+      script(src='/js/modules/controllers/homeController.js')
+      script(src='/js/modules/controllers/userController.js')
+      script(src='/js/modules/services/service.js')
+      script(src='/js/modules/directives.js')
+      script(src='/js/modules/filters.js')
+      script(src='/js/generic.js')     
+      script(src='/js/theme.js')

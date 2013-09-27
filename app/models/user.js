@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto'),
     _ = require('underscore'),
-    authTypes = ['twitter', 'facebook', 'google']
+    authTypes = ['twitter', 'facebook', 'google'],
     uniqueValidator = require('mongoose-unique-validator');
 
 

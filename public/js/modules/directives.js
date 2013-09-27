@@ -63,55 +63,73 @@
                 this._formatFileSize(data.loaded) + ' / ' +
                 this._formatFileSize(data.total);
         };
+        var i = 0;
         function link (scope, element, attrs){
-            $('#browsefield').fileupload({
-                url: 'http://192.168.1.5:8080',
+            element.hide();
+            $(element).fileupload({
+                url: 'http://192.168.1.7:8080',
                 sequentialUploads: true,
                 dropZone: $(attrs.uploadDropZone),
                 dataType: 'json',
                 singleFileUploads:true,
-                fileInput: $('#browsefield'),
+                fileInput: $(element),
                 filesContainer:$(attrs.uploadFilesContainer),
                 maxChunkSize: 10000000,
                 multipart: true,
                 dragover: function(e){
+                    /**
+                     * TODO:: Create directive or bind dragover and drop events seperately 
+                     */
                     $('.noticebox').css({'background-image':'url(../app/img/cloud-over.png)'});
                     $('.accordion-pane').css({'box-shadow': '0 1px 6px rgba(85, 84, 84, 0.61)','background-color':'#ffffff'});
                 },
                 add: function(e,data){
                     $('.noticebox').hide();
                     $('.accordion-pane').removeClass('empty').addClass('stuffed');
+                    $('.drop-overlay').hide();
                     $(attrs.uploadDropZone).trigger('scrollbar');
-                    console.log(data);
                     var file = [];
-                    $.each(data.files,function(index, v){
+                    console.log(data);
+                    angular.forEach(data.files,function(v, index){
                         var i = $('.ix-accordion-list li.ixlist').length;
                         file['name'] = v.name;
                         file['type']  = v.type;
                         file['size'] = _formatFileSize(v.size);
-                        file['id'] = i;
+                        file['id'] = index;
+                        i++;
                     });
-                    var qcount = Number(data.files.length);
+                    
+                    scope.filequeue.push(file);
+                    scope.qcount = scope.filequeue.length;
+                    data.currentIndex = Number(scope.qcount - 1);
+                    scope.$apply();
                     //files[0]['size'] = _formatFileSize(files[0]['size']);
-                    var nd = ich.tmplfile(file,true);
-                    data.context = $('<li/>').addClass('ixlist').attr('id','ix-list-li-'+file['id']).html(nd).prependTo(".ix-accordion-list");
+                    //var nd = ich.tmplfile(file,true);
+                    //data.context = $('<li/>').addClass('ixlist').attr('id','ix-list-li-'+file['id']).html(nd).prependTo(".ix-accordion-list");
                     $('#extended-info span a').tooltip();
                     var jxhr = data.submit()
                                 .success(function(result,textStatus,jqXHR){
                                     result = result.files[0];
-                                    $(data.context).data('ixid',result.payload);
-                                    $(data.context).data('filename',result.filename);
-                                    $('.progressHolder', data.context).hide();
-                                    $('.nexus', data.context).css('margin-top','0px').prepend('<p><strong>Link: </strong><a href="http://'+getDomain(document.URL)+'/'+result.payload+'" target="_blank" class="ix-link">http://'+getDomain(document.URL)+'/'+result.payload+'</a></p>');
-                                    $('.itemThumb img.img-polaroid', data.context).attr('src','http://i-x.it/scripts/timthumb.php?src='+result.thumbnail_url+'&w=50&h=50');
+                                    //$(data.context).data('ixid',result.payload);
+                                    //$(data.context).data('filename',result.filename);
+                                    //$('.progressHolder', data.context).hide();
+                                    //$('.nexus', data.context).css('margin-top','0px').prepend('<p><strong>Link: </strong><a href="http://'+getDomain(document.URL)+'/'+result.payload+'" target="_blank" class="ix-link">http://'+getDomain(document.URL)+'/'+result.payload+'</a></p>');
+                                    //$('.itemThumb img.img-polaroid', data.context).attr('src','http://i-x.it/scripts/timthumb.php?src='+result.thumbnail_url+'&w=50&h=50');
                                 });
                 },
                 progress: function(e,data){
+                    console.log(data.loaded);
                     var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('.tf-tag').hide();
-                    $('.tf-speed', data.context).text(_formatBitrate(data.bitrate));
-                    $('.tf-time', data.context).text(_formatTime((data.total - data.loaded) * 8 / data.bitrate));
-                    $('.progressHolder .bar', data.context).css('width',progress+'%');
+                    scope.filequeue[data.currentIndex].tfrate = _formatBitrate(data.bitrate);
+                    scope.filequeue[data.currentIndex].tftime = _formatTime((data.total - data.loaded) * 8 / data.bitrate);
+                    scope.filequeue[data.currentIndex].progress = progress+'%';
+                    scope.$apply();
+
+                    // $('.tf-tag').hide();
+                    
+                    // $('.tf-speed', data.context).text();
+                    // $('.tf-time', data.context).text(_formatTime((data.total - data.loaded) * 8 / data.bitrate));
+                    // $('.progressHolder .bar', data.context).css('width',);
                 },
                 done: function (e, data) {
                     $('.progress .status', data.context).text('done');

@@ -1,4 +1,5 @@
 var async = require('async');
+var passport = require("passport");
 
 /**
  * Expose routes
@@ -20,9 +21,11 @@ module.exports = function (app, passport, auth) {
   Authentication and User routes
    */
   var users = require('../app/controllers/users');
-  console.log(users);
   users.routes(app);
 
+  app.all('/dashboard', passport.ensureAuthenticated);
+  var dashboard = require('../app/controllers/dashboard');
+  dashboard.routes(app);
 
   app.get('/partials/:name', function (req, res) {
       var name = req.params.name;

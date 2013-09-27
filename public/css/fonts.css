@@ -1,32 +1,6 @@
-@font-face {
-    font-family: Dimitry Swank;
-    src: url('fonts/DIMIS___.TTF');
-    font-weight:400;
-}
-@font-face {
-    font-family: Dimitry Swank Black;
-    src: url('fonts/DIMITRI_.TTF');
-    font-weight:400;
-}
-@font-face {
-    font-family: 'Goma-Standard02';
-    src: url('fonts/gomarice_goma-standard02.ttf');
-    font-weight:400;
-}
+
 
 @font-face {
-    font-family: 'Merit';
-    src: url('fonts/merit2.ttf');
-    font-weight:400;
-}
-
-@font-face {
-    font-family: 'FV Granada';
-    src: url('fonts/FVGranada-regular.ttf');
-    font-weight:400;
-}
-@font-face {
-    font-family: 'Redcat';
-    src: url('fonts/Redcat.ttf');
-    font-weight:400;
+    font-family: 'Dimitri'; /*a name to be used later*/
+    src: url('../font/DIMITRI_.TTF'); /*URL to font*/
 }

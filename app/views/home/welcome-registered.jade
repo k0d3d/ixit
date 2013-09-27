@@ -1,0 +1,24 @@
+#wrap
+    .container
+        .row
+          include ../includes/navigation
+        #_primary.row
+          .col-md-12
+            .row
+              .col-md-offset-4.col-md-4
+                .logo
+                  a(href='/') 
+                    img#imgLogo(src='/img/logo.png')
+                  span.logo-sub shrink, shorten, share everything
+            .row
+              .col-md-offset-4.col-md-4
+                  .register-row.well
+                      h3.text-center Welcome Aboard
+                      hr
+                      p
+                        | You've successfully created an account on 
+                        | I-X.it. An email has been sent with instructions
+                        | on account validation. We've also bundled a tour 
+                        | for starters when you login. 
+                      hr 
+                      button.btn.primary(ng-click="commons.href('/login')") Login Now

@@ -1,0 +1,46 @@
+#pad-wrapper
+  .table-wrapper.products-table.section
+      .row.head
+          .span12
+            h4 All Files
+        .row.filter-block
+          .pull-right
+            a.btn-flat.gray
+              i.icon-folder-close
+              | New Folder
+        .row
+          table.table.table-hover
+            thead
+              tr
+                th.col-md-2
+                  input(type='checkbox')
+                  | Date
+                th.col-md-5
+                  span.line
+                  | File name
+                th.col-md-1
+                  span.line
+                  | Size
+                th.col-md-1
+                  span.line
+                  | Downloads
+                th.col-md-2
+                  span.line
+            tbody
+              tr
+                td 
+                  input(type='checkbox')
+                  | 4 Days ago
+                td
+                  .img
+                    img(src='/img/table-img.png')
+                  a.name(href='#') Generate Lorem
+                  span.align-right foldername 
+                td
+                  | 8mb
+                td.description
+                  | 400
+                td.align-right
+                  .btn-group.btn-group-sm
+                    button.btn.btn-primary(href='#') Share
+                    button.btn.btn-danger(href='#') Delete

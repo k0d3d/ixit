@@ -1,5 +1,3 @@
-@import 'fonts.css'; 
-
 html,body {height:100%}
 
 /*....Logo....*/
@@ -660,18 +658,30 @@ dd{
 }
 .nav>li>a:hover, 
 .nav>li>a:focus{
-    background-color: #000000;
-    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
+    color: #000000;
 }
 .signin-well{
-    background-color: black;
-    padding: 15px;
+    border-radius: 0 0 4px 4px;
+    border-top: medium none;
+    box-shadow: none;
     margin-left: 85px;
-    width: 258px;    
-    top: 30px;
+    padding: 15px;
+    top: 38px;
+    width: 258px;
+    -webkit-animation-name: fadeInDown;
+    -moz-animation-name: fadeInDown;
+    -o-animation-name: fadeInDown;
+    animation-name: fadeInDown;    
 }
 .signin-well input {
     width: 100%;
     padding: 5px;
     border-radius: 3px;    
+    border: solid 1px #ddd;
+}
+.btn-grey{
+    background: none repeat scroll 0 0 #7E91AA;
+    border: 1px solid #888E97;
+    color: white;
 }

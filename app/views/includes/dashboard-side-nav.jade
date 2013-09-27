@@ -1,0 +1,29 @@
+#sidebar-nav
+  ul#dashboard-menu
+    li
+      button.btn.btn-flat.inverse(data-ng-click="clickBrowse()")
+        i.icon-upload-alt(style="font-size: 12px;")
+        span Upload
+    li(style="margin-top: 25px")
+      .pointer
+        .arrow
+        .arrow_border   
+      a.dropdown-toggle(href='#')
+        i.icon-hdd
+        span Storage
+        i.icon-chevron-down
+      ul.submenu
+        li
+          a(href='dashboard/files/all') All Files
+        li
+          a(href='user-list.html') Documents
+        li
+          a(href='new-user.html') Music
+        li
+          a(href='user-profile.html') Photos        
+        li
+          a(href='user-profile.html') Bookmarks
+    li
+      a.dropdown-toggle(href='#')
+        i.icon-trash
+        span Trash

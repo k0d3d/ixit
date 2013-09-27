@@ -65,10 +65,7 @@ Users.prototype.create = function(req, res) {
                 errors: err,
             });
         }
-        req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
-        });
+        return res.json(200, {status: true});
     });
 };
 

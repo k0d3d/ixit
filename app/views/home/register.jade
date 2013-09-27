@@ -11,8 +11,8 @@
                     img#imgLogo(src='/img/logo.png')
                   span.logo-sub shrink, shorten, share everything
             .row
-              .col-md-offset-4.col-md-4
-                  .register-row.well
+              .col-md-offset-4.col-md-4(ng-switch="isRegistered")
+                  .register-row.well(ng-switch-when="false")
                       h3.text-center Create Account
                       hr
                       .bubblingG(ng-show='isLoading')
@@ -28,21 +28,31 @@
                         .form-group
                           label(for='email') Email Address
                           input#email.form-control(placeholder='example@example.com', name='email', type='email', ng-model='form.email', required='required')
-                          span.help-block(ng-show='registration_form.email.$error.taken') Email is already registered.
+                          span.help-block(ng-show='registration_form.email.$error.taken', style="color: red") Email is already registered.
                         .form-group
                           label(for='password') Password
                           input#password.form-control(name='password', type='password', ng-model='form.password', required='required', ng-minlength='6', ng-maxlength='20')
                           span.help-block Minimun 6 characters and contain a number
                         .form-group
                           label(for='password_c') Password Again
-                          input#password_c.form-control(name='password_c', type='password', ng-model='form.passwordalt', valid-password-c='valid-password-c', required='required')
-                          span(ng-show='registration_form.password_c.$error.required && registration_form.password_c.$dirty') Please confirm your password.
-                          span(ng-show='!registration_form.password_c.$error.required && registration_form.password_c.$error.noMatch && registration_form.password.$dirty') Passwords do not match.
+                          input#password_c.form-control(name='password_c', type='password', ng-model='form.passwordalt', valid-password-c='password', required='required')
+                          span(ng-show='!registration_form.password_c.$error.required && registration_form.password_c.$error.pwmatch') Passwords do not match.
                         .form-group
                           button.btn.btn-primary(type='submit', ng-disabled='!registration_form.$valid') Sign Up
                           input(type='hidden', name='antisurf', value='{{$token}}')
                       h5
                         | Forgot your password? <a href='/login'> Sign In</a>
+                  .register-row.well(ng-switch-when="true")
+                      h3.text-center Welcome Aboard
+                      hr
+                      p
+                        | You've successfully created an account on 
+                        | I-X.it. An email has been sent with instructions
+                        | on account validation. We've also bundled a tour 
+                        | for starters when you login. 
+                      hr 
+                      button.btn.btn-primary(ng-click="commons.href('/login')") Login Now
+
             .row
               .col-md-offset-4.col-md-4
 script(src='js/modules/login.js')

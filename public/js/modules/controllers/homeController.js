@@ -16,9 +16,6 @@
         function init(){
             ich.grabTemplates();
         }
-        $scope.clickBrowse = function(){
-            $('.browsefiles').click();
-        };
         init();
     });
     
