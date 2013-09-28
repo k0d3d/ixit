@@ -39,7 +39,7 @@
                           span(ng-show='!registration_form.password_c.$error.required && registration_form.password_c.$error.pwmatch') Passwords do not match.
                         .form-group
                           button.btn.btn-primary(type='submit', ng-disabled='!registration_form.$valid') Sign Up
-                          input(type='hidden', name='antisurf', value='{{$token}}')
+                          input(type='hidden', name='_csrf', value='#{_csrf}')
                       h5
                         | Forgot your password? <a href='/login'> Sign In</a>
                   .register-row.well(ng-switch-when="true")

@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
     }));
 
     //Setting the fav icon and static folder
-    app.use(express.favicon());
+    app.use(express.favicon(config.root + '/public/favicon.ico'));
     app.use(express.static(config.root + '/public'));
 
     //Don't use logger for test env
@@ -40,6 +40,7 @@ module.exports = function(app, passport) {
 
         //bodyParser should be above methodOverride
         app.use(express.bodyParser());
+        
         app.use(express.methodOverride());
 
         //express/mongo session storage
@@ -61,6 +62,14 @@ module.exports = function(app, passport) {
         app.use(passport.initialize());
         app.use(passport.session());
 
+        //CSRF protection for form-submission
+        app.use(express.csrf());
+        app.use(function(req, res, next) {
+          res.cookie('XSRF-TOKEN', req.csrfToken());
+          res.locals.csrftoken = req.csrfToken();
+          next();
+        });
+        
         //routes should be at the last
         app.use(app.router);
 
