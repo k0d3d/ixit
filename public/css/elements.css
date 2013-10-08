@@ -663,6 +663,24 @@ ul.nav li.notification-dropdown span.badge{
     margin-bottom: 5px;
     width: 233px;	
 }
+.navbar > .progress{
+	margin-bottom: 0;
+	height: 4px;
+    border-radius: 0; 	
+	top: 1px;
+	position: relative;    
+}
+
+.navbar > .progress .progress-bar{
+
+}
+.navbar-inverse.navbar-fixed-top{
+	box-shadow: 0 1px 7px #000;
+}
+.navbar .navbar-collapse .item{
+	text-overflow: ellipsis;
+	word-wrap: break-word;	
+}
 
 @-webkit-keyframes reveal{
 	0% {

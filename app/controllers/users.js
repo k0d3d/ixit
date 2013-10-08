@@ -49,8 +49,7 @@ Users.prototype.signout = function(req, res) {
  * Session
  */
 Users.prototype.session = function(req, res) {
-            console.log(req.session);
-    res.redirect('/');
+    res.json(200, {status: true});
 };
 
 /**
@@ -111,7 +110,6 @@ module.exports.routes = function(app){
     */
     //Login Page
     app.get('/login', function(req, res){
-            console.log(req.session);
         res.render('index');
     });
 

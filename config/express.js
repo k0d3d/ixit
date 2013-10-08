@@ -63,12 +63,12 @@ module.exports = function(app, passport) {
         app.use(passport.session());
 
         //CSRF protection for form-submission
-        app.use(express.csrf());
-        app.use(function(req, res, next) {
-          res.cookie('XSRF-TOKEN', req.csrfToken());
-          res.locals.csrftoken = req.csrfToken();
-          next();
-        });
+        // app.use(express.csrf());
+        // app.use(function(req, res, next) {
+        //   res.cookie('XSRF-TOKEN', req.csrfToken());
+        //   res.locals.csrftoken = req.csrfToken();
+        //   next();
+        // });
         
         //routes should be at the last
         app.use(app.router);

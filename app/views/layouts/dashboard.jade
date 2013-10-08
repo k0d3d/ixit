@@ -41,7 +41,8 @@ html
       })();    
   body(ng-app='ixitApp')
     // main container 
-    div(ng-controller='MainController')
+    div(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
+      input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
       .drop-overlay
         .h1t
           h1 drop 
@@ -54,7 +55,6 @@ html
       include ../includes/dashboard-side-nav
       // end sidebar 
       
-      input#browsefield.browsefiles.point(type='file', multiple='multiple', data-upload-handler='data-upload-handler', data-upload-drop-zone='body', data-upload-files-container='.ix-accordion-list')  
       .content
         .container-fluid    
           block body
@@ -66,14 +66,10 @@ html
       script(src='/js/angular-resource.min.js')
       script(src='/js/angular-sanitize.min.js')
       script(src='/js/vendor/jquery.ui.widget.js')      
-      script(src='/js/fileupload/jquery.fileupload.js')
-      script(src='/js/fileupload/jquery.fileupload-process.js')
-      script(src='/js/fileupload/jquery.fileupload-audio.js')
-      script(src='/js/fileupload/jquery.fileupload-image.js')
-      script(src='/js/fileupload/jquery.fileupload-validate.js')
-      script(src='/js/fileupload/jquery.fileupload-video.js')
       script(src='/js/cors/jquery.postmessage-transport.js')
       script(src='/js/cors/jquery.xdr-transport.js')
+      script(src='/js/underscore-min.js')
+      script(src='/js/resumable.js')
       script(src='/js/moment.min.js')
       script(src='/js/jquery.slimscroll.min.js')
       script(src='/js/ICanHaz.min.js')

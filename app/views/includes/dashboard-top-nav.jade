@@ -18,7 +18,7 @@
               i.icon-remove-sign
             .notifications
               h3 You have 6 uploads on queue
-              .item(href='#', ng-repeat="file in filequeue")
+              .item(href='#', ng-repeat="file in filequeue", ng-class="file.class")
                 i.icon-cloud-upload
                 | {{file.name}}
                 .progress
@@ -93,3 +93,5 @@
       li.settings.hidden-phone
         a(href='signin.html', role='button')
           i.icon-share-alt
+  .progress(ng-show="isUploading")
+    .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="overallUploadProgress")
