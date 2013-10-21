@@ -7,11 +7,6 @@ var passport = require("passport");
 
 module.exports = function (app, passport, auth) {
   // home route
-
-
-  // var orders = require('../app/controllers/orders');
-  // orders.routes(app);
-
   app.get('/', function(req, res){
       res.render('index');
     }
@@ -26,6 +21,9 @@ module.exports = function (app, passport, auth) {
   app.all('/dashboard', passport.ensureAuthenticated);
   var dashboard = require('../app/controllers/dashboard');
   dashboard.routes(app);
+
+  var keeper = require('../app/controllers/k33per.js');
+  keeper.routes(app);
 
   app.get('/partials/:name', function (req, res) {
       var name = req.params.name;

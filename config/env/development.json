@@ -1,8 +1,10 @@
 {
     "db": "mongodb://localhost/local",
     "app": {
-        "name": "IXIT - File Sharing and Hosting"
+        "name": "IXIT - File Sharing and Hosting",
+        "user_agent": "IXIT Client"
     },
+    "api_url": "http://localhost:3000",
     "facebook": {
         "clientID": "APP_ID",
         "clientSecret": "APP_SECRET",

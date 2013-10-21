@@ -5,7 +5,8 @@
         'user',
         'dashboard',
         'ngResource',
-        'ngSanitize'
+        'ngSanitize',
+        'ngCookies'
         ]);
     angular.module('ixitApp').config(function ($routeProvider, $locationProvider) {
       $routeProvider.

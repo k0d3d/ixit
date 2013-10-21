@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+var db = require("../../lib/db.js");
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto'),
@@ -124,3 +125,4 @@ UserSchema.methods = {
 };
 
 mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User');

@@ -105,7 +105,7 @@ input.search{
 /* navbar popup dialog */
 .navbar-inverse .pop-dialog {
 	position: absolute;
-	right: -10px;
+	/*right: -10px;*/
 	top: 55px;
 	display: none;
 }

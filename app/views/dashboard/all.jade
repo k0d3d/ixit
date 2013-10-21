@@ -1,13 +1,9 @@
-#pad-wrapper
-  .table-wrapper.products-table.section
+div(ng-controller="filesController")  
+  #pad-wrapper(ng-show="files.length > 0")
+    .table-wrapper.products-table.section
       .row.head
-          .span12
-            h4 All Files
-        .row.filter-block
-          .pull-right
-            a.btn-flat.gray
-              i.icon-folder-close
-              | New Folder
+        .span12
+          h4 All Files
         .row
           table.table.table-hover
             thead
@@ -27,20 +23,29 @@
                 th.col-md-2
                   span.line
             tbody
-              tr
+              tr(ng-repeat="f in files")
                 td 
                   input(type='checkbox')
-                  | 4 Days ago
+                  | {{f.completedDate | moment}}
                 td
-                  .img
-                    img(src='/img/table-img.png')
-                  a.name(href='#') Generate Lorem
-                  span.align-right foldername 
+                  a.name(href='#') {{f.filename}}
                 td
-                  | 8mb
-                td.description
-                  | 400
+                  | {{f.size | formatFileSize}}
+                td
+                  | {{t.downloadCount}}
                 td.align-right
                   .btn-group.btn-group-sm
                     button.btn.btn-primary(href='#') Share
                     button.btn.btn-danger(href='#') Delete
+  #pad-wrapper(ng-show="files.length == 0")
+    .row-fluid.header
+    .no-gallery
+      .center
+        img(src='/img/1379620524_add_file.png')
+        h6 You don't have any files on your storage
+        p
+          | Click the button below to select files from your computer. 
+          | You can drag files into this space and drop to upload. 
+        a.btn-glow.primary(data-ng-click="clickBrowse()") Add files
+    // end blank state 
+                

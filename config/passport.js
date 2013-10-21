@@ -12,7 +12,10 @@ module.exports = function(passport) {
 
 // Simple route middleware to ensure user is authenticated.  Otherwise send to login page.
 passport.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
+  if (req.isAuthenticated()) { 
+    res.cookie('throne',req.session.passport.user, {maxAge: 1800000, httpOnly: true});
+    return next(); 
+    }
   res.redirect('/login');
 };
  

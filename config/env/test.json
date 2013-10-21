@@ -1,6 +1,6 @@
 {
-    "db": "mongodb://localhost/mean-test",
-    "port": 3001,
+    "db": "mongodb://localhost/local",
+    "port": 27017,
     "app": {
         "name": "MEAN - A Modern Stack - Test"
     },

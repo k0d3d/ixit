@@ -144,6 +144,7 @@ var Resumable = function(opts){
       }
       var relativePath = file.webkitRelativePath||file.fileName||file.name; // Some confusion in different versions of Firefox
       var size = file.size;
+      //var type = file.type;
       return(size + '-' + relativePath.replace(/[^0-9a-zA-Z_-]/img, ''));
     },
     contains:function(array,test) {

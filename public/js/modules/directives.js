@@ -142,7 +142,7 @@
     //     };
     // });
 
-    angular.module('directives').directive('uploadHandler', function(){
+    angular.module('directives').directive('uploadHandler',function(Sharer){
         var _formatFileSize = function (bytes) {
             if (typeof bytes !== 'number') {
                 return '';
@@ -196,21 +196,21 @@
                 this._formatFileSize(data.loaded) + ' / ' +
                 this._formatFileSize(data.total);
         };
+        var extraParams = function(fileObj, chunkObj){
+            return {
+                fileType : fileObj.file.type,
+                //throne: $cookies.throne
+                throne: 'januzaj'
+            };
+        };
         function link (scope, element, attrs){
              var r = new Resumable({
                 target:'http://ixit.vm:3000/upload',
                 chunkSize:1*1024*1024,
                 simultaneousUploads:4,
-                testChunks:false,
+                testChunks:true,
                 maxFiles: 10,
-                generateUniqueIdentifier : function(){
-                    function s4() {
-                      return Math.floor((1 + Math.random()) * 0x10000)
-                                 .toString(16)
-                                 .substring(1);
-                    }
-                    return s4() + s4() + '-' + s4() + s4()+'-'+s4();
-                }
+                query: extraParams
               });
             // Resumable.js isn't supported, fall back on a different method
             if(!r.support) {
@@ -224,17 +224,11 @@
               // Handle file add event
               r.on('fileAdded', function(file){
                 $('.drop-overlay').hide();
-                var ade = {
-                    name: file.fileName,
-                    size: _formatFileSize(file.size),
-                    class: file.uniqueIdentifier
-                };
-                console.log(r.getFromUniqueIdentifier(ade.class));
-                scope.filequeue.push(ade);
-                console.log(file);
-                scope.qcount = scope.filequeue.length;
+
+                // Check if upload is on queue               
+                Sharer.addToQueue(file);
                 scope.$apply();
-                // Actually start the upload
+                
                 r.upload();
               });
               r.on('pause', function(){
@@ -244,7 +238,6 @@
               });
               r.on('complete', function(){
                 scope.isUploading = r.isUploading();
-                console.log(r.isUploading());
                 scope.$apply();
                   // Hide pause/resume when the upload has completed
                   $('.resumable-progress .progress-resume-link, .resumable-progress .progress-pause-link').hide();
@@ -255,13 +248,11 @@
               });
               r.on('fileError', function(file, message){
                   // Reflect that the file upload has resulted in error
-                  $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(file could not be uploaded: '+message+')');
+                  $('file-'+file.uniqueIdentifier).html('(file could not be uploaded: '+message+')');
               });
               r.on('fileProgress', function(file){
-                console.log(file.progress());
-                console.log(r.progress());
                   // Handle progress for both the file and the overall upload
-                  //$('.'+file.uniqueIdentifier+' .resumable-file-progress').html(Math.floor(file.progress()*100) + '%');
+                  $('.file-'+file.uniqueIdentifier+' .progress-bar').css({width: Math.floor(file.progress()*100) + '%'});
                   //scope.overallUploadProgress = {width:Math.floor(r.progress()*100) + '%' };
                   //scope.$apply();
                   $('.navbar > .progress .progress-bar').css({width:Math.floor(r.progress()*100) + '%'});
@@ -280,8 +271,15 @@
               });
             }
         }
+
+        function controller ($scope, $attrs, Sharer){
+            $scope.$on('onQueue', function(){
+                $scope.fileQueue = _.flatten(Sharer.filequeue);
+            });
+        }
         return {
             link: link
+            //controller: controller
         }
     });
 

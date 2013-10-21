@@ -23,6 +23,7 @@ module.exports.routes = function(app){
 	app.get('/dashboard/files/all', function(req, res){
 		res.render('dashboard');
 	});
+
 };
 
 
