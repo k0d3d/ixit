@@ -29,14 +29,23 @@ div(ng-controller="filesController")
                   | {{f.completedDate | moment}}
                 td
                   a.name(href='#') {{f.filename}}
+                  .btn-group(style="float: right")
+                    button.btn.btn-default.dropdown-toggle.btn-xs(type="button", dropdown-hover)
+                      | #tags
+                      span.caret
+                    ul.dropdown-menu(style="padding: 0")
+                      li
+                        form
+                          .form-group(style="margin-bottom:0")
+                            input(name="tags", class="tag-field", tags-input, ng-model="f.tags", ixid="{{f.ixid}}")
                 td
                   | {{f.size | formatFileSize}}
                 td
-                  | {{t.downloadCount}}
+                  | {{f.downloadCount}}
                 td.align-right
                   .btn-group.btn-group-sm
                     button.btn.btn-primary(href='#') Share
-                    button.btn.btn-danger(href='#') Delete
+                    button.btn.btn-danger(href='#', ng-click="trashFile($index)") Delete
   #pad-wrapper(ng-show="files.length == 0")
     .row-fluid.header
     .no-gallery

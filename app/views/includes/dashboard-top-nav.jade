@@ -19,32 +19,34 @@
             .notifications
               h3 You have {{filequeue.length}} uploads on queue
               .item(href='#', ng-repeat="queue in filequeue", class="file-{{queue.identifier}}")
-                i.icon-cloud-upload
+                i.fa.fa-cloud-upload
                 | {{queue.filename}}
                 .progress
                   .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100')
                     span.sr-only 60% Complete
                 span.stat
-                  i.icon-hdd
+                  i.fa.fa-hdd-o
                   | {{queue.size | formatFileSize}}                
                 span.stat.pull-right
-                  a(href="#") Remove
-                span.stat.pull-right
-                  a(href="#") Pause
+                  a(href="#", ng-click="clear($event, queue.mediaNumber, queue.identifier)") Remove
                 span.stat
-                  a(href="#") {{queue.isQueued}}
+                  i.fa.fa-info-circle(ng-show="queue.isQueued", queue-tip )
               .footer
-                a.logout(ng-click="clearAll()") Clear all transfers
+                button.btn.btn-default(ng-click="toggleUpload()", ng-init="uploadStateText = 'Start'") 
+                  i.fa(ng-class="uploadStateClass")
+                  |  {{uploadStateText}} all
+                button.btn.btn-warning(ng-click="clearAll()")  Clear all 
+                  i.fa.fa-times-cirle-o                 
       li.notification-dropdown.hidden-phone
         a.trigger(href='#')
-          i.icon-envelope-alt
+          i.fa.fa-envelope-o
         .pop-dialog
           .pointer.right
             .arrow
             .arrow_border
           .body
             a.close-icon(href='#')
-              i.icon-remove-sign
+              i.fa.fa-times
             .messages
               a.item(href='#')
                 img.display(src='img/contact-img.png')
@@ -78,20 +80,11 @@
           b.caret
         ul.dropdown-menu
           li
-            a(href='personal-info.html') Personal info
+            a(href='#', ng-click="commons.href('/dashboard/user/account')") Account
           li
-            a(href='#') Account settings
-          li
-            a(href='#') Billing
-          li
-            a(href='#') Export your data
-          li
-            a(href='#') Send feedback
+            a(href='#') Support
       li.settings.hidden-phone
-        a(href='personal-info.html', role='button')
-          i.icon-cog
-      li.settings.hidden-phone
-        a(href='signin.html', role='button')
-          i.icon-share-alt
+        a(href='signin.html', role='button', title="Logout")
+          i.fa.fa-sign-out
   .progress(ng-show="isUploading")
     .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="overallUploadProgress")

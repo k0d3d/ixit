@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'mongoosastic',
+1 verbose cli   '--save' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.4
+4 verbose read json /home/k0d3d/www/ixit/package.json
+5 verbose read json /home/k0d3d/www/ixit/node_modules/async/package.json
+6 verbose read json /home/k0d3d/www/ixit/node_modules/connect-flash/package.json
+7 verbose read json /home/k0d3d/www/ixit/node_modules/connect-mongo/package.json
+8 verbose read json /home/k0d3d/www/ixit/node_modules/easyimage/package.json
+9 verbose read json /home/k0d3d/www/ixit/node_modules/express/package.json
+10 verbose read json /home/k0d3d/www/ixit/node_modules/forever/package.json
+11 verbose read json /home/k0d3d/www/ixit/node_modules/grunt/package.json
+12 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-bower-task/package.json
+13 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-cli/package.json
+14 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-concurrent/package.json
+15 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-contrib-jshint/package.json
+16 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-contrib-watch/package.json
+17 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-mocha-test/package.json
+18 verbose read json /home/k0d3d/www/ixit/node_modules/grunt-nodemon/package.json
+19 verbose read json /home/k0d3d/www/ixit/node_modules/hashids/package.json
+20 verbose read json /home/k0d3d/www/ixit/node_modules/jade/package.json
+21 verbose read json /home/k0d3d/www/ixit/node_modules/mean-logger/package.json
+22 verbose read json /home/k0d3d/www/ixit/node_modules/mongoose/package.json
+23 verbose read json /home/k0d3d/www/ixit/node_modules/mongoose-paginate.zip/package.json
+24 verbose read json /home/k0d3d/www/ixit/node_modules/mongoose-unique-validator/package.json
+25 verbose read json /home/k0d3d/www/ixit/node_modules/passport/package.json
+26 verbose read json /home/k0d3d/www/ixit/node_modules/passport-facebook/package.json
+27 verbose read json /home/k0d3d/www/ixit/node_modules/passport-github/package.json
+28 verbose read json /home/k0d3d/www/ixit/node_modules/passport-google-oauth/package.json
+29 verbose read json /home/k0d3d/www/ixit/node_modules/passport-local/package.json
+30 verbose read json /home/k0d3d/www/ixit/node_modules/passport-twitter/package.json
+31 verbose read json /home/k0d3d/www/ixit/node_modules/restler/package.json
+32 verbose read json /home/k0d3d/www/ixit/node_modules/should/package.json
+33 verbose read json /home/k0d3d/www/ixit/node_modules/supertest/package.json
+34 verbose read json /home/k0d3d/www/ixit/node_modules/underscore/package.json
+35 verbose read json /home/k0d3d/www/ixit/node_modules/view-helpers/package.json
+36 verbose from cache /home/k0d3d/www/ixit/package.json
+37 verbose readDependencies using package.json deps
+38 verbose cache add [ 'mongoosastic', null ]
+39 verbose cache add name=undefined spec="mongoosastic" args=["mongoosastic",null]
+40 verbose parsed url { protocol: null,
+40 verbose parsed url   slashes: null,
+40 verbose parsed url   auth: null,
+40 verbose parsed url   host: null,
+40 verbose parsed url   port: null,
+40 verbose parsed url   hostname: null,
+40 verbose parsed url   hash: null,
+40 verbose parsed url   search: null,
+40 verbose parsed url   query: null,
+40 verbose parsed url   pathname: 'mongoosastic',
+40 verbose parsed url   path: 'mongoosastic',
+40 verbose parsed url   href: 'mongoosastic' }
+41 silly lockFile 98a83b3b-mongoosastic mongoosastic
+42 verbose lock mongoosastic /home/k0d3d/.npm/98a83b3b-mongoosastic.lock
+43 silly lockFile 98a83b3b-mongoosastic mongoosastic
+44 silly lockFile 98a83b3b-mongoosastic mongoosastic
+45 verbose addNamed [ 'mongoosastic', '' ]
+46 verbose addNamed [ null, '' ]
+47 silly lockFile 694d4d50-mongoosastic mongoosastic@
+48 verbose lock mongoosastic@ /home/k0d3d/.npm/694d4d50-mongoosastic.lock
+49 silly addNameRange { name: 'mongoosastic', range: '', hasData: false }
+50 verbose url raw mongoosastic
+51 verbose url resolving [ 'https://registry.npmjs.org/', './mongoosastic' ]
+52 verbose url resolved https://registry.npmjs.org/mongoosastic
+53 info trying registry request attempt 1 at 13:36:08
+54 http GET https://registry.npmjs.org/mongoosastic
+55 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+56 info trying registry request attempt 2 at 13:36:58
+57 http GET https://registry.npmjs.org/mongoosastic
+58 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+59 info trying registry request attempt 3 at 13:38:38
+60 http GET https://registry.npmjs.org/mongoosastic
+61 silly lockFile 694d4d50-mongoosastic mongoosastic@
+62 silly lockFile 694d4d50-mongoosastic mongoosastic@
+63 error Error: getaddrinfo ENOTFOUND
+63 error     at errnoException (dns.js:37:11)
+63 error     at Object.onanswer [as oncomplete] (dns.js:124:16)
+64 error If you need help, you may report this log at:
+64 error     <http://github.com/isaacs/npm/issues>
+64 error or email it to:
+64 error     <npm-@googlegroups.com>
+65 error System Linux 2.6.32-358.14.1.el6.x86_64
+66 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "mongoosastic" "--save"
+67 error cwd /home/k0d3d/www/ixit
+68 error node -v v0.10.4
+69 error npm -v 1.2.18
+70 error syscall getaddrinfo
+71 error code ENOTFOUND
+72 error errno ENOTFOUND
+73 verbose exit [ 1, true ]

@@ -19,28 +19,5 @@ Built using MEAN boilerplate .
 * Twitter Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
 * UI Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
 
-## Quick Install
-
- The quickest way to get started with MEAN is to clone the project and utilize it like this:
-
-  Install dependencies:
-
-    $ npm install
-
-  Export the node Path to load your lib into project (default in HEROKU)
-    $ export NODE_PATH=lib
-
-  We recommend using [Grunt](https://github.com/gruntjs/grunt-cli) to start the server:
-    $ grunt
-
-  When not using grunt you can use:
-
-    $ node server
-    
-  Then open a browser and go to:
-
-    http://localhost:3000
 
 
-## Credits
-Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)

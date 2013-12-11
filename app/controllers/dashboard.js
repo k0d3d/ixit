@@ -20,7 +20,11 @@ module.exports.routes = function(app){
 	});
 
 	//Show All Files on the user dashboard
-	app.get('/dashboard/files/all', function(req, res){
+	app.get('/dashboard/files/all', passport.ensureAuthenticated, function(req, res){
+		res.render('dashboard');
+	});
+
+	app.get('/dashboard/user/account', passport.ensureAuthenticated, function(req, res){
 		res.render('dashboard');
 	});
 

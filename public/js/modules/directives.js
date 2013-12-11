@@ -9,140 +9,7 @@
      * results
      * @return {[type]} [description]
      */
-    // angular.module('directives').directive('uploadHandler', function(){
-    //     var _formatFileSize = function (bytes) {
-    //         if (typeof bytes !== 'number') {
-    //             return '';
-    //         }
-    //         if (bytes >= 1000000000) {
-    //             return (bytes / 1000000000).toFixed(2) + ' GB';
-    //         }
-    //         if (bytes >= 1000000) {
-    //             return (bytes / 1000000).toFixed(2) + ' MB';
-    //         }
-    //         return (bytes / 1000).toFixed(2) + ' KB';
-    //     };
-    //     var _formatBitrate = function (bits) {
-    //         if (typeof bits !== 'number') {
-    //             return '';
-    //         }
-    //         if (bits >= 1000000000) {
-    //             return (bits / 1000000000).toFixed(2) + ' Gbit/s';
-    //         }
-    //         if (bits >= 1000000) {
-    //             return (bits / 1000000).toFixed(2) + ' Mbit/s';
-    //         }
-    //         if (bits >= 1000) {
-    //             return (bits / 1000).toFixed(2) + ' kbit/s';
-    //         }
-    //         return bits.toFixed(2) + ' bit/s';
-    //     };
-
-    //     var _formatTime = function (seconds) {
-    //         var date = new Date(seconds * 1000),
-    //             days = parseInt(seconds / 86400, 10);
-    //         days = days ? days + 'd ' : '';
-    //         return days +
-    //             ('0' + date.getUTCHours()).slice(-2) + ':' +
-    //             ('0' + date.getUTCMinutes()).slice(-2) + ':' +
-    //             ('0' + date.getUTCSeconds()).slice(-2);
-    //     };
-
-    //     var _formatPercentage = function (floatValue) {
-    //         return (floatValue * 100).toFixed(2) + ' %';
-    //     };
-
-    //     var _renderExtendedProgress = function (data) {
-    //         return this._formatBitrate(data.bitrate) + ' | ' +
-    //             this._formatTime(
-    //                 (data.total - data.loaded) * 8 / data.bitrate
-    //             ) + ' | ' +
-    //             this._formatPercentage(
-    //                 data.loaded / data.total
-    //             ) + ' | ' +
-    //             this._formatFileSize(data.loaded) + ' / ' +
-    //             this._formatFileSize(data.total);
-    //     };
-    //     var i = 0;
-    //     function link (scope, element, attrs){
-    //         element.hide();
-    //         $(element).fileupload({
-    //             url: 'http://192.168.1.7:8080',
-    //             sequentialUploads: true,
-    //             dropZone: $(attrs.uploadDropZone),
-    //             dataType: 'json',
-    //             singleFileUploads:true,
-    //             fileInput: $(element),
-    //             filesContainer:$(attrs.uploadFilesContainer),
-    //             maxChunkSize: 10000000,
-    //             multipart: true,
-    //             dragover: function(e){
-    //                 /**
-    //                  * TODO:: Create directive or bind dragover and drop events seperately 
-    //                  */
-    //                 $('.noticebox').css({'background-image':'url(../app/img/cloud-over.png)'});
-    //                 $('.accordion-pane').css({'box-shadow': '0 1px 6px rgba(85, 84, 84, 0.61)','background-color':'#ffffff'});
-    //             },
-    //             add: function(e,data){
-    //                 $('.noticebox').hide();
-    //                 $('.accordion-pane').removeClass('empty').addClass('stuffed');
-    //                 $('.drop-overlay').hide();
-    //                 $(attrs.uploadDropZone).trigger('scrollbar');
-    //                 var file = [];
-    //                 console.log(data);
-    //                 angular.forEach(data.files,function(v, index){
-    //                     var i = $('.ix-accordion-list li.ixlist').length;
-    //                     file['name'] = v.name;
-    //                     file['type']  = v.type;
-    //                     file['size'] = _formatFileSize(v.size);
-    //                     file['id'] = index;
-    //                     i++;
-    //                 });
-                    
-    //                 scope.filequeue.push(file);
-    //                 scope.qcount = scope.filequeue.length;
-    //                 data.currentIndex = Number(scope.qcount - 1);
-    //                 scope.$apply();
-    //                 //files[0]['size'] = _formatFileSize(files[0]['size']);
-    //                 //var nd = ich.tmplfile(file,true);
-    //                 //data.context = $('<li/>').addClass('ixlist').attr('id','ix-list-li-'+file['id']).html(nd).prependTo(".ix-accordion-list");
-    //                 $('#extended-info span a').tooltip();
-    //                 var jxhr = data.submit()
-    //                             .success(function(result,textStatus,jqXHR){
-    //                                 result = result.files[0];
-    //                                 //$(data.context).data('ixid',result.payload);
-    //                                 //$(data.context).data('filename',result.filename);
-    //                                 //$('.progressHolder', data.context).hide();
-    //                                 //$('.nexus', data.context).css('margin-top','0px').prepend('<p><strong>Link: </strong><a href="http://'+getDomain(document.URL)+'/'+result.payload+'" target="_blank" class="ix-link">http://'+getDomain(document.URL)+'/'+result.payload+'</a></p>');
-    //                                 //$('.itemThumb img.img-polaroid', data.context).attr('src','http://i-x.it/scripts/timthumb.php?src='+result.thumbnail_url+'&w=50&h=50');
-    //                             });
-    //             },
-    //             progress: function(e,data){
-    //                 console.log(data.loaded);
-    //                 var progress = parseInt(data.loaded / data.total * 100, 10);
-    //                 scope.filequeue[data.currentIndex].tfrate = _formatBitrate(data.bitrate);
-    //                 scope.filequeue[data.currentIndex].tftime = _formatTime((data.total - data.loaded) * 8 / data.bitrate);
-    //                 scope.filequeue[data.currentIndex].progress = progress+'%';
-    //                 scope.$apply();
-
-    //                 // $('.tf-tag').hide();
-                    
-    //                 // $('.tf-speed', data.context).text();
-    //                 // $('.tf-time', data.context).text(_formatTime((data.total - data.loaded) * 8 / data.bitrate));
-    //                 // $('.progressHolder .bar', data.context).css('width',);
-    //             },
-    //             done: function (e, data) {
-    //                 $('.progress .status', data.context).text('done');
-    //                 data.files.length = 0;
-    //             }
-    //         });
-    //     }
-    //     return{
-    //         link: link
-    //     };
-    // });
-
-    angular.module('directives').directive('uploadHandler',function(Sharer){
+    angular.module('directives').directive('uploadHandler',['$cookies','Sharer','$rootScope', function($cookies, Sharer, $rootScope){
         var _formatFileSize = function (bytes) {
             if (typeof bytes !== 'number') {
                 return '';
@@ -198,9 +65,9 @@
         };
         var extraParams = function(fileObj, chunkObj){
             return {
-                fileType : fileObj.file.type,
-                //throne: $cookies.throne
-                throne: 'januzaj'
+                fileType : fileObj.file.type.length > 0 ? fileObj.file.type : 'noMime',
+                throne: 'ojPbjonlELhxJ047wK4b'
+                //throne: 'januzaj'
             };
         };
         function link (scope, element, attrs){
@@ -210,7 +77,7 @@
                 simultaneousUploads:4,
                 testChunks:true,
                 maxFiles: 10,
-                query: extraParams
+                query: extraParams,
               });
             // Resumable.js isn't supported, fall back on a different method
             if(!r.support) {
@@ -225,11 +92,15 @@
               r.on('fileAdded', function(file){
                 $('.drop-overlay').hide();
 
+                //Reference the resumable object as a
+                //property on the Sharer service
+                Sharer.resumable = r;
+
                 // Check if upload is on queue               
                 Sharer.addToQueue(file);
                 scope.$apply();
                 
-                r.upload();
+                //r.upload();
               });
               r.on('pause', function(){
                   // Show resume, hide pause
@@ -243,8 +114,12 @@
                   $('.resumable-progress .progress-resume-link, .resumable-progress .progress-pause-link').hide();
               });
               r.on('fileSuccess', function(file,message){
-                  // Reflect that the file upload has completed
-                  $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(completed)');
+                //Remove an object from the file scope
+                Sharer.removeFromQueue(file.uniqueIdentifier);
+                scope.$apply();
+
+                // Reflect that the file upload has completed
+                $('.file-'+file.uniqueIdentifier).hide();
               });
               r.on('fileError', function(file, message){
                   // Reflect that the file upload has resulted in error
@@ -281,7 +156,7 @@
             link: link
             //controller: controller
         }
-    });
+    }]);
 
     angular.module('directives').directive('dragover', function(){
         return {
@@ -309,4 +184,82 @@
                 });
             }
         };
+    });
+
+    angular.module('directives').directive('queueTip', function(){
+        return {
+            link: function(scope, element, attrs){
+                element.tooltip({
+                    title: 'This upload will be resumed'
+                });
+            }
+        }
+    });
+
+    angular.module('directives').directive('loading', function(){
+      return {
+        link: link,
+        
+      }
+    });
+
+    angular.module('directives').directive('profilephoto', function(){
+      function link(scope, element, attrs){
+        element.on('click', function(e){
+          e.preventDefault();
+          $('.p-ph-h-i').click();
+          var r = new Resumable({
+            target:'/user/account/photo',
+            chunkSize:1*1024*1024,
+            simultaneousUploads:1,
+            testChunks:false,
+            maxFiles: 1,
+            fileParameterName : 'pp'
+          });
+          // Show a place for dropping/selecting files
+          r.assignBrowse($('.p-ph-h-i')[0]);
+          // Handle file add event
+          r.on('fileAdded', function(file){              
+            r.upload();
+          });                 
+        });
+        element.on('mouseover', function(e){
+          $(this).after('<span class="label label-default animated fadeInUp">Click to change</span>');
+        });
+        element.on('mouseout mouseleave', function(e){
+          element.next('span.label').remove();
+        })
+      }
+      return {
+        restrict: 'EA',
+        link: link,
+      }
+    }); 
+    angular.module('directives').directive('tagsInput', ['Keeper', function(K){
+      function link (scope, element, attrs){
+        $(element).tagsInput();
+        scope.$watch(attrs.ngModel, function(n, o){
+          $(element).importTags(n);
+        });
+        var id = $(element).attr('id');
+        $('#'+id+'_tag').on('focusout', function(e){
+          var tgs = $(element).val();
+          if(tgs.length === 0) return false;
+          var file_id = attrs.ixid;
+          K.updateTags(tgs, file_id, function(){
+
+          });
+        });
+      }
+      return {
+        link:link
+      }
+    }]); 
+    angular.module('directives').directive('dropdownHover', function(){
+      function link (scope, element, attrs){
+        $(element).dropdownHover();
+      }
+      return {
+        link:link
+      }
     });

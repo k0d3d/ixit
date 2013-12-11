@@ -1,0 +1,33 @@
+#pad-wrapper.settings-wrapper
+  //
+     avatar column 
+  .col-md-3.avatar-box
+    .personal-image
+      img.avatar.img-circle(ng-src='/user/{{cuser}}/img', profilephoto)
+      input.p-ph-h-i(type='file', name='pp')
+  //
+     edit form column 
+  .col-md-7.personal-info
+    h5.personal-title Personal info
+    form(name="accountForm", ng-submit="updateAc()")
+      .field-box
+        label First name:
+        input.span5.inline-input(type='text', ng-model="user.firstname")
+      .field-box
+        label Last name:
+        input.span5.inline-input(type='text', ng-model="user.lastname")
+      .field-box
+        label Email:
+        input.span5.inline-input(type='text', value='alejandra@design.com', ng-model="user.email")
+      .field-box
+        label Username:
+        input.span5.inline-input(type='text', value='alegalvan', readonly)
+      .field-box
+        label Password:
+        input.span5.inline-input(type='password', value='blablablabla', ng-model="user.password")
+      .field-box
+        label Confirm password:
+        input.span5.inline-input(type='password', value='blablablabla', ng-model="passwordC", name="passwordC")
+        span.helptext(ng-show="accountForm.passwordC.$invalid", style="color: red") Your password's dont match
+      .span6.field-box.actions
+        input.btn-flat.primary(type='button', value='Save Changes')

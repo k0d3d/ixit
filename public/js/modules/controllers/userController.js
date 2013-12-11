@@ -5,7 +5,8 @@
     .config(['$routeProvider', function ($routeProvider){
         $routeProvider.when('/login', {templateUrl: '/home/login', controller: 'loginController'})
         .when('/recover', {templateUrl: '/home/recover', controller: 'loginController'})
-        .when('/register', {templateUrl: '/home/register', controller: 'registerController'});
+        .when('/register', {templateUrl: '/home/register', controller: 'registerController'})
+        .when('/dashboard/user/account', {templateUrl: '/dashboard/personal', controller: 'accountController'});
     }])
 
     .controller('loginController', function($scope, $sanitize, $location, Authenticate, $timeout, $window){
@@ -30,9 +31,25 @@
             });
         };
     })
+    .controller('accountController', ['$scope', 'accountServices', function($scope, as){
+            
+        as.getUser(function(r){
+            $scope.user = _.extend({_id: $scope.cuser}, r);
+        });
+
+        $scope.updateAc = function(){
+            // if($scope.user.password !== $scope.passwordC){
+            //     $scope.accountForm.passwordC.$invalid = true;
+            //     return false;
+            // }
+            as.update($scope.user, function(r){
+
+            });
+        };
+    }])
     .controller('registerController', function($scope, $sanitize, $location, $http, $timeout){
         $scope.form = {};
-        $scope.flash = '';
+        $scope.flash = ''; 
         $scope.isRegistered = false;
         $scope.signup = function(){
             $scope.isLoading = true;
@@ -56,17 +73,43 @@
                 }, 7000);
             });
         };
-    }).directive('validPasswordC',[function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, elem, attrs, ctrl) {
-            var firstPassword = '#' + attrs.validPasswordC;
-            elem.add(firstPassword).on('keyup', function () {
-                scope.$apply(function () {
-                    var v = elem.val()===$(firstPassword).val();
-                    ctrl.$setValidity('pwmatch', v);
-                });
+    })
+    .factory('accountServices', ['$http', 'Notification', 'Language', function(http){
+        var as = {};
+
+        as.getUser = function(cb){
+            http.get('/users/me')
+            .success(function(d){
+                cb(d);
+            })
+            .error(function(d){
+
             });
         }
-    };
+
+        as.update = function(d, cb){
+            http.put('/users/me/', d)
+            .success(function(d){
+
+            })
+            .error(function(d){
+
+            });
+        };
+
+        return as;
+    }])
+    .directive('validPasswordC',[function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                var firstPassword = '#' + attrs.validPasswordC;
+                elem.add(firstPassword).on('keyup', function () {
+                    scope.$apply(function () {
+                        var v = elem.val()===$(firstPassword).val();
+                        ctrl.$setValidity('pwmatch', v);
+                    });
+                });
+            }
+        };
 }]);

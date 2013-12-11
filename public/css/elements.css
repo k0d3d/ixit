@@ -463,6 +463,7 @@
 .pop-dialog .pointer 	{
 	position: relative;
 	top: -22px;
+	left: 257px;
 }
 .pop-dialog .pointer .arrow,
 .pop-dialog .pointer .arrow_border {
@@ -675,12 +676,23 @@ ul.nav li.notification-dropdown span.badge{
 
 }
 .navbar-inverse.navbar-fixed-top{
-	box-shadow: 0 1px 7px #000;
+	/*box-shadow: 0 1px 7px #000;*/
 }
 .navbar .navbar-collapse .item{
 	text-overflow: ellipsis;
 	word-wrap: break-word;	
 }
+.p-ph-h-i{
+	display: none !important;
+}
+
+div.tagsinput { border:1px solid #CCC; background: #FFF; padding:5px; width:300px; height:100px; overflow-y: auto;}
+div.tagsinput span.tag { border: 1px solid #a5d24a; -moz-border-radius:2px; -webkit-border-radius:2px; display: block; float: left; padding: 5px; text-decoration:none; background: #cde69c; color: #638421; margin-right: 5px; margin-bottom:5px;font-family: helvetica;  font-size:13px;}
+div.tagsinput span.tag a { font-weight: bold; color: #82ad2b; text-decoration:none; font-size: 11px;  } 
+div.tagsinput input { width:80px; margin:0px; font-family: helvetica; font-size: 13px; border:1px solid transparent; padding:5px; background: transparent; color: #000; outline:0px;  margin-right:5px; margin-bottom:5px; }
+div.tagsinput div { display:block; float: left; } 
+.tags_clear { clear: both; width: 100%; height: 0px; }
+.not_valid {background: #FBD8DB !important; color: #90111A !important;}
 
 @-webkit-keyframes reveal{
 	0% {

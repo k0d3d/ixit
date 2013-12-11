@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     GitHubStrategy = require('passport-github').Strategy,
     GoogleStrategy = require('passport-google-oauth').Strategy,
     User = mongoose.model('User'),
+    hashr = require("../lib/hash.js");
     config = require('./config');
 
 
@@ -13,7 +14,7 @@ module.exports = function(passport) {
 // Simple route middleware to ensure user is authenticated.  Otherwise send to login page.
 passport.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { 
-    res.cookie('throne',req.session.passport.user, {maxAge: 1800000, httpOnly: true});
+    res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 1800000, httpOnly: false});
     return next(); 
     }
   res.redirect('/login');

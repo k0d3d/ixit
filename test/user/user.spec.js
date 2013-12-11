@@ -63,3 +63,9 @@ describe('Login Process :', function() {
         });
     });
 });
+
+describe("User parole", function(){
+    it('should load a profile photo for a user', function(){
+
+    });
+})

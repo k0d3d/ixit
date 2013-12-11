@@ -3,7 +3,12 @@
  */
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    passport = require("passport");
+    hashr = require('../../lib/hash.js'),
+    _ = require('underscore'),
+    util = require('util'),
+    fs = require('fs'),
+    path = require('path'),
+    passport = require('passport');
 
 
 
@@ -85,24 +90,78 @@ Users.prototype.show = function(req, res) {
  * Send User
  */
 Users.prototype.me = function(req, res) {
-    res.jsonp(req.user || null);
+    res.jsonp({
+        "email": req.user.email,
+        "photo": req.user.photo,
+        "username": req.user.username,
+        "firstname": req.user.firstname,
+        "lastname": req.user.lastname
+    } || null);
 };
 
 /**
  * Find user by id
  */
 Users.prototype.user = function(req, res, next, id) {
+    var oid = hashr.unhashOid(id);
     User
         .findOne({
-            _id: id
+            _id: oid
         })
         .exec(function(err, user) {
             if (err) return next(err);
             if (!user) return next(new Error('Failed to load User ' + id));
             req.profile = user;
             next();
-        });
+        }); 
 };
+
+/**
+ * [update upates user account information]
+ * @param  {[type]}   userId      [description]
+ * @param  {[type]}   updatedInfo [description]
+ * @param  {Function} callback    [description]
+ * @return {[type]}               [description]
+ */
+Users.prototype.updateUser = function(updatedInfo, callback){
+    var o = _.omit(updatedInfo, ['_id', 'username', 'email']);
+    User.update({
+        _id: hashr.unhashOid(updatedInfo._id)
+    }, {
+        $set: o
+    })
+    .exec(function(err, ar){
+        if(err) return callback(err);
+        callback(ar);
+    });
+};
+
+/**
+ * [fetchphoto fetches the profile photo for the logged in user or id]
+ * @param  {[type]}   id       [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+Users.prototype.fetchphoto = function(id, callback){
+    var filename = path.normalize('app','users','img', id);
+    var al = 'prettyme.png';
+    fs.exists(filename, function(huh){
+        al = huh;
+    });
+    callback(al);
+};
+
+Users.prototype.postphoto = function(req, cb){
+    var tempPath = req.files.pp.path,
+        targetPath = path.resolve('./app/users/img/'+ hashr.hashOid(req.session.passport.user));
+    fs.rename(tempPath, targetPath, function(err) {
+        if (err) throw err;
+        cb(hashr.hashOid(req.session.passport.user));
+    });
+};
+
+var users = new Users();
+module.exports.users = users;
 
 module.exports.routes = function(app){
     /*
@@ -133,6 +192,17 @@ module.exports.routes = function(app){
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
+
+    //Change user profile information
+    app.put('/users/me/', function(req, res, next){
+        users.updateUser(req.body, function(r){
+            if(util.isError(r)){
+                next(r);
+            }else{
+                res.json(200, true);
+            }
+        });
+    });
 
     //Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {
@@ -166,10 +236,30 @@ module.exports.routes = function(app){
         failureRedirect: '/signin'
     }), users.authCallback);
 
+    //Fetch user profile photo
+    app.get('/user/:userId/img', function(req, res, next){
+        users.fetchphoto(req.params.userId, function(r){
+            if(util.isError(r)){
+                next(r);
+            }else{
+                res.sendfile(path.resolve('./app/users/img/'+r));
+            }
+        });
+    });
+
+
+    app.post('/user/account/photo', passport.ensureAuthenticated, function(req, res, next){
+        users.postphoto(req, function(r){
+            if(util.isError(r)){
+                next(r);
+            }else{
+                res.json(200, r);
+            }
+        })
+    });
+
     //Finish with setting up the userId param
     app.param('userId', users.user);
 
 };
 
-var users = new Users();
-module.exports.users = users;
