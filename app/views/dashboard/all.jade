@@ -16,11 +16,11 @@ div.files-ctrlr(ng-controller="filesController")
   #tool-bar
     .row.filter-block
       .pull-right
-        form.form-inline
+        form.form-inline(ng-submit="create_folder()")
           .form-group
             .folder-input(style="width: 139px")
               input.form-control(type="text", placeholder="Folder name")
-          button.btn.btn-flat.btn-success() Create Folder     
+          button.btn.btn-flat.btn-success(type="submit") Create Folder     
   #pad-wrapper(ng-show="cabinetTabs.length > 0")
     .table-wrapper.files-table.section
       .row.header

@@ -34,7 +34,7 @@ angular.module('dashboard',[
     });
   };
 }])
-.controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', function filesController($scope, $http, Keeper, T){
+.controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', 'Alert', function filesController($scope, $http, Keeper, T, Alert){
   function init(){
     var param = {user: $scope.cuser};
     Keeper.thisUserFiles(param, function(r){
@@ -66,6 +66,17 @@ angular.module('dashboard',[
   };
   $scope.close_tab = function(index){
     console.log(index);
+  };
+  $scope.create_folder = function(){
+    Alert.set_alert({
+      heading: 'Funny Shit',
+      message: 'So Cool, no oil',
+      type: 'danger',
+      icon: 'fa-times',
+      exec: function(){
+        console.log('hallo');
+      }
+    });
   };
 }])
 .controller('queueController', ['$scope', '$http', 'Keeper', 'Sharer', function queueController($scope, $http, Keeper, Sharer){

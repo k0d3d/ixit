@@ -1,0 +1,13 @@
+.small-box(ng-repeat="an in a_p")
+  .box-icon.pull-left
+    i.fa.fa-trash-o
+  .pull-right
+    i.fa.fa-times
+  .box-content
+    .box-title
+      h6 {{an.heading}}
+    .box-mssg
+      p {{an.message}}
+    .action-tinz
+      button.btn.btn-flat.inverse(ng-click="close_an($index)") Cancel
+      button.btn.btn-flat.white(ng-click="exec_yes($index)") Yes

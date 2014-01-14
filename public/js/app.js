@@ -17,16 +17,19 @@ angular.module('ixitApp').config(function ($routeProvider, $locationProvider) {
     });
   $locationProvider.html5Mode(true);
 });
+
+
 angular.module('ixitApp')
-  .controller('MainController', 
-    [ '$scope',
-      '$http',
-      '$location',
-      '$rootScope',
-      '$cookies',
-      'Keeper',
-      'Tabs',
-      function($scope, $http, $location, $rootScope, $cookies, Keeper, T){
+.controller('MainController', 
+  [ '$scope',
+    '$http',
+    '$location',
+    '$rootScope',
+    '$cookies',
+    'Keeper',
+    'Tabs',
+    'Alert',
+    function($scope, $http, $location, $rootScope, $cookies, Keeper, T, Alert){
     
   $scope.cuser = $cookies.throne;
 
@@ -70,6 +73,10 @@ angular.module('ixitApp')
 
   $scope.$on('newTab', function(){
     $scope.cabinetTabs = T.tabs;
+  });
+
+  $scope.$on('newPrompt', function(){
+    $scope.alerts = Alert.prompts;
   });
 
 

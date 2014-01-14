@@ -42,27 +42,31 @@ html
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();    
   body(ng-app='ixitApp')
-    .content
-      .container
-        // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
-          input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
-          .drop-overlay
-            .h1t
-              h1 drop 
-              p files and links in here. 
-          // navbar
-          include ../includes/dashboard-top-nav
-          // end navbar 
-          
-          .row
-            // sidebar 
-            include ../includes/dashboard-side-nav
-            // end sidebar 
-              
-            block body
-              
-        // end main container 
+    .container
+      // main container 
+      div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
+        .x-prompt
+          .alert-block.notice(notification)
+          .alert-block(prompt="alerts")
+
+
+        input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
+        .drop-overlay
+          .h1t
+            h1 drop 
+            p files and links in here. 
+        // navbar
+        include ../includes/dashboard-top-nav
+        // end navbar 
+        
+        .row
+          // sidebar 
+          include ../includes/dashboard-side-nav
+          // end sidebar 
+            
+          block body
+            
+      // end main container 
     
     block scripts
       script(src='/js/bootstrap.min.js')
@@ -71,7 +75,6 @@ html
       script(src='/js/angular-sanitize.min.js')
       script(src='/js/angular-cookies.min.js')
       script(src='/js/vendor/jquery.ui.widget.js')      
-      script(src='/js/vendor/n.js')      
       script(src='/js/cors/jquery.postmessage-transport.js')
       script(src='/js/cors/jquery.xdr-transport.js')
       script(src='/js/underscore-min.js')
