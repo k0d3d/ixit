@@ -1,5 +1,5 @@
 //services.js
-angular.module('ixitApp')
+angular.module('services', [])
   .factory('Authenticate', function($http){
       var a = {};
 
@@ -7,6 +7,20 @@ angular.module('ixitApp')
         $http.post('/api/users/session', loginParams)
         .success(callback)
         .error(callback);
+      };
+
+      a.logout = function(){
+
+      };
+
+      a.getApiKey = function(cb){
+        $http.get('/users/developer/apikey')
+        .success(function(data){
+          cb(data);
+        })
+        .error(function(data){
+
+        });
       };
 
       return a;
@@ -95,11 +109,21 @@ angular.module('ixitApp')
       });
     };
 
+    a.search = function(query, cb){
+      $http.get('/api/search/'+query)
+      .success(function(d){
+        cb(d);
+      })
+      .error(function(err){
+
+      });
+    };
+
     return a;
   })
   .factory('Sharer', function($rootScope){
       var s = {};
-
+ 
       s.filequeue = [];
 
       s.warning = 0;
@@ -256,4 +280,28 @@ angular.module('ixitApp')
           $rootScope.$broadcast('newEvent');
       };
       return s;
-  });
+  })
+  .factory('Tabs', [ '$rootScope', function($rootScope){
+    var s = {};
+
+    s.tabs = [];
+
+    /**
+     * createTab creates a tab on the file cabinet page
+     * @param  {Object} n object with title and file list properties
+     * @return {[type]}   [description]
+     */
+    s.createTab = function(n){
+      this.tabs.push(n)
+      this.reTab();
+    }
+
+    s.reTab = function(){
+      $rootScope.$broadcast('newTab');
+    };
+
+    s.closeTab = function(){
+
+    };
+    return s;
+  }]);

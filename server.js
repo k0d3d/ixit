@@ -5,6 +5,11 @@ var express = require('express'),
     fs = require('fs'),
     passport = require('passport'),
     logger = require('mean-logger');
+var redis_client = require('redis').createClient();    
+
+redis_client.on("error", function (err) {
+    console.log("Error " + err);
+});
 
 /**
  * Main application entry file.
@@ -39,6 +44,7 @@ require('./config/routes')(app, passport, auth);
 //Start the app by listening on <port>
 var port = config.port;
 app.listen(port);
+
 console.log('IXIT client started on port ' + port);
 
 //Initializing logger 

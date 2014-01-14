@@ -5,10 +5,8 @@
     .config(['$routeProvider', function ($routeProvider){
         $routeProvider.when('/login', {templateUrl: '/home/login', controller: 'loginController'})
         .when('/recover', {templateUrl: '/home/recover', controller: 'loginController'})
-        .when('/register', {templateUrl: '/home/register', controller: 'registerController'})
-        .when('/dashboard/user/account', {templateUrl: '/dashboard/personal', controller: 'accountController'});
+        .when('/register', {templateUrl: '/home/register', controller: 'registerController'});
     }])
-
     .controller('loginController', function($scope, $sanitize, $location, Authenticate, $timeout, $window){
         $scope.form = {};
         $scope.flash = '';
@@ -31,22 +29,6 @@
             });
         };
     })
-    .controller('accountController', ['$scope', 'accountServices', function($scope, as){
-            
-        as.getUser(function(r){
-            $scope.user = _.extend({_id: $scope.cuser}, r);
-        });
-
-        $scope.updateAc = function(){
-            // if($scope.user.password !== $scope.passwordC){
-            //     $scope.accountForm.passwordC.$invalid = true;
-            //     return false;
-            // }
-            as.update($scope.user, function(r){
-
-            });
-        };
-    }])
     .controller('registerController', function($scope, $sanitize, $location, $http, $timeout){
         $scope.form = {};
         $scope.flash = ''; 

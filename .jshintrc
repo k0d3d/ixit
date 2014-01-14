@@ -16,7 +16,7 @@
     "undef": true, // Require all non-global variables be declared before they are used.
     "unused": true, // Warn unused variables.
     "strict": false, // Require `use strict` pragma in every file.
-    "trailing": true, // Prohibit trailing whitespaces.
+    "trailing": false, // Prohibit trailing whitespaces.
     "smarttabs": false, // Suppresses warnings about mixed tabs and spaces
     "globals": { // Globals variables.
         "angular": true
@@ -35,6 +35,6 @@
     ],
     "indent": 2, // Specify indentation spacing
     "maxlen": 120, // Max line lenght
-    "devel": false, // Allow development statements e.g. `console.log();`.
+    "devel": true, // Allow development statements e.g. `console.log();`.
     "noempty": true // Prohibit use of empty blocks.
 }

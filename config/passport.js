@@ -11,23 +11,23 @@ var mongoose = require('mongoose'),
 
 module.exports = function(passport) {
 
-// Simple route middleware to ensure user is authenticated.  Otherwise send to login page.
-passport.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { 
-    res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 1800000, httpOnly: false});
-    return next(); 
-    }
-  res.redirect('/login');
-};
+    // Simple route middleware to ensure user is authenticated.  Otherwise send to login page.
+    passport.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
+      if (req.isAuthenticated()) { 
+        res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+        return next(); 
+      }
+      res.redirect('/login');
+    };
  
-// Check for admin middleware, this is unrelated to passport.js
-// You can delete this if you use different method to check for admins or don't need admins
-passport.ensureAdmin = function ensureAdmin(req, res, next) {
-        if(req.user && req.user.admin === true)
-            next();
-        else
-            res.send(403);
-};
+    // Check for admin middleware, this is unrelated to passport.js
+    // You can delete this if you use different method to check for admins or don't need admins
+    passport.ensureAdmin = function ensureAdmin(req, res, next) {
+      if(req.user && req.user.admin === true)
+        next();
+      else
+        res.send(403);
+    };
 
 
     //Serialize sessions

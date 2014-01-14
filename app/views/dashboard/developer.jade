@@ -1,0 +1,15 @@
+#pad-wrapper.settings-wrapper
+  //
+     edit form column 
+  .col-md-7.personal-info
+    h5.personal-title Developer Access
+    div.login-wrapper
+      .box
+        .content-wrap
+            form(ng-submit="submit4key()", ng-init="thisClientKey = '#{key}'")
+              .form-group
+                label API Key
+                input.form-control(type="text", placeholder="Your API Key", ng-model="thisClientKey", ng-disabled="thisClientKey")
+              .action
+                button.btn.btn-glow.primary.signup(type="submit", ng-disabled="thisClientKey") Request Key
+

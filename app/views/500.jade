@@ -1,0 +1,29 @@
+extends layouts/default
+block body
+  #wrap
+      .container
+          .row
+            include includes/navigation
+          #_primary.row
+            .span12
+              .row
+                .col-md-offset-4.col-md-4
+              .row(style="margin-top: 120px")
+                .col-md-offset-2.col-md-3
+                  .logo
+                    a(href='/')
+                      img#imgLogo(src='/img/logo.png')
+                    span.logo-sub shrink, shorten, share everything  
+                  form#search.form-line(role="form")  
+                    .form-group
+                      input.input-lg(type="search", name="search", placeholder="Find Something")         
+                .col-md-5
+                  h3.fourohfour Sorry!
+                  p we can't find the page or file you're looking for. 
+                  p This coule be caused by a wrong entry in the browser address bar. #{url}
+                  p Sometimes and very unlikely, an error can occur when trying to visit a link.
+                  p
+                    | In that case, errors get reported immediately and you can be sure we'll fix it in a couple minutes.
+                  p Just try again.                
+              .row
+                .col-md-offset-4.col-md-4

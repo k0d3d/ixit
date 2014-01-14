@@ -5,7 +5,9 @@
   .collapse.navbar-collapse.navbar-ex1-collapse
     ul.nav.navbar-nav.navbar-right
       li.hidden-phone
-        input.search(type='text')
+        form(ng-submit="searchQuery()")
+          .form-group
+            input.search(type='search', ng-model="queryString", placeholder="Filenames or Tags")
       li.notification-dropdown.hidden-phone(ng-controller="queueController")
         a.trigger(href='#') Queue
         span.badge.pull-right {{filequeue.length}}
@@ -80,7 +82,9 @@
           b.caret
         ul.dropdown-menu
           li
-            a(href='#', ng-click="commons.href('/dashboard/user/account')") Account
+            a(href='#', ng-click="commons.href('/dashboard/user/account')") Profile
+          li
+            a(href='#', ng-click="commons.href('/dashboard/user/developer')") Developer
           li
             a(href='#') Support
       li.settings.hidden-phone

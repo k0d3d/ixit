@@ -9,7 +9,7 @@ html
     block styles
       link(href='http://fonts.googleapis.com/css?family=Economica', rel='stylesheet', type='text/css')
       link(href='/css/bootstrap.min.css', rel='stylesheet', type='text/css')       
-      link(rel='stylesheet', type='text/css', href='/css/layout.css')
+      link(rel='stylesheet', type='text/css', href='/css/public.css')
       link(rel='stylesheet', type='text/css', href='/css/elements.css')
       link(rel='stylesheet', type='text/css', href='/css/icons.css')
       link(rel='stylesheet', type='text/css', href='/css/n.css')
@@ -42,53 +42,25 @@ html
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();    
   body(ng-app='ixitApp')
-    .content
-      .container
-        // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
-          input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
-          .drop-overlay
-            .h1t
-              h1 drop 
-              p files and links in here. 
-          // navbar
-          include ../includes/dashboard-top-nav
-          // end navbar 
-          
-          .row
-            // sidebar 
-            include ../includes/dashboard-side-nav
-            // end sidebar 
-              
-            block body
-              
-        // end main container 
+    // main container 
+    div.main-container()
+      // navbar
+      include ../includes/public-top-nav
+      // end navbar 
+
+      .content
+        .container-fluid    
+          block body
+    // end main container 
     
     block scripts
       script(src='/js/bootstrap.min.js')
-      script(src='/js/angular.min.js')
-      script(src='/js/angular-resource.min.js')
-      script(src='/js/angular-sanitize.min.js')
-      script(src='/js/angular-cookies.min.js')
       script(src='/js/vendor/jquery.ui.widget.js')      
-      script(src='/js/vendor/n.js')      
-      script(src='/js/cors/jquery.postmessage-transport.js')
-      script(src='/js/cors/jquery.xdr-transport.js')
       script(src='/js/underscore-min.js')
-      script(src='/js/resumable.js')
       script(src='/js/moment.min.js')
-      script(src='/js/jquery.slimscroll.min.js')
-      script(src='/js/jquery.tagsinput.min.js')
       script(src='/js/ICanHaz.min.js')
       script(src='/js/bootstrap-hover-dropdown.min.js')        
-      script(src='/js/app.js')      
+      script(src='/js/public.js')      
       script(src='/js/main.js')      
-      script(src='/js/modules/controllers/dashboardController.js')
-      script(src='/js/modules/controllers/homeController.js')
-      script(src='/js/modules/controllers/userController.js')
-      script(src='/js/modules/services/service.js')
-      script(src='/js/modules/directives.js')
-      script(src='/js/modules/filters.js')
-      script(src='/js/modules/lang.js')
       script(src='/js/generic.js')     
       script(src='/js/theme.js')

@@ -1,0 +1,63 @@
+extends ../layouts/public
+
+block body
+  div#wrap
+    .row
+      .col-md-1
+      .col-md-4   
+        .row(style="margin-top: 150px")
+          .col-md-12(style="padding: 0 29px")
+            .row
+              .col-md-12
+                .file-img
+                  img.center-block(src="/img/filetype/#{type}.png")
+            .row
+              .col-md-12         
+                table.table.table-hover.table-bordered.table-rounded
+                  thead
+                    tr
+                      th(style="width: 60%;") Filename
+                      th Size
+                      th Download Count
+                  tbody
+                    tr
+                      td #{blah}
+                      td #{size}
+                      td #{downloadCount}
+                p
+                  | #{tags}
+                  | #{completedDate}
+            .row
+              .col-md-12
+                a.btn.btn-block.btn-default.btn-lg(href="/api/media/#{mediaNumber}/request/") Download
+            .row
+              .col-md-12
+              //
+                AddThis Button BEGIN 
+              .addthis_toolbox.addthis_default_style.addthis_32x32_style
+                a.addthis_button_preferred_1
+                a.addthis_button_preferred_2
+                a.addthis_button_preferred_3
+                a.addthis_button_preferred_4
+                a.addthis_button_compact
+                a.addthis_counter.addthis_bubble_style
+              script(type='text/javascript').
+                var addthis_config = {"data_track_addressbar":true};
+              script(type='text/javascript', src='//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ece25997e439d8f').
+              //
+                AddThis Button END 
+
+
+      .col-md-7.brd-l
+        .row.sndry-col
+          .col-md-12
+            .row
+              .col-md-12 
+                .ad-box
+                  p Place Add here
+
+
+
+
+
+

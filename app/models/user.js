@@ -24,7 +24,9 @@ var UserSchema = new Schema({
     salt: String,
     facebook: {},
     twitter: {},
-    google: {}
+    google: {},
+    isDeveloper: {type: Boolean},
+    clientKey: {type: String}
 });
 
 /**

@@ -157,6 +157,32 @@
   .table-products .pagination {
     float: right;
     margin-top: 35px; }
+.files-ctrlr{
+  margin-top: 34px;
+}
+.files-table a.title{
+  text-transform: capitalize;
+}
+
+
+.nav-tabs i.fa{
+  margin: 0 2px;
+  padding: 2px;
+  border-radius: 2px;
+}
+.nav-tabs i.fa:hover{
+  background-color: #D2322D;
+  color: #fff;
+}
+.tab-pane table {
+  margin-top: 5px;
+}
+.bact{
+  left: 7px;
+  display: inline-block;
+  position: relative;
+  width: 36px; 
+}
 
 /* responsive */
 @media (max-width: 767px) {

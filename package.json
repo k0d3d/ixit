@@ -38,7 +38,14 @@
     "grunt-cli": "latest",
     "grunt-bower-task": "latest",
     "mongoose-unique-validator": "~0.1.0",
-    "easyimage": "~0.1.4"
+    "easyimage": "~0.1.4",
+    "mongoosastic": "~0.2.3",
+    "less": "~1.5.1",
+    "mime": "~1.2.11",
+    "moment": "~2.4.0",
+    "node-validator": "~0.1.1",
+    "redis": "~0.10.0",
+    "bcrypt": "~0.7.7"
   },
   "devDependencies": {
     "supertest": "latest",

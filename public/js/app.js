@@ -5,6 +5,7 @@ angular.module('ixitApp',[
     'home',
     'user',
     'dashboard',
+    'services',
     'ngResource',
     'ngSanitize',
     'ngCookies'
@@ -18,12 +19,14 @@ angular.module('ixitApp').config(function ($routeProvider, $locationProvider) {
 });
 angular.module('ixitApp')
   .controller('MainController', 
-    [ '$scope', 
-      '$http', 
-      '$location', 
-      '$rootScope', 
-      '$cookies', 
-      function($scope, $http, $location, $rootScope, $cookies){
+    [ '$scope',
+      '$http',
+      '$location',
+      '$rootScope',
+      '$cookies',
+      'Keeper',
+      'Tabs',
+      function($scope, $http, $location, $rootScope, $cookies, Keeper, T){
     
   $scope.cuser = $cookies.throne;
 
@@ -31,6 +34,8 @@ angular.module('ixitApp')
     heading : '',
     body : ''
   };
+
+  $scope.cabinetTabs = [];
 
   $rootScope.completedUploads = 0;
 
@@ -53,7 +58,21 @@ angular.module('ixitApp')
   $scope.clickBrowse = function(){
     $('.browsefiles').click();
   };
-  
+  $scope.searchQuery = function(){
+    Keeper.search($scope.queryString, function(d){
+      T.createTab({
+        title: $scope.queryString,
+        id: $scope.queryString.replace(/[^\w\s]/gi, ''),
+        list: d.hits
+      });
+    });
+  };
+
+  $scope.$on('newTab', function(){
+    $scope.cabinetTabs = T.tabs;
+  });
+
+
 }]);
 
  

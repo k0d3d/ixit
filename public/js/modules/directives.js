@@ -66,7 +66,7 @@
         var extraParams = function(fileObj, chunkObj){
             return {
                 fileType : fileObj.file.type.length > 0 ? fileObj.file.type : 'noMime',
-                throne: 'ojPbjonlELhxJ047wK4b'
+                throne: $cookies.throne
                 //throne: 'januzaj'
             };
         };
@@ -237,8 +237,10 @@
     }); 
     angular.module('directives').directive('tagsInput', ['Keeper', function(K){
       function link (scope, element, attrs){
+         
         $(element).tagsInput();
         scope.$watch(attrs.ngModel, function(n, o){
+          if(_.isUndefined(n)) return false;
           $(element).importTags(n);
         });
         var id = $(element).attr('id');
@@ -261,5 +263,14 @@
       }
       return {
         link:link
+      }
+    });
+    angular.module('directives').directive('folderTabs', function(){
+      function link(scope, element, attrs){
+
+      }
+      return {
+        link: link,
+        templateUrl: '/templates/cabinet-tabs-tpl.jade'
       }
     });

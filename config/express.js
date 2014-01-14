@@ -21,7 +21,7 @@ module.exports = function(app, passport) {
     //Setting the fav icon and static folder
     app.use(express.favicon(config.root + '/public/favicon.ico'));
     app.use(express.static(config.root + '/public'));
-    app.use(express.static(config.root + '/app/users'));
+    app.use('/user/:userId/img', express.static(config.root + '/app/users/img'));
 
     //Don't use logger for test env
     if (process.env.NODE_ENV !== 'test') {
@@ -47,9 +47,11 @@ module.exports = function(app, passport) {
         //express/mongo session storage
         app.use(express.session({
             secret: 'hell12sex12fury',
+            cookie: { maxAge: 24 * 60 * 60 * 1000 },
             store: new mongoStore({
                 url: config.db,
-                collection: 'sessions'
+                collection: 'sessions',
+
             })
         }));
 
@@ -92,7 +94,8 @@ module.exports = function(app, passport) {
         app.use(function(req, res, next) {
             res.status(404).render('404', {
                 url: req.originalUrl,
-                error: 'Not found'
+                error: 'Not found',
+                title: '..Oopps'
             });
         });
 

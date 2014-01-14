@@ -257,7 +257,6 @@ input.search{
 
 /* Sidebar */
 #sidebar-nav {
-	position: absolute;
 	width: 180px;
 	float: left;
 	margin: 0em;
@@ -422,10 +421,10 @@ input.search{
 	overflow: hidden;
 	position: relative;
 	background: #fff;
-	margin-left: 177px;
+	/*margin-left: 177px;*/
 	border-left: 1px solid #8F8F8F;
 	border-bottom: 1px solid #8F8F8F;
-	box-shadow: -3px -3px 3px -2px #808080;
+/*	box-shadow: -3px -3px 3px -2px #808080;*/
 	border-radius: 0 0 0 5px;
 }
 

@@ -1,0 +1,5 @@
+li(ng-repeat="title in cabinetTabs")
+  a.title(data-target="#{{title.id}}", data-toggle="tab") {{title.title}}
+    .bact
+      i.fa.fa-refresh(ng-click="refresh_tab($index)")
+      i.fa.fa-times(ng-click="close_tab($index)", ng-show="$index != 0")

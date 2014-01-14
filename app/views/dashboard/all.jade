@@ -1,53 +1,76 @@
-div(ng-controller="filesController")  
-  #pad-wrapper(ng-show="files.length > 0")
-    .table-wrapper.products-table.section
-      .row.head
+div.files-ctrlr(ng-controller="filesController")
+  #main-stats
+    .row-fluid.stats-row
+        .col-md-3.col-md-offset-3.stat.first
+          .data
+            span.number #{files}
+            | files
+        .col-md-3.stat
+          .data
+            span.number #{files}
+            | files
+        .col-md-3.stat.last
+          .data
+            span.number #{size}
+            | MB
+  #tool-bar
+    .row.filter-block
+      .pull-right
+        form.form-inline
+          .form-group
+            .folder-input(style="width: 139px")
+              input.form-control(type="text", placeholder="Folder name")
+          button.btn.btn-flat.btn-success() Create Folder     
+  #pad-wrapper(ng-show="cabinetTabs.length > 0")
+    .table-wrapper.files-table.section
+      .row.header
         .span12
-          h4 All Files
-        .row
-          table.table.table-hover
-            thead
-              tr
-                th.col-md-2
-                  input(type='checkbox')
-                  | Date
-                th.col-md-5
-                  span.line
-                  | File name
-                th.col-md-1
-                  span.line
-                  | Size
-                th.col-md-1
-                  span.line
-                  | Downloads
-                th.col-md-2
-                  span.line
-            tbody
-              tr(ng-repeat="f in files")
-                td 
-                  input(type='checkbox')
-                  | {{f.completedDate | moment}}
-                td
-                  a.name(href='#') {{f.filename}}
-                  .btn-group(style="float: right")
-                    button.btn.btn-default.dropdown-toggle.btn-xs(type="button", dropdown-hover)
-                      | #tags
-                      span.caret
-                    ul.dropdown-menu(style="padding: 0")
-                      li
-                        form
-                          .form-group(style="margin-bottom:0")
-                            input(name="tags", class="tag-field", tags-input, ng-model="f.tags", ixid="{{f.ixid}}")
-                td
-                  | {{f.size | formatFileSize}}
-                td
-                  | {{f.downloadCount}}
-                td.align-right
-                  .btn-group.btn-group-sm
-                    button.btn.btn-primary(href='#') Share
-                    button.btn.btn-danger(href='#', ng-click="trashFile($index)") Delete
-  #pad-wrapper(ng-show="files.length == 0")
-    .row-fluid.header
+          ul.nav.nav-tabs(folder-tabs)
+          .tab-content
+            .tab-pane.fade(ng-repeat="tabC in cabinetTabs", id="{{tabC.id}}", ng-init="tabIndex = $index")
+              table.table.table-hover
+                thead
+                  tr
+                    th.col-md-2
+                      input(type='checkbox')
+                      | Date
+                    th.col-md-5
+                      span.line
+                      | File name
+                    th.col-md-1
+                      span.line
+                      | Size
+                    th.col-md-1
+                      span.line
+                      | Downloads
+                    th.col-md-2
+                      span.line
+                tbody
+                  tr(ng-repeat="f in tabC.list")
+                    td 
+                      input(type='checkbox')
+                      | {{f.completedDate | moment}}
+                    td
+                      a.name(href='#') {{f.filename}}
+                      .btn-group(style="float: right")
+                        button.btn.btn-default.dropdown-toggle.btn-xs(type="button", dropdown-hover)
+                          | #tags
+                          span.caret
+                        ul.dropdown-menu(style="padding: 0")
+                          li
+                            form
+                              .form-group(style="margin-bottom:0")
+                                input(name="tags", class="tag-field", tags-input, ng-model="f.tags", ixid="{{f.ixid}}")
+                    td
+                      | {{f.size | formatFileSize}}
+                    td
+                      | {{f.downloadCount}}
+                    td.align-right
+                      .btn-group.btn-group-sm
+                        button.btn.btn-primary(href='#') Share
+                        button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
+  #pad-wrapper(ng-show="cabinetTabs[0].list.length == 0")
+    .row.header
     .no-gallery
       .center
         img(src='/img/1379620524_add_file.png')

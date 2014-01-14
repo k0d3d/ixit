@@ -2,4 +2,5 @@
 .nodemonignore
 .sass-cache/
 node_modules/
-public/lib
+public/lib 
+app/users
