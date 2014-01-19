@@ -55,7 +55,7 @@ function K33per (){
 K33per.prototype.constructor = K33per;
 
 K33per.prototype.getUsersFiles = function(userId, callback){
-  rest.get(api_url+'/user/'+userId+'/files', {
+  rest.get(config.api_url+'/user/'+userId+'/files', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
@@ -71,7 +71,7 @@ K33per.prototype.getUsersFiles = function(userId, callback){
 };
 
 K33per.prototype.getUserQueue = function(userId, callback){
-  rest.get(api_url+ '/user/'+userId+'/queue',{
+  rest.get(config.api_url+ '/user/'+userId+'/queue',{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
@@ -89,7 +89,7 @@ K33per.prototype.getUserQueue = function(userId, callback){
 
 K33per.prototype.deleteUserFile = function(userId, fileId, callback){
   fileId = hashr.unhashInt(fileId);
-  rest.del(api_url+'/user/'+userId+'/file/'+fileId,{
+  rest.del(config.api_url+'/user/'+userId+'/file/'+fileId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
@@ -99,7 +99,7 @@ K33per.prototype.deleteUserFile = function(userId, fileId, callback){
 };
 
 K33per.prototype.removeUserQueue = function(mediaNumber, owner, callback){
-  rest.del(api_url+'/user/'+owner+'/queue/'+mediaNumber, {
+  rest.del(config.api_url+'/user/'+owner+'/queue/'+mediaNumber, {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result){
     callback(result);
@@ -110,7 +110,7 @@ K33per.prototype.removeUserQueue = function(mediaNumber, owner, callback){
 
 K33per.prototype.updateTags = function(file_id, owner, tags, cb){
   var fileId = hashr.unhashInt(file_id);
-  rest.put(api_url+'/user/'+owner+'/file/'+fileId+'/tags', {
+  rest.put(config.api_url+'/user/'+owner+'/file/'+fileId+'/tags', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent },
     data: {tags: tags}
   })
@@ -124,7 +124,7 @@ K33per.prototype.updateTags = function(file_id, owner, tags, cb){
 
 
 K33per.prototype.search = function(query, cb){
-  rest.get(api_url+'/media/search/'+query,{
+  rest.get(config.api_url+'/media/search/'+query,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('success', function(result){
@@ -137,7 +137,7 @@ K33per.prototype.search = function(query, cb){
 
 K33per.prototype.downloadPage = function(mediaId, cb){
   //return cb(true);
-  rest.get(api_url+'/user/media/'+mediaId,{
+  rest.get(config.api_url+'/user/media/'+mediaId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('complete', function(rz, rs){
@@ -155,7 +155,7 @@ K33per.prototype.requestFileDownload = function(mediaId, cb){
     if(err){
       cb(err);
     }else{
-      cb(api_url+'/download/'+reply.toString());
+      cb(config.api_url+'/download/'+reply.toString());
     }
   });
 };

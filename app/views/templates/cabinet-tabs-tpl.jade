@@ -1,4 +1,4 @@
-li(ng-repeat="title in cabinetTabs")
+li(ng-repeat="title in cabinetTabs", activate-tab)
   a.title(data-target="#{{title.id}}", data-toggle="tab") {{title.title}}
     .bact
       i.fa.fa-refresh(ng-click="refresh_tab($index)")

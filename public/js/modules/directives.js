@@ -266,9 +266,33 @@ appDirective.directive('dropdownHover', function(){
     link:link
   }
 });
+appDirective.directive('activateTab', function($timeout){
+  function link(scope, element, attrs){
+    if(scope.$last === true){
+      $timeout(function(){
+        //using the length so we can activate the last tab
+        var lnt = scope.cabinetTabs.length - 1;
+        var lastTab = scope.cabinetTabs[lnt].id;
+        $('a.title[data-target="#'+lastTab+'"]').tab('show'); 
+      });
+    }    
+  }
+  return {
+    link: link
+  }
+})
 appDirective.directive('folderTabs', function(){
   function link(scope, element, attrs){
 
+    // scope.$watch('cabinetTabs', function(n){
+    //   console.log(n);
+    //   if(_.isEmpty(n)) return false;
+    //   // //using the length so we can activate the last tab
+    //   // var lnt = scope.cabinetTabs.length - 1;
+    //   // var lastTab = scope.cabinetTabs[lnt].id;
+    //   // console.log(lastTab);
+    //   // $('a.title[data-target="#'+lastTab+'"]').tab('show');      
+    // });
   }
   return {
     link: link,

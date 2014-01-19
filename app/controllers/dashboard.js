@@ -55,7 +55,7 @@ module.exports.routes = function(app){
 		var keeper = new Keeper();
 		var owner = hashr.hashOid(req.session.passport.user);
 		keeper.count(owner, function(d){
-			var r = d[0];
+			var r = (!_.isEmpty(d))? d[0]: {files: 0, size: 0};
 			res.render('dashboard/all', {
 				size: commons._formatFileSize(r.size),
 				files: r.files

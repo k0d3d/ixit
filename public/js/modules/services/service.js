@@ -119,6 +119,10 @@ angular.module('services', [])
       });
     };
 
+    a.makeFolder = function(foldername, parent, cb){
+
+    };
+
     return a;
   })
   .factory('Sharer', function($rootScope){
@@ -241,7 +245,11 @@ angular.module('services', [])
   .factory('Tabs', [ '$rootScope', function($rootScope){
     var s = {};
 
+    //Dunno! but for all tabs
     s.tabs = [];
+
+    //This will hold the current tab properties
+    s.tab = null;
 
     /**
      * createTab creates a tab on the file cabinet page
@@ -249,9 +257,9 @@ angular.module('services', [])
      * @return {[type]}   [description]
      */
     s.createTab = function(n){
-      this.tabs.push(n)
+      this.tab = n;
       this.reTab();
-    }
+    };
 
     s.reTab = function(){
       $rootScope.$broadcast('newTab');

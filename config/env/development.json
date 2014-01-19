@@ -4,7 +4,7 @@
         "name": "IXIT - File Sharing and Hosting",
         "user_agent": "IXIT Client"
     },
-    "api_url": "http://192.168.1.7:3000",
+    "api_url": "http://192.168.1.11:3000",
     "facebook": {
         "clientID": "APP_ID",
         "clientSecret": "APP_SECRET",

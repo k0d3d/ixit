@@ -68,6 +68,7 @@ angular.module('dashboard',[
     console.log(index);
   };
   $scope.create_folder = function(){
+    
     Alert.set_alert({
       heading: 'Funny Shit',
       message: 'So Cool, no oil',

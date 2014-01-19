@@ -72,7 +72,7 @@ angular.module('ixitApp')
   };
 
   $scope.$on('newTab', function(){
-    $scope.cabinetTabs = T.tabs;
+    $scope.cabinetTabs.push(T.tab);
   });
 
   $scope.$on('newPrompt', function(){
