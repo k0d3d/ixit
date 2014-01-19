@@ -252,6 +252,9 @@ input.search{
 .navbar-inverse  .pop-dialog .messages .footer {
 	margin-top: 6px;
 }
+.ftbz li:first-child{
+	margin-left: 5px;
+}
 
 
 
@@ -260,6 +263,7 @@ input.search{
 	float: left;
 	margin: 0em;
 	padding-top: 5.8em;	
+	background-color: #f7f7f7;
 }
 #dashboard-menu {
 	list-style: none;
@@ -436,7 +440,7 @@ input.search{
 }
 
 .container{
-	width: 1170px;
+	width: 100%;
 	height: calc(100% - 17px);	
 	right: 0;
 }
@@ -605,6 +609,9 @@ input.search{
 .files-table a.title{
   text-transform: capitalize;
 }
+.table-wrapper{
+	padding: 0 15px;
+}
 
 
 .nav-tabs i.fa{
@@ -624,8 +631,16 @@ input.search{
   display: inline-block;
   position: relative;
   width: 36px; 
+  color: #ADACAC;
 }
-
+.stats-row{
+	border-bottom: solid 1px #edeff1;
+	background-color: #fdfdfd;
+	margin-left: 0;
+}
+.crumb-block{
+	margin: 10px 0;
+}
 /* responsive */
 @media (max-width: 767px) {
   #main-stats {
