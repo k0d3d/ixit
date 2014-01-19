@@ -1,29 +1,24 @@
 div.files-ctrlr(ng-controller="filesController")
   #main-stats
-    .row-fluid.stats-row
-        .col-md-3.col-md-offset-3.stat.first
-          .data
-            span.number #{files}
-            | files
-        .col-md-3.stat
+    .row.stats-row
+        .col-md-3.col-md-offset-6.stat.first
           .data
             span.number #{files}
             | files
         .col-md-3.stat.last
           .data
             span.number #{size}
-            | MB
-  #tool-bar
-    .row.filter-block
-      .pull-right
-        form.form-inline
-          .form-group
-            .folder-input(style="width: 139px")
-              input.form-control(type="text", placeholder="Folder name")
-          button.btn.btn-flat.btn-success() Create Folder     
-  #pad-wrapper(ng-show="cabinetTabs.length > 0")
-    .table-wrapper.files-table.section
-      .row.header
+            | MB     
+  #pad-wrapper(ng-show="cabinetTabs.length > 0")  
+    .row.header
+      .filter-block
+        .pull-right
+          form.form-inline
+            .form-group
+              .folder-input(style="width: 139px")
+                input.form-control(type="text", placeholder="Folder name")
+            button.btn.btn-flat.btn-success() Create Folder        
+      .table-wrapper.files-table.section
         .span12
           ul.nav.nav-tabs(folder-tabs)
           .tab-content
