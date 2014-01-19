@@ -17,11 +17,11 @@ div.files-ctrlr(ng-controller="filesController")
           ul.breadcrumb
             li.active Home
         .pull-left    
-          form.form-inline(style="margin-left: 10px")
+          form.form-inline(style="margin-left: 10px", ng-submit="create_folder()")
             .form-group
               .folder-input(style="width: 139px")
-                input.form-control(type="text", placeholder="Folder name")
-            button.btn.btn-flat.btn-success() Create Folder 
+                input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
+            button.btn.btn-flat.btn-success(type="submit") Create Folder 
         .clearfix
   .row(ng-show="cabinetTabs.length > 0")       
     .table-wrapper.files-table
