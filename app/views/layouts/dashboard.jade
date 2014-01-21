@@ -12,7 +12,6 @@ html
       link(rel='stylesheet', type='text/css', href='/css/layout.css')
       link(rel='stylesheet', type='text/css', href='/css/elements.css')
       link(rel='stylesheet', type='text/css', href='/css/icons.css')
-      link(rel='stylesheet', type='text/css', href='/css/n.css')
       link(href='/css/bootstrap-overrides.css', type='text/css', rel='stylesheet')
 
     //
@@ -22,7 +21,6 @@ html
        this page specific styles 
     link(rel='stylesheet', href='/css/compiled/gallery.css', type='text/css', media='screen')
     link(rel='stylesheet', href='/css/compiled/tables.css', type='text/css', media='screen')
-    link(rel='stylesheet', href='/css/compiled/index.css', type='text/css', media='screen')
     //
        open sans font 
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
@@ -43,38 +41,38 @@ html
       })();    
   body(ng-app='ixitApp')
     .container
-      // main container 
-      div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
-        .x-prompt
-          .alert-block.notice(notification)
-          .alert-block(prompt="alerts")
+      .content
+        // main container 
+        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn", ng-init="home_folder = '#{home_folder}'")
+          input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
+          .x-prompt
+            .alert-block.notice(notification)
+            .alert-block(prompt="alerts")
 
-
-        input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
-        .drop-overlay
-          .h1t
-            h1 drop 
-            p files and links in here. 
-        // navbar
-        include ../includes/dashboard-top-nav
-        // end navbar 
-        
-        .row
-          // sidebar 
-          include ../includes/dashboard-side-nav
-          // end sidebar 
-            
-          block body
-            
-      // end main container 
+          .drop-overlay
+            .h1t
+              h1 drop 
+              p files and links in here. 
+          // navbar
+          include ../includes/dashboard-top-nav
+          // end navbar 
+          
+          .row
+            // sidebar 
+            include ../includes/dashboard-side-nav
+            // end sidebar 
+              
+            block body
+              
+        // end main container 
     
     block scripts
       script(src='/js/bootstrap.min.js')
       script(src='/js/angular.min.js')
       script(src='/js/angular-resource.min.js')
       script(src='/js/angular-sanitize.min.js')
-      script(src='/js/angular-cookies.min.js')
-      script(src='/js/vendor/jquery.ui.widget.js')      
+      script(src='/js/angular-cookies.min.js')     
+      script(src='/js/tab.js')      
       script(src='/js/cors/jquery.postmessage-transport.js')
       script(src='/js/cors/jquery.xdr-transport.js')
       script(src='/js/underscore-min.js')
