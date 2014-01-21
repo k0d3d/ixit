@@ -7,10 +7,9 @@ var mongoose = require('mongoose'),
     rest = require('restler'),
     hashr = require('../../lib/hash.js'),
     _ = require('underscore'),
-    api_url = 'http://192.168.1.7:3000',
     config = require('../../config/config'),
     commons = require('../../lib/commons'),
-    util = require('util');
+    util = require('util'),
     redis = require('redis'),
     redis_client = redis.createClient();
 
@@ -54,6 +53,39 @@ function K33per (){
 
 K33per.prototype.constructor = K33per;
 
+/**
+ * request the logged in user's home folder id.
+ * @param  {[type]}   user [description]
+ * @param  {Function} cb   [description]
+ * @return {[type]}        [description]
+ */
+K33per.prototype.loadHome = function(user, cb){
+  rest.get(config.api_url+'/user/'+user+'/home', commons.restParams())
+  .on('complete', function(r){
+    cb(r._id);
+  });
+};
+
+/**
+ * requests for files belonging to a folder
+ * @param  {[type]}   user [description]
+ * @param  {Function} cb   [description]
+ * @return {[type]}        [description]
+ */
+K33per.prototype.loadFolder = function(user, options, cb){
+  rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
+  .on('complete', function(r){
+    cb(r);
+  });
+};
+
+/**
+ * Send a request to query all files beloging to a user
+ * regardless of what folder / subfolder the file is in.
+ * @param  {[type]}   userId   [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
 K33per.prototype.getUsersFiles = function(userId, callback){
   rest.get(config.api_url+'/user/'+userId+'/files', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
@@ -65,7 +97,7 @@ K33per.prototype.getUsersFiles = function(userId, callback){
     strip_files_result(data, function(r){
       callback(r, response);
     });
-  }).on('error', function(err, response){
+  }).on('error', function(err){
     callback(err);
   });
 };
@@ -183,7 +215,11 @@ K33per.prototype.count = function(userId, cb){
  * @return {[type]}              [description]
  */
 K33per.prototype.createFolder = function(foldername, parent, owner, cb){
-  rest.post(config.api_url+'/user/'+owner+'/folder', commons.restParams())
+  rest.post(config.api_url+'/user/'+owner+'/folder', commons.restParams({
+    data: {
+      name: foldername
+    }
+  }))
   .on('complete', function(data){
     cb(data);
   });
@@ -194,6 +230,30 @@ module.exports.keeper = K33per;
 var k33per = new K33per();
 
 module.exports.routes = function(app){
+  //Request all files in a folder belonging to a user
+  //Using the req.cookies to determine what folder is 
+  //'current'
+  app.get('/api/user/folder', function(req, res, next){
+    var currentFolder = hashr.unhashOid(req.query.id);
+    //Users are always stored as hashes on the vault
+    var owner = hashr.hashOid(req.session.passport.user);
+    //The parent folder if any
+    var parent = req.query.parent;
+
+    //
+    k33per.loadFolder(owner, {
+      id: currentFolder,
+      parentId: parent
+    }, function(r){
+      if(util.isError(r)){
+        next(r);
+      }else{
+        res.json(200, r);
+      }
+    });
+  });
+
+  //Request all files uploaded by a user
   app.get('/api/user/files', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUsersFiles(owner, function(r){

@@ -65,7 +65,7 @@ angular.module('ixitApp')
     Keeper.search($scope.queryString, function(d){
       T.createTab({
         title: $scope.queryString,
-        id: $scope.queryString.replace(/[^\w\s]/gi, ''),
+        id: $scope.queryString.replace(/[^\w\s]/gi, '')+'-tab',
         list: d.hits
       });
     });
@@ -74,9 +74,13 @@ angular.module('ixitApp')
   $scope.$on('newTab', function(){
     $scope.cabinetTabs.push(T.tab);
   });
-
+  //Listener for prompts
   $scope.$on('newPrompt', function(){
     $scope.alerts = Alert.prompts;
+  });
+  //Listener for notifincation 
+  $scope.$on('newNotice', function(){
+    $scope.notices = Alert.notes;
   });
 
 

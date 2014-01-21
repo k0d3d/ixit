@@ -1,31 +1,32 @@
 #sidebar-nav.col-md-2
-  ul#dashboard-menu
-    li
-      button#browsefilesbtn.btn.btn-flat.inverse.btn-block(data-ng-click="clickBrowse()")
-        i.fa.fa-plus(style="font-size: 12px;margin-right: 10px")
-        span Upload
-      button#browsefilesbtn.btn.btn-flat.inverse.btn-block(data-ng-click="clickBrowse()")
-        i.fa.fa-plus(style="font-size: 12px;margin-right: 10px")
-        span Upload Folder
-    li(style="margin-top: 25px")
-      .pointer
-        .arrow
-        .arrow_border   
-      a.dropdown-toggle(href='#')
-        i.fa.fa-hdd-o
-        span Storage
-      ul.submenu
-        li
-          a(href='/dashboard/files/all') All Files
-        li
-          a(href='user-list.html') Documents
-        li
-          a(href='new-user.html') Music
-        li
-          a(href='user-profile.html') Photos         
-        li
-          a(href='user-profile.html') Videos
-    li
-      a.dropdown-toggle(href='#')
-        i.fa.fa-trash-o
-        span Trash
+  .fl-sd-br
+    ul#dashboard-menu
+      li
+        button#browsefilesbtn.btn.btn-flat.inverse.btn-block(data-ng-click="clickBrowse()")
+          i.fa.fa-plus(style="font-size: 12px;margin-right: 10px")
+          span Upload
+        button#browsefilesbtn.btn.btn-flat.inverse.btn-block(data-ng-click="clickBrowse()")
+          i.fa.fa-plus(style="font-size: 12px;margin-right: 10px")
+          span Upload Folder
+      li(style="margin-top: 25px")
+        .pointer
+          .arrow
+          .arrow_border   
+        a.dropdown-toggle(href='#')
+          i.fa.fa-hdd-o
+          span Storage
+        ul.submenu
+          li
+            a(href='/dashboard/files/all') All Files
+          li
+            a(href='user-list.html') Documents
+          li
+            a(href='new-user.html') Music
+          li
+            a(href='user-profile.html') Photos         
+          li
+            a(href='user-profile.html') Videos
+      li
+        a.dropdown-toggle(href='#')
+          i.fa.fa-trash-o
+          span Trash

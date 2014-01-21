@@ -43,7 +43,7 @@ html
     .container
       .content
         // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn")
+        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn", ng-init="home_folder = '#{home_folder}'")
           input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
           .drop-overlay
             .h1t

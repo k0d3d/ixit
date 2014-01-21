@@ -47,7 +47,18 @@ div.files-ctrlr(ng-controller="filesController")
                   th.col-md-2
                     span.line
               tbody
-                tr(ng-repeat="f in tabC.list")
+                tr(ng-repeat="f in tabC.list.folders")
+                  td 
+                    input(type='checkbox')
+                    | {{f.created | moment}}
+                  td
+                    a.name(href='#') {{f.name}}
+                  td.align-right
+                    .btn-group.btn-group-sm
+                      button.btn.btn-primary(href='#') Share
+                      button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
+
+                tr(ng-repeat="f in tabC.list.files")
                   td 
                     input(type='checkbox')
                     | {{f.completedDate | moment}}

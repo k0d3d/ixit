@@ -33,7 +33,13 @@ module.exports.dashboard = dashboard;
 
 module.exports.routes = function(app){
 	app.get('/dashboard', function(req, res){
-		res.render('dashboard');
+		var keeper = new Keeper();
+		var owner = hashr.hashOid(req.session.passport.user);
+		keeper.loadHome(owner, function(d){
+			res.render('dashboard', {
+				home_folder: hashr.hashOid(d)
+			});
+		});		
 	});
 
 	app.get('/dashboard/developer', function(req, res){
@@ -44,7 +50,6 @@ module.exports.routes = function(app){
 			}else{
 				key = r;
 			}
-			console.log(key);
 			res.render('dashboard/developer', {
 				key: key
 			});			

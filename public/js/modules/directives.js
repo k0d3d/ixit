@@ -357,7 +357,7 @@ appDirective.directive('prompt', ['Alert', function(AlertService){
     link: link,
     templateUrl: '/templates/prompt-alert-tpl',
     scope:{
-      alerts: '=prompt'
+      prompts: '=prompt'
     },
     controller: AlertCtrl
   }

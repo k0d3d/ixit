@@ -37,12 +37,13 @@ angular.module('dashboard',[
 .controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', 'Alert', function filesController($scope, $http, Keeper, T, Alert){
   function init(){
     var param = {user: $scope.cuser};
-    Keeper.thisUserFiles(param, function(r){
+    //Call for the home folder and its content
+    Keeper.fetchFolder({id: $scope.home_folder}, function(r){
       if(r !== false){
         T.createTab({
-          title: 'All',
-          id: 'all',
-          list: _.values(r)
+          title: 'Home',
+          id: 'home-tab',
+          list: r
         });
           // angular.forEach(r, function(value, key){
           //   $scope.files.push(value);
@@ -69,7 +70,7 @@ angular.module('dashboard',[
   };
   $scope.create_folder = function(){
     
-    Alert.set_alert({
+    Alert.set_prompt({
       heading: 'Funny Shit',
       message: 'So Cool, no oil',
       type: 'danger',

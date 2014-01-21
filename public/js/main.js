@@ -14,4 +14,6 @@ $(function () {
     $(document).bind('drop dragover', function (e) {
         e.preventDefault();
     });
+
+    $('.fl-sd-br').height($('.content').innerHeight());
 });
