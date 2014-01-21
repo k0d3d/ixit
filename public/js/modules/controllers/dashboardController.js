@@ -76,7 +76,7 @@ angular.module('dashboard',[
       type: 'danger',
       icon: 'fa-times',
       exec: function(){
-        console.log('hallo');
+        console.log($scope.newFolderInput);
       }
     });
   };
