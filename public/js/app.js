@@ -83,6 +83,14 @@ angular.module('ixitApp')
     $scope.notices = Alert.notes;
   });
 
+  // When the scope is destroyed, be sure to unbind
+  // event handler can cause issues.
+  $scope.$on(
+    "$destroy",
+    function() {
+      $( window ).off( "resize.bnViewport" );
+    }
+  );
 
 }]);
 

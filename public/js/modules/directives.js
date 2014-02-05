@@ -299,7 +299,7 @@ appDirective.directive('folderTabs', function(){
     templateUrl: '/templates/cabinet-tabs-tpl.jade'
   }
 });
-appDirective.directive('notification', ['Alert', function(){
+appDirective.directive('notification', ['$timeout', function($timeout){
   function link(scope, element, attrs){
     scope.notes = []
     scope.$watch('notices', function(n){
@@ -309,14 +309,14 @@ appDirective.directive('notification', ['Alert', function(){
       scope.notes.push(n);
       //Close the notification after 3 secs
       $timeout(function(){
-        scope.close_note(scope.notes.length -1);
-      }, 3000);
+        scope.close_note(0);
+      }, 50000);
     };
   }
   function NoticeCtrl ($scope){
     //Close an alert
     $scope.close_note = function(index){
-      scope.notes.splice(index, 1);
+      $scope.notes.splice(index, 1);
     };
     // //Execute the acceptance function
     // $scope.exec_yes = function(index){
@@ -327,15 +327,15 @@ appDirective.directive('notification', ['Alert', function(){
     link: link,
     templateUrl: '/templates/notice-alert-tpl',
     scope:{
-      notices: '=notice'
+      notices: '=notification'
     },
     controller: NoticeCtrl
   }
 }]);
-appDirective.directive('prompt', ['Alert', function(AlertService){
+appDirective.directive('prompt', [function(){
   function link(scope, element, attrs){
     scope.a_p = []
-    scope.$watch('alerts', function(n){
+    scope.$watch('prompts', function(n){
       if(!_.isEmpty(n)) _queueAlert(n);
     });
     function _queueAlert(n){

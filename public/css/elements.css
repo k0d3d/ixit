@@ -707,22 +707,27 @@ div.tagsinput div { display:block; float: left; }
 	margin: 0 0 5px;
 }
 .x-prompt .box-icon{
-	width: 35px;
+	width: 50px;
 	height: 35px;
 }
 .x-prompt .box-content{
 	margin-left: 35px
 }
+
+.x-alert-danger{
+	background-color: #D2322D;
+}
+
 .small-box{
 	position: relative;
 	padding-right: 30px;
 	color: #FFF;
 	font-family: 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
-	background-color: rgba(0, 0, 0, 0.89);
 	padding-left: 15px;
 	padding: 10px;
 	opacity: 0.95;
 	display: block;
+	margin-top: 2px;
 }
 
 .action-tinz button{
