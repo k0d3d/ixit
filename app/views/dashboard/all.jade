@@ -24,11 +24,11 @@ div.files-ctrlr(ng-controller="filesController")
             button.btn.btn-flat.btn-success(type="submit") Create Folder 
         .clearfix
   .row(ng-show="cabinetTabs.length > 0")       
-    .table-wrapper.files-table
-      .col-md-12fz
+    .table-wrapper.files-table.vprt
+      .col-md-12.fz
         ul.nav.nav-tabs.ftbz(folder-tabs)
         .tab-content
-          .tab-pane.fade(ng-repeat="tabC in cabinetTabs", id="{{tabC.id}}", ng-init="tabIndex = $index")
+          .tab-pane.fade(ng-repeat="tabC in cabinetTabs", id="{{tabC.id}}", ng-init="tabIndex = $index", scroll-bar)
             table.table.table-hover
               thead
                 tr
@@ -53,6 +53,8 @@ div.files-ctrlr(ng-controller="filesController")
                     | {{f.created | moment}}
                   td
                     a.name(href='#') {{f.name}}
+                  td
+                  td
                   td.align-right
                     .btn-group.btn-group-sm
                       button.btn.btn-primary(href='#') Share

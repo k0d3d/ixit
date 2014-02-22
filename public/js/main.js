@@ -15,5 +15,9 @@ $(function () {
         e.preventDefault();
     });
 
-    $('.fl-sd-br').height($('.content').innerHeight());
+    $('.bar-n-body').height($('.content').innerHeight());
+    $(window).on('resize', function (e) {
+        console.log('message');
+        $('.bar-n-body').height($('.content').innerHeight());
+    });
 });

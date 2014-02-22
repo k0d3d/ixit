@@ -729,6 +729,21 @@ div.tagsinput div { display:block; float: left; }
 	margin-right: 8px;
 }
 
+.fz{
+	padding: 0;
+}
+.browsefiles{
+	display: none !important;
+}
+#sidebar-nav, #wrap {
+	height: calc(100% - 17px);
+}
+.fl-sd-br{
+	margin-top: 55px;
+}
+.stats-row{
+	display: none;
+}
 
 @-webkit-keyframes reveal{
 	0% {

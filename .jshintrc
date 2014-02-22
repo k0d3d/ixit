@@ -19,7 +19,9 @@
     "trailing": false, // Prohibit trailing whitespaces.
     "smarttabs": false, // Suppresses warnings about mixed tabs and spaces
     "globals": { // Globals variables.
-        "angular": true
+        "angular": true,
+        "$": true,
+        "jQuery": true
     },
     "predef": [ // Extra globals.
         "define",

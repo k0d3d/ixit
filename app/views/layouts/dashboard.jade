@@ -17,6 +17,7 @@ html
     //
        libraries 
     link(href='/css/lib/font-awesome.css', type='text/css', rel='stylesheet')
+    link(href='/css/lib/jquery.dataTables.css', type='text/css', rel='stylesheet')
     //
        this page specific styles 
     link(rel='stylesheet', href='/css/compiled/gallery.css', type='text/css', media='screen')
@@ -43,8 +44,8 @@ html
     .container
       .content
         // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse="#browsefilesbtn", ng-init="home_folder = '#{home_folder}'")
-          input#browsefilesbtn.browsefiles(type="file",multiple="multiple")
+        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse=".browsefiles", ng-init="home_folder = '#{home_folder}'")
+          input.browsefiles(type="file",multiple="multiple")
           .
           .drop-overlay
             .h1t
@@ -54,7 +55,7 @@ html
           include ../includes/dashboard-top-nav
           // end navbar 
           
-          .row
+          .row.bar-n-body
             // sidebar 
             include ../includes/dashboard-side-nav
             // end sidebar 
@@ -77,6 +78,7 @@ html
       script(src='/js/moment.min.js')
       script(src='/js/jquery.slimscroll.min.js')
       script(src='/js/jquery.tagsinput.min.js')
+      script(src='/js/jquery.dataTables.min.js')
       script(src='/js/ICanHaz.min.js')
       script(src='/js/bootstrap-hover-dropdown.min.js')        
       script(src='/js/app.js')      

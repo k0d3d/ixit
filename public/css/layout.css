@@ -262,7 +262,6 @@ input.search{
 #sidebar-nav {
 	float: left;
 	margin: 0em;
-	padding-top: 5.8em;	
 	background-color: #f7f7f7;
 }
 #dashboard-menu {
@@ -413,7 +412,6 @@ input.search{
 	min-width: 400px;
 	height: 100%;
 	margin-bottom: 100px;
-	padding-bottom: 50px;
 	overflow: hidden;
 	position: relative;
 	background: #fff;
