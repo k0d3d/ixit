@@ -741,7 +741,7 @@ div.tagsinput div { display:block; float: left; }
 	display: none !important;
 }
 #sidebar-nav, #wrap {
-	height: calc(100% - 17px);
+	height: 100%;
 }
 .fl-sd-br{
 	margin-top: 55px;

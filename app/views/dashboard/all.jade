@@ -48,14 +48,14 @@ div.files-ctrlr(ng-controller="filesController")
                   th.col-md-2
                     span.line
               tbody
-                tr(ng-repeat="f in tabC.list.folders")
+                tr(ng-repeat="d in tabC.list.folders")
                   td 
                     input(type='checkbox')
-                    | {{f.created | moment}}
+                    | {{d.created | moment}}
                   td
                     i.fa.fa-folder-o
                   td
-                    a.name(href='#', ng-click="open_folder($index)") {{f.name}}
+                    a.name(href='#', ng-click="open_folder($index)") {{d.name}}
                   td
                   td
                   td.align-right
