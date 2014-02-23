@@ -44,7 +44,7 @@ html
     .container
       .content
         // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse=".browsefiles", ng-init="home_folder = '#{home_folder}'")
+        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse=".browsefiles", ng-init="current_folder = '#{home_folder}'")
           input.browsefiles(type="file",multiple="multiple")
           .x-prompt
             .alert-block.notice(notification="notices")
