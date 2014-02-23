@@ -179,7 +179,7 @@ appDirective.directive('scrollBar', function(){
         var ep = $(element).parent().height();
         if( element.height() > ep ){
           $(element).slimScroll({
-            height: 'auto'
+            
           });
         }
       });
