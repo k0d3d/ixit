@@ -34,22 +34,21 @@ angular.module('dashboard',[
     });
   };
 }])
-.controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', 'Alert', function filesController($scope, $http, Keeper, T, Alert){
+.controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', function filesController($scope, $http, Keeper, T){
   function init(){
-    var param = {user: $scope.cuser};
     //Call for the home folder and its content
-    Keeper.fetchFolder({id: $scope.home_folder}, function(r){
+    Keeper.fetchFolder({id: $scope.current_folder}, function(r){
       if(r !== false){
         T.createTab({
           title: 'Home',
           id: 'home-tab',
           list: r
         });
-          // angular.forEach(r, function(value, key){
-          //   $scope.files.push(value);
-          // });
       }
     });
+
+    //Path for breadcrumbs
+    $scope.path = [];
   }
   init();
 
@@ -69,16 +68,21 @@ angular.module('dashboard',[
     console.log(index);
   };
   $scope.create_folder = function(){
-    
-    Alert.set_prompt({
-      heading: 'Funny Shit',
-      message: 'So Cool, no oil',
-      type: 'danger',
-      icon: 'fa-times',
-      exec: function(){
-        console.log($scope.newFolderInput);
-      }
+    if(!$scope.newFolderInput) return false;
+    //Using the current_folder scope property from the parent scope
+    //as the parentId for the subfolder being created.
+    Keeper.createSubFolder($scope.newFolderInput, $scope.current_folder, function(r){
+      //The home tab is the first tab so we push in there.
+      $scope.cabinetTabs[0].list.folders.push(r);
     });
+  };
+  $scope.open_folder = function(index){
+    var _folder = $scope.cabinetTabs[0].list.folders[index];
+    //push the foldername into our path
+    $scope.path.push(_folder);
+  };
+  $scope.up_folder = function(){
+    
   };
 }])
 .controller('queueController', ['$scope', '$http', 'Keeper', 'Sharer', function queueController($scope, $http, Keeper, Sharer){

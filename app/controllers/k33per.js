@@ -11,21 +11,41 @@ var mongoose = require('mongoose'),
     commons = require('../../lib/commons'),
     util = require('util'),
     redis = require('redis'),
+    EventRegister = require('../../lib/event_register').register,
     redis_client = redis.createClient();
 
-function strip_files_result(mongooseResult, callback){
-  var h = {};
-  _.each(mongooseResult, function(v, i){
-    var ixid = hashr.hashInt(v.mediaNumber);
-    var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-    h[i] = _.extend({
-      ixid: ixid
-    }, n);
+function strip_files_result(m){
+  //if its an array use the map function to loop 
+  //over the process
+  if(util.isArray(m)){
+    return _.map(m, function(v){
+      var ixid = hashr.hashInt(v.mediaNumber);
+      var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+      return _.extend({ixid: ixid}, n);
+    });
+  }else{
+    //Just one object
+    var ixid = hashr.hashInt(m.mediaNumber);
+    var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+    return _.extend({ixid: ixid}, n);    
+  }
 
-    if(mongooseResult.length === i + 1){
-      callback(h);
-    }
-  });
+}
+function strip_folder_result(m){
+  //If its an array
+  if(util.isArray(m)){
+    return _.map(m, function(v){
+      var id = hashr.hashOid(v._id);
+      var n = _.omit(v, ['_id', 'folderId', 'visible', '__v']);
+      return _.extend({id: id}, n);
+    });    
+  }else{
+    //Just one object
+    var id = hashr.hashOid(m._id);
+    var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
+    return _.extend({id: id}, n);    
+  }
+
 }
 
 function strip_queue_result(mongooseResult, callback){
@@ -73,10 +93,99 @@ K33per.prototype.loadHome = function(user, cb){
  * @return {[type]}        [description]
  */
 K33per.prototype.loadFolder = function(user, options, cb){
-  rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
-  .on('complete', function(r){
-    cb(r);
+  var register = new EventRegister();
+
+  var cab = {};
+
+  //Event send d request for the folder content
+  register.once('reqFolder', function(data, isDone){
+    rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
+    .on('complete', function(r){
+      isDone(r);
+    });    
   });
+
+  //Event strips out propeties that shouldnt be sent to the view from the 
+  //files object
+  register.once('stripOnFiles', function(data, isDone){
+    //Remove unecessary properties and hash the ObjectId;
+    //Keep the stripped result in 
+    //the files property     
+    cab.files = strip_files_result(data.files);
+    //Pass in data again so the next event
+    //can use it    
+    isDone(data); 
+  });
+
+  //Event strips out propeties that shouldnt be sent to the view from the 
+  //files object
+  register.once('stripOnFolder', function(data, isDone){
+    //Remove unecessary properties and hash the ObjectId;
+    //Keep the stripped result in 
+    //the folders property   
+    //console.log(r);    
+    cab.folders = strip_folder_result(data.folders);
+    //pass it on, nothing to do thou
+    isDone(data);
+      
+  });
+
+  register
+  .queue('reqFolder', 'stripOnFiles', 'stripOnFolder')
+  .onEnd(function(data){
+    cb(cab);
+  })
+  .onError(function(err){
+    cb(err);
+  })
+  .start(cab);
+};
+
+/**
+ * send a request to create a new folder or a new subfolder.
+ * @param  {String}   foldername [description]
+ * @param  {ObjectId}   parent     [description]
+ * @param  {String}   owner      [description]
+ * @param  {Function} cb         [description]
+ * @return {[type]}              [description]
+ */
+K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb){
+  var dataTo = {
+      name: foldername,
+      parent: hashr.unhashOid(parent_id),
+      type: type
+    };
+
+  var register = new EventRegister();
+
+  //Event send d request for the folder to be created
+  register.once('reqNewFolder', function(data, isDone){
+    rest.post(config.api_url+'/user/'+owner+'/folder', commons.restParams({
+      data: data
+    }))
+    .on('complete', function(r){
+      console.log(r);
+      isDone(r);
+    });    
+  });
+
+  //Event strips out propeties that shouldnt be sent to the view from the 
+  //files object
+  register.once('stripOnFolder', function(data, isDone){
+    //Remove unecessary properties and hash the ObjectId;
+    //the pass it to the next event
+    isDone(strip_folder_result(data));
+  });
+
+  register
+  .queue('reqNewFolder', 'stripOnFolder')
+  .onEnd(function(data){
+    cb(data);
+  })
+  .onError(function(err){
+    cb(err);
+  })
+  .start(dataTo);
 };
 
 /**
@@ -206,24 +315,6 @@ K33per.prototype.count = function(userId, cb){
   });
 };
 
-/**
- * creates a new folder 
- * @param  {String}   foldername [description]
- * @param  {ObjectId}   parent     [description]
- * @param  {String}   owner      [description]
- * @param  {Function} cb         [description]
- * @return {[type]}              [description]
- */
-K33per.prototype.createFolder = function(foldername, parent, owner, cb){
-  rest.post(config.api_url+'/user/'+owner+'/folder', commons.restParams({
-    data: {
-      name: foldername
-    }
-  }))
-  .on('complete', function(data){
-    cb(data);
-  });
-};
 
 module.exports.keeper = K33per;
 
@@ -296,10 +387,11 @@ module.exports.routes = function(app){
     });
   });
 
-
+  //calls the method which creates a new folder or subfolder
   app.post('/api/user/folder', function(req, res, next){
+    return res.json(500, false);
     var owner = hashr.hashOid(req.session.passport.user);
-    k33per.createFolder( req.body.name, req.body.parent, owner, function(r){
+    k33per.createFolder( req.body.name, req.body.parentId, req.body.type, owner, function(r){
       if(util.isError(r)){
         next(r);
       }else{

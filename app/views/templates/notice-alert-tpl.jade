@@ -1,13 +1,10 @@
-.small-box(ng-repeat="an in a_p")
+.small-box(ng-repeat="an in notes", ng-class="an.class")
   .box-icon.pull-left
-    i.fa.fa-trash-o
+    i.fa.fa-3x(ng-class="an.icon", style="margin-right: 5px")
   .pull-right
-    i.fa.fa-times
+    i.fa.fa-times(ng-click="close_an($index)")
   .box-content
     .box-title
       h6 {{an.heading}}
     .box-mssg
       p {{an.message}}
-    .action-tinz
-      button.btn.btn-flat.inverse(ng-click="close_an($index)") Cancel
-      button.btn.btn-flat.white(ng-click="exec_yes($index)") Yes

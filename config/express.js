@@ -1,103 +1,109 @@
 /**
  * Module dependencies.
  */
-var express = require('express'),
-    mongoStore = require('connect-mongo')(express),
-    flash = require('connect-flash'),
-    helpers = require('view-helpers'),
-    config = require('./config');
+ var express = require('express'),
+ mongoStore = require('connect-mongo')(express),
+ flash = require('connect-flash'),
+ helpers = require('view-helpers'),
+ lingua = require('lingua'),
+ config = require('./config');
 
 module.exports = function(app, passport) {
-    app.set('showStackError', true);
+  app.set('showStackError', true);
 
-    //Should be placed before express.static
-    app.use(express.compress({
-        filter: function(req, res) {
-            return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-        },
-        level: 9
-    }));
+  //Should be placed before express.static
+  app.use(express.compress({
+    filter: function(req, res) {
+      return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
+    },
+    level: 9
+  }));
 
-    //Setting the fav icon and static folder
-    app.use(express.favicon(config.root + '/public/favicon.ico'));
-    app.use(express.static(config.root + '/public'));
-    app.use('/user/:userId/img', express.static(config.root + '/app/users/img'));
+  //Setting the fav icon and static folder
+  app.use(express.favicon(config.root + '/public/favicon.ico'));
+  app.use(express.static(config.root + '/public'));
+  app.use('/user/:userId/img', express.static(config.root + '/app/users/img'));
 
-    //Don't use logger for test env
-    if (process.env.NODE_ENV !== 'test') {
-        app.use(express.logger('dev'));
-    }
+  //Don't use logger for test env
+  if (process.env.NODE_ENV !== 'test') {
+    app.use(express.logger('dev'));
+  }
 
-    //Set views path, template engine and default layout
-    app.set('views', config.root + '/app/views');
-    app.set('view engine', 'jade');
+  //Set views path, template engine and default layout
+  app.set('views', config.root + '/app/views');
+  app.set('view engine', 'jade');
 
-    //Enable jsonp
-    app.enable("jsonp callback");
+  app.use(lingua(app, {
+    defaultLocale: 'en',
+    path: __dirname + '/i18n'
+  }));
 
-    app.configure(function() {
-        //cookieParser should be above session
-        app.use(express.cookieParser());
+  //Enable jsonp
+  app.enable("jsonp callback");
 
-        //bodyParser should be above methodOverride
-        app.use(express.bodyParser());
-        
-        app.use(express.methodOverride());
+  app.configure(function() {
+      //cookieParser should be above session
+      app.use(express.cookieParser());
 
-        //express/mongo session storage
-        app.use(express.session({
-            secret: 'hell12sex12fury',
-            cookie: { maxAge: 24 * 60 * 60 * 1000 },
-            store: new mongoStore({
-                url: config.db,
-                collection: 'sessions',
+      //bodyParser should be above methodOverride
+      app.use(express.bodyParser());
+      
+      app.use(express.methodOverride());
 
-            })
-        }));
+      //express/mongo session storage
+      app.use(express.session({
+        secret: 'hell12sex12fury',
+        cookie: { maxAge: 24 * 60 * 60 * 1000 },
+        store: new mongoStore({
+          url: config.db,
+          collection: 'sessions',
 
-        //connect flash for flash messages
-        app.use(flash());
+        })
+      }));
 
-        //dynamic helpers
-        app.use(helpers(config.app.name));
+      //connect flash for flash messages
+      app.use(flash());
 
-        //use passport session
-        app.use(passport.initialize());
-        app.use(passport.session());
+      //dynamic helpers
+      app.use(helpers(config.app.name));
 
-        //CSRF protection for form-submission
-        // app.use(express.csrf());
-        // app.use(function(req, res, next) {
-        //   res.cookie('XSRF-TOKEN', req.csrfToken());
-        //   res.locals.csrftoken = req.csrfToken();
-        //   next();
-        // });
-        
-        //routes should be at the last
-        app.use(app.router);
+      //use passport session
+      app.use(passport.initialize());
+      app.use(passport.session());
 
-        //Assume "not found" in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
-        app.use(function(err, req, res, next) {
-            //Treat as 404
-            if (~err.message.indexOf('not found')) return next();
+      //CSRF protection for form-submission
+      // app.use(express.csrf());
+      // app.use(function(req, res, next) {
+      //   res.cookie('XSRF-TOKEN', req.csrfToken());
+      //   res.locals.csrftoken = req.csrfToken();
+      //   next();
+      // });
 
-            //Log it
-            console.error(err.stack);
+      //routes should be at the last
+      app.use(app.router);
 
-            //Error page
-            res.status(500).render('500', {
-                error: err.stack
-            });
+      //Assume "not found" in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
+      app.use(function(err, req, res, next) {
+          //Treat as 404
+          if (~err.message.indexOf('not found')) return next();
+
+          //Log it
+          console.error(err.stack);
+
+          //Error page
+          res.status(500).render('500', {
+            error: err.stack
+          });
         });
 
-        //Assume 404 since no middleware responded
-        app.use(function(req, res, next) {
-            res.status(404).render('404', {
-                url: req.originalUrl,
-                error: 'Not found',
-                title: '..Oopps'
-            });
+      //Assume 404 since no middleware responded
+      app.use(function(req, res, next) {
+        res.status(404).render('404', {
+          url: req.originalUrl,
+          error: 'Not found',
+          title: '..Oopps'
         });
+      });
 
     });
 };

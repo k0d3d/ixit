@@ -1,4 +1,4 @@
-!!! 5
+doctype html
 html
   head
     meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
@@ -46,7 +46,10 @@ html
         // main container 
         div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse=".browsefiles", ng-init="home_folder = '#{home_folder}'")
           input.browsefiles(type="file",multiple="multiple")
-          .
+          .x-prompt
+            .alert-block.notice(notification="notices")
+            .alert-block(prompt="alerts")
+
           .drop-overlay
             .h1t
               h1 drop 
