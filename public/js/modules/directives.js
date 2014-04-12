@@ -10,7 +10,7 @@ var appDirective =  angular.module('directives');
  * results
  * @return {[type]} [description]
  */
-appDirective.directive('uploadHandler',['$cookies','Sharer','$rootScope', function($cookies, Sharer, $rootScope){
+appDirective.directive('uploadHandler',['$cookies','Sharer','$rootScope', function uploadHandler ($cookies, Sharer, $rootScope){
   var _formatFileSize = function (bytes) {
     if (typeof bytes !== 'number') {
       return '';
@@ -159,7 +159,7 @@ appDirective.directive('uploadHandler',['$cookies','Sharer','$rootScope', functi
   };
 }]);
 
-appDirective.directive('dragover', function(){
+appDirective.directive('dragover', function dragover(){
   return {
     link: function(scope, element, attrs){
       element.on('dragover dragenter', function(){
@@ -172,22 +172,23 @@ appDirective.directive('dragover', function(){
   };
 });
 
-appDirective.directive('scrollBar', function(){
+appDirective.directive('scrollBar', function scrollBar (){
   return {
     link: function(scope, element, attrs){
       scope.$watch(function () {
-        var ep = $(element).parent().height();
-        if( element.height() > ep ){
+        var elTop = $(element).offset().top, wrapHeight = $('#wrap').height();
+        if ((wrapHeight - elTop) < wrapHeight) {
           $(element).slimScroll({
-            
-          });
+            height: wrapHeight - elTop + 'px'
+          });            
         }
+        
       });
     }
   };
 });
 
-appDirective.directive('queueTip', function(){
+appDirective.directive('queueTip', function queueTip (){
   return {
     link: function(scope, element, attrs){
       element.tooltip({
@@ -197,14 +198,14 @@ appDirective.directive('queueTip', function(){
   }
 });
 
-appDirective.directive('loading', function(){
+appDirective.directive('loading', function loading (){
   return {
     link: link,
 
   }
 });
 
-appDirective.directive('profilephoto', function(){
+appDirective.directive('profilephoto', function profilephoto (){
   function link(scope, element, attrs){
     element.on('click', function(e){
       e.preventDefault();
@@ -236,7 +237,7 @@ appDirective.directive('profilephoto', function(){
     link: link,
   }
 }); 
-appDirective.directive('tagsInput', ['Keeper', function(K){
+appDirective.directive('tagsInput', ['Keeper', function tagsInput (K){
   function link (scope, element, attrs){
 
     $(element).tagsInput();
@@ -258,7 +259,7 @@ appDirective.directive('tagsInput', ['Keeper', function(K){
     link:link
   }
 }]); 
-appDirective.directive('dropdownHover', function(){
+appDirective.directive('dropdownHover', function dropdownHover (){
   function link (scope, element, attrs){
     $(element).dropdownHover();
   }
@@ -266,7 +267,7 @@ appDirective.directive('dropdownHover', function(){
     link:link
   }
 });
-appDirective.directive('activateTab', function($timeout){
+appDirective.directive('activateTab', function activateTab ($timeout){
   function link(scope, element, attrs){
     if(scope.$last === true){
       $timeout(function(){
@@ -281,7 +282,7 @@ appDirective.directive('activateTab', function($timeout){
     link: link
   }
 })
-appDirective.directive('folderTabs', function(){
+appDirective.directive('folderTabs', function folderTabs (){
   function link(scope, element, attrs){
 
     // scope.$watch('cabinetTabs', function(n){
@@ -299,7 +300,7 @@ return {
   templateUrl: '/templates/cabinet-tabs-tpl.jade'
 }
 });
-appDirective.directive('notification', ['$timeout', function($timeout){
+appDirective.directive('notification', ['$timeout', function notification ($timeout){
   function link(scope, element, attrs){
     scope.notes = []
     scope.$watch('notices', function(n){
@@ -332,7 +333,7 @@ appDirective.directive('notification', ['$timeout', function($timeout){
     controller: NoticeCtrl
   }
 }]);
-appDirective.directive('prompt', [function(){
+appDirective.directive('prompt', [function prompt(){
   function link(scope, element, attrs){
     scope.a_p = []
     scope.$watch('prompts', function(n){
