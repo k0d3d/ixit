@@ -3,10 +3,13 @@ angular.module('services', [])
   .factory('Authenticate', function($http){
       var a = {};
 
-      a.postParam = function(loginParams, callback){
-        $http.post('/api/users/session', loginParams)
-        .success(callback)
-        .error(callback);
+      a.postParam = function(loginParams){
+        return $http.post('/api/users/session', loginParams)
+          .then(function (d) {
+            return d;
+          }, function (e) {
+            return e;
+          });
       };
 
       a.logout = function(){
@@ -269,6 +272,7 @@ angular.module('services', [])
         icon: 'fa-warning'
       }
     };
+
     /**
      * Prompts is an object that holds the properties of an
      * alert prompt. 
@@ -279,9 +283,7 @@ angular.module('services', [])
     s.prompts = null;
     s.notes = null;
 
-    //Subtle notifications esp when connections
-    //to server fail
-    s.set_prompt = function(n){
+    s.set_prompt = function (n) {
       this.prompts = n;
       this.prompts.class= __state[n.type].class;
 

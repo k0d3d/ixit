@@ -20,6 +20,10 @@ module.exports = function (app, passport, auth) {
   app.get('/', clientSession, function(req, res){
     res.render('index');
   });
+  // home route
+  app.get('/home', clientSession, function(req, res){
+    res.render('index');
+  });
 
   /*
   Authentication and User routes

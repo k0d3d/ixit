@@ -20,7 +20,7 @@
                     span#bubblingG_2
                     span#bubblingG_3
                   .alert.fade.in.alert-danger.alert-dismissable(ng-show='flash', ng-bind='flash')
-                  form#auth_login(role='form', ng-submit='login()', novalidate='novalidate')
+                  form#auth_login(ng-submit='login()', novalidate='novalidate')
                     .form-group
                       label(for='email') Email Address
                       input#email.form-control(type='email', placeholder='example@example.com', name='email', ng-model='form.email', required='required')
@@ -38,4 +38,4 @@
                     | Forgot your password? <a href='/recover'> Request Password</a>
             .row
               .col-md-offset-4.col-md-4
-script(src='js/modules/login.js')
+script(src='/js/modules/login.js')

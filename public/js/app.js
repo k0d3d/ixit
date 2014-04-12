@@ -1,26 +1,49 @@
-angular.module('ixitApp',[
-    'filters',
-    'directives',
+var app = angular.module('ixitApp',[
+    //'ngRoute',
+    'ui.router',
+    // 'filters',
+    // 'directives',
     'language',
     'home',
     'user',
-    'dashboard',
+    // 'dashboard',
     'services',
     'ngResource',
     'ngSanitize',
     'ngCookies'
   ]);
-angular.module('ixitApp').config(function ($routeProvider, $locationProvider) {
-  $routeProvider.
-    otherwise({
-      redirectTo: '/'
-    });
-  $locationProvider.html5Mode(true);
+
+app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+  $urlRouterProvider.otherwise('/home');
+  //$locationProvider.html5Mode(true);
+  $httpProvider.interceptors.push('errorNotifier');
 });
 
+// app.config(function ($routeProvider, $locationProvider, $httpProvider) {
+//   $routeProvider
+//   .otherwise({
+//       redirectTo: '/'
+//     });
+//   $locationProvider.html5Mode(true);
+//   $httpProvider.interceptors.push('errorNotifier');
+// });
 
-angular.module('ixitApp')
-.controller('MainController', 
+
+app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
+  return {
+    responseError: function (response) {
+      N.notifier({
+        message: response.data.message || response.data,
+        type: 'danger'
+      });
+      return $q.reject(response);
+    }
+  };
+}])
+
+
+app.controller('MainController', 
   [ '$scope',
     '$http',
     '$location',

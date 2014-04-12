@@ -1,21 +1,18 @@
-    /**
-     * Home Module
-     */
-    angular.module('home',[
-        'ngResource',
-        'ngSanitize',
-        ])
+/**
+ * Home Module
+ */
+angular.module('home',[])
 
-    .config(['$routeProvider', function ($routeProvider){
-        $routeProvider.when('/', {templateUrl: '/home/index', controller: 'itemIndexController'});
-    }])
-    .controller('initController', function($scope){
-
-    })
-    .controller('itemIndexController', function($scope){
-        function init(){
-            ich.grabTemplates();
-        }
-        init();
+.config(['$stateProvider', function ($stateProvider){
+    $stateProvider
+    .state('home', {
+        url: '/home',
+        templateUrl: '/home/index', 
+        controller: 'homeIndexController'
     });
-    
+}])
+
+.controller('homeIndexController', function(){
+
+});
+
