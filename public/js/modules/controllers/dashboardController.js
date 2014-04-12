@@ -4,17 +4,22 @@ angular.module('dashboard',[])
   .state('dashboard', {
     url: '/dashboard',
     templateUrl: '/dashboard/all', 
-    controller: 'indexController'
+    controller: 'filesController'
   })
-  // .state('dashboard.developer', {
-  //   url: '/dashboard/user/developer',
-  //   templateUrl: '/dashboard/developer', 
-  //   controller: 'developerController'
-  // })
   .state('dashboard.files', {
     url: '/dashboard/files/all',
     templateUrl: '/dashboard/all', 
-    controller: 'indexController'
+    controller: 'filesController'
+  })
+  .state('dashboard.folder', {
+    url: '/dashboard/folder/:folderId',
+    templateUrl: '/dashboard/all', 
+    controller: 'filesController',
+    resolve: {
+      files: function ($stateParams) {
+        console.log($stateParams);
+      }
+    }
   })
   .state('dashboard.account', {
     url: '/dashboard/user/account',
@@ -50,6 +55,7 @@ angular.module('dashboard',[])
 }])
 .controller('filesController', ['$scope', '$http', 'Keeper', 'Tabs', function filesController($scope, $http, Keeper, T){
   function init(){
+    console.log('message');
     //Call for the home folder and its content
     Keeper.fetchFolder({id: $scope.current_folder}, function(r){
       if(r !== false){
@@ -60,9 +66,6 @@ angular.module('dashboard',[])
         });
       }
     });
-
-    //Path for breadcrumbs
-    $scope.path = [];
   }
   init();
 
@@ -93,7 +96,7 @@ angular.module('dashboard',[])
   $scope.open_folder = function(index){
     var _folder = $scope.cabinetTabs[0].list.folders[index];
     //push the foldername into our path
-    $scope.path.push(_folder);
+    $scope.$parent.path.push(_folder);
   };
   $scope.up_folder = function(){
     

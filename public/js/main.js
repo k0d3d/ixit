@@ -17,7 +17,12 @@ $(function () {
 
     $('.bar-n-body').height($('.content').innerHeight());
     $(window).on('resize', function (e) {
-        console.log('message');
         $('.bar-n-body').height($('.content').innerHeight());
+        var element = $('.tab-pane');
+        $(element).slimScroll({destroy: true});
+        var elTop = $(element).offset().top, wrapHeight = $('#wrap').height();
+        $(element).slimScroll({
+          height: wrapHeight - elTop + 'px'
+        });            
     });
 });
