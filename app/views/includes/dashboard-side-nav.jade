@@ -12,21 +12,23 @@
         .pointer
           .arrow
           .arrow_border   
-        a.dropdown-toggle(href='#')
+        a.dropdown-toggle(href='')
           i.fa.fa-hdd-o
           span Storage
-        ul.submenu
-          li
-            a(href='/dashboard/files/all') All Files
-          li
-            a(href='user-list.html') Documents
-          li
-            a(href='new-user.html') Music
-          li
-            a(href='user-profile.html') Photos         
-          li
-            a(href='user-profile.html') Videos
-      li
-        a.dropdown-toggle(href='#')
-          i.fa.fa-trash-o
-          span Trash
+        -if (nextVer) 
+          ul.submenu
+            li
+              a(href='/dashboard/files/all') All Files
+            li
+              a(href='user-list.html') Documents
+            li
+              a(href='new-user.html') Music
+            li
+              a(href='user-profile.html') Photos         
+            li
+              a(href='user-profile.html') Videos
+      -if (nextVer) 
+        li
+          a.dropdown-toggle(href='#')
+            i.fa.fa-trash-o
+            span Trash

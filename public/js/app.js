@@ -1,12 +1,11 @@
 var app = angular.module('ixitApp',[
-    //'ngRoute',
     'ui.router',
-    // 'filters',
-    // 'directives',
+    'filters',
+    'directives',
     'language',
     'home',
     'user',
-    // 'dashboard',
+    'dashboard',
     'services',
     'ngResource',
     'ngSanitize',
@@ -19,16 +18,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
 });
-
-// app.config(function ($routeProvider, $locationProvider, $httpProvider) {
-//   $routeProvider
-//   .otherwise({
-//       redirectTo: '/'
-//     });
-//   $locationProvider.html5Mode(true);
-//   $httpProvider.interceptors.push('errorNotifier');
-// });
-
 
 app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
   return {

@@ -1,12 +1,26 @@
-angular.module('dashboard',[
-  'ngResource',
-  'ngSanitize'
-  ])
-.config(['$routeProvider', function ($routeProvider){
-  $routeProvider.when('/dashboard', {templateUrl: '/dashboard/all', controller: 'indexController'})
-  .when('/dashboard/user/developer', {templateUrl: '/dashboard/developer', controller: 'developerController'})
-  .when('/dashboard/files/all', {templateUrl: '/dashboard/all', controller: 'indexController'})
-  .when('/dashboard/user/account', {templateUrl: '/dashboard/personal', controller: 'accountController'});    
+angular.module('dashboard',[])
+.config(['$stateProvider', function ($stateProvider){
+  $stateProvider
+  .state('dashboard', {
+    url: '/dashboard',
+    templateUrl: '/dashboard/all', 
+    controller: 'indexController'
+  })
+  // .state('dashboard.developer', {
+  //   url: '/dashboard/user/developer',
+  //   templateUrl: '/dashboard/developer', 
+  //   controller: 'developerController'
+  // })
+  .state('dashboard.files', {
+    url: '/dashboard/files/all',
+    templateUrl: '/dashboard/all', 
+    controller: 'indexController'
+  })
+  .state('dashboard.account', {
+    url: '/dashboard/user/account',
+    templateUrl: '/dashboard/personal', 
+    controller: 'accountController'
+  });    
 }])
 .controller('indexController', ['$scope', '$http', '$cookies', function indexController($scope, $http, $cookies){
 

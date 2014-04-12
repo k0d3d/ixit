@@ -9,18 +9,18 @@
           .form-group
             input.search(type='search', ng-model="queryString", placeholder="Filenames or Tags")
       li.notification-dropdown.hidden-phone(ng-controller="queueController")
-        a.trigger(href='#') Queue
+        a.trigger(href='') Queue
         span.badge.pull-right {{filequeue.length}}
         .pop-dialog(ng-show="filequeue.length > 0")
           .pointer
             .arrow
             .arrow_border
           .body
-            a.close-icon(href='#')
+            a.close-icon(href='')
               i.icon-remove-sign
             .notifications
               h3 You have {{filequeue.length}} uploads on queue
-              .item(href='#', ng-repeat="queue in filequeue", class="file-{{queue.identifier}}")
+              .item(href='', ng-repeat="queue in filequeue", class="file-{{queue.identifier}}")
                 i.fa.fa-cloud-upload
                 | {{queue.filename}}
                 .progress
@@ -40,17 +40,17 @@
                 button.btn.btn-warning(ng-click="clearAll()")  Clear all 
                   i.fa.fa-times-cirle-o                 
       li.notification-dropdown.hidden-phone
-        a.trigger(href='#')
+        a.trigger(href='')
           i.fa.fa-envelope-o
         .pop-dialog
           .pointer.right
             .arrow
             .arrow_border
           .body
-            a.close-icon(href='#')
+            a.close-icon(href='')
               i.fa.fa-times
             .messages
-              a.item(href='#')
+              a.item(href='')
                 img.display(src='img/contact-img.png')
                 .name Alejandra Galván
                 .msg
@@ -58,7 +58,7 @@
                 span.time
                   i.icon-time
                   | 13 min.
-              a.item(href='#')
+              a.item(href='')
                 img.display(src='img/contact-img2.png')
                 .name Alejandra Galván
                 .msg
@@ -66,7 +66,7 @@
                 span.time
                   i.icon-time
                   | 26 min.
-              a.item.last(href='#')
+              a.item.last(href='')
                 img.display(src='img/contact-img.png')
                 .name Alejandra Galván
                 .msg
@@ -75,18 +75,18 @@
                   i.icon-time
                   | 48 min.
               .footer
-                a.logout(href='#') View all messages
+                a.logout(href='') View all messages
       li.dropdown
-        a.dropdown-toggle.hidden-phone(href='#', data-toggle='dropdown')
+        a.dropdown-toggle.hidden-phone(href='', data-toggle='dropdown')
           | Your account
           b.caret
         ul.dropdown-menu
           li
-            a(href='#', ng-click="commons.href('/dashboard/user/account')") Profile
+            a(href='', ng-click="commons.href('/dashboard/user/account')") Profile
           li
-            a(href='#', ng-click="commons.href('/dashboard/user/developer')") Developer
+            a(href='', ng-click="commons.href('/dashboard/user/developer')") Developer
           li
-            a(href='#') Support
+            a(href='') Support
       li.settings.hidden-phone
         a(href='/logout', role='button', title="Logout", target="_self")
           i.fa.fa-sign-out
