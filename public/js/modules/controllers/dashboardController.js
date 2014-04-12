@@ -6,11 +6,6 @@ angular.module('dashboard',[])
     templateUrl: '/dashboard/all', 
     controller: 'filesController'
   })
-  // .state('dashboard.developer', {
-  //   url: '/dashboard/user/developer',
-  //   templateUrl: '/dashboard/developer', 
-  //   controller: 'developerController'
-  // })
   .state('dashboard.files', {
     url: '/dashboard/files/all',
     templateUrl: '/dashboard/all', 
