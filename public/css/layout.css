@@ -268,6 +268,7 @@ input.search{
 	list-style: none;
 	padding-left: 15px;
 	margin-bottom: 0;
+  padding-top: 40px;
 }
 #dashboard-menu > li > a {
 	display: block;
@@ -600,7 +601,7 @@ input.search{
     float: right;
     margin-top: 35px; }
 .files-ctrlr{
-  margin-top: 34px;
+  margin-top: 55px;
 }
 .files-table a.title{
   text-transform: capitalize;
@@ -637,6 +638,29 @@ input.search{
 .crumb-block{
 	margin: 10px 0;
 }
+
+form.create-folder button.btn{
+  margin-left: -88px;
+  padding: 6px 4px;
+}
+
+form.create-folder .folder-input {
+  width: 256px;
+}
+
+form.create-folder input {
+  padding-right: 90px;
+}
+.breadcrumb li:first-child:before {
+  content: "\f015";
+  margin-right: 2px;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+}
+
+
 /* responsive */
 @media (max-width: 767px) {
   #main-stats {
@@ -655,6 +679,7 @@ input.search{
     margin-right: 10px; }
   #pad-wrapper .table-products .table .label {
     display: none; } }
+
 @media (max-width: 979px) {
   #main-stats .stat .data {
     padding-right: 17px; }

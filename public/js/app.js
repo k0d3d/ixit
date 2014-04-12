@@ -14,7 +14,7 @@ var app = angular.module('ixitApp',[
 
 app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/dashboard');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
 });
@@ -65,6 +65,16 @@ app.controller('MainController',
   function _clearAll(){
     $scope.filequeue = '';
   }
+
+  //Initialize breadcrumbs 
+  $scope.path = [
+    {
+      name: 'Home',
+      id: $scope.current_folder
+    }
+  ];
+
+
   $scope.commons = {
     href : href,
     backBtn: backBtn,

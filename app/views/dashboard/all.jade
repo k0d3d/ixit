@@ -1,4 +1,4 @@
-div.files-ctrlr(ng-controller="filesController")
+div.files-ctrlr
   .row.stats-row
     #main-stats
       .col-md-3.col-md-offset-6.stat.first
@@ -15,11 +15,11 @@ div.files-ctrlr(ng-controller="filesController")
       .crumb-block
         .pull-left
           ul.breadcrumb
-            li(ng-repeat="p in path") Home
-        .pull-left    
-          form.form-inline(style="margin-left: 10px", ng-submit="create_folder()")
+            li(ng-repeat="p in $parent.path") {{p.name}}
+        .pull-right    
+          form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder()")
             .form-group
-              .folder-input(style="width: 139px")
+              .folder-input()
                 input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
             button.btn.btn-flat.btn-success(type="submit") Create Folder 
         .clearfix
@@ -55,7 +55,7 @@ div.files-ctrlr(ng-controller="filesController")
                   td
                     i.fa.fa-folder-o
                   td
-                    a.name(href='#', ng-click="open_folder($index)") {{d.name}}
+                    a.name(ui-sref='.folder({folderId: d.id})', ng-click="open_folder($index)") {{d.name}}
                   td
                   td
                   td.align-right
