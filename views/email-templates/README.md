@@ -1,0 +1,1 @@
+use this folder to put in email templates :)

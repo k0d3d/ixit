@@ -1,0 +1,1254 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"margi",
+				"margin"
+			],
+			[
+				"pading",
+				"padding-top"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"media",
+				"mediaNumber"
+			],
+			[
+				"down",
+				"downloadCount"
+			],
+			[
+				"meid",
+				"mediaId"
+			],
+			[
+				"min-",
+				"min-width"
+			],
+			[
+				"border",
+				"border-left"
+			],
+			[
+				"tra",
+				"table-hover"
+			],
+			[
+				"file",
+				"filetype"
+			],
+			[
+				"ex",
+				"exists"
+			],
+			[
+				"btn",
+				"btn-default"
+			],
+			[
+				"im",
+				"img-circle"
+			],
+			[
+				"col",
+				"col-md-"
+			],
+			[
+				"bst",
+				"bst-col	bst-col"
+			],
+			[
+				"get",
+				"getFile"
+			],
+			[
+				"hash",
+				"hashrid"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"re",
+				"reTab"
+			],
+			[
+				"attr",
+				"attrs"
+			],
+			[
+				"de",
+				"delete"
+			],
+			[
+				"_",
+				"_optionsHandler"
+			],
+			[
+				"update",
+				"updateTags"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"path",
+				"path.normalize(path);"
+			],
+			[
+				"users",
+				"Users"
+			],
+			[
+				"profi",
+				"profile-photo-hidden-input"
+			],
+			[
+				"direc",
+				"directives"
+			],
+			[
+				"directi",
+				"directive"
+			],
+			[
+				"queue",
+				"queueTip"
+			],
+			[
+				"direct",
+				"directive"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"chunk",
+				"chunkNumber"
+			],
+			[
+				"$root",
+				"$rootScope"
+			],
+			[
+				"angul",
+				"angular.forEach	AngularJS"
+			],
+			[
+				"mongoose",
+				"mongooseResult"
+			],
+			[
+				"filepa",
+				"filepath"
+			],
+			[
+				"filep",
+				"filepath"
+			],
+			[
+				"usr",
+				"userId"
+			],
+			[
+				"util",
+				"util"
+			],
+			[
+				"progre",
+				"progress-bar"
+			],
+			[
+				"que",
+				"queuecopy"
+			],
+			[
+				"Que",
+				"queueController"
+			],
+			[
+				"k",
+				"Keeper"
+			],
+			[
+				"api",
+				"api_url"
+			],
+			[
+				"total",
+				"totalChunks"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"Client",
+				"ClientSchema"
+			],
+			[
+				"Media",
+				"MediaSchema"
+			],
+			[
+				"console",
+				"console.log"
+			],
+			[
+				"post",
+				"postHandler"
+			],
+			[
+				"uti",
+				"utility"
+			],
+			[
+				"con",
+				"constructor	JS constructor pattern"
+			],
+			[
+				"nav",
+				"navbar"
+			],
+			[
+				"_form",
+				"_formatFileSize"
+			],
+			[
+				"url",
+				"baseUrl"
+			],
+			[
+				"seesur",
+				"seesurfToken"
+			],
+			[
+				"sees",
+				"seesurfToken"
+			],
+			[
+				"requ",
+				"require"
+			],
+			[
+				"clear",
+				"clearQueue	.clearQueue()"
+			],
+			[
+				"ang",
+				"angular.forEach	AngularJS"
+			],
+			[
+				"mA",
+				"margin-top"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"drop",
+				"drop-overlay"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"backgroung",
+				"background-image"
+			],
+			[
+				"uniqu",
+				"uniqueValidator"
+			],
+			[
+				"backgrund",
+				"background-color"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"dire",
+				"directives"
+			],
+			[
+				"tem",
+				"templates"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"fff",
+				"FFFFFF"
+			],
+			[
+				"login",
+				"loginParams"
+			],
+			[
+				"register",
+				"registerController"
+			],
+			[
+				"IXI",
+				"IXIT.LoginApp"
+			],
+			[
+				"Login",
+				"LoginApp"
+			],
+			[
+				"form",
+				"formdata"
+			],
+			[
+				"Back",
+				"Backbone"
+			],
+			[
+				"Bak",
+				"Backbone.Marionette"
+			],
+			[
+				"order",
+				"orderId"
+			],
+			[
+				"Order",
+				"OrderStatus"
+			],
+			[
+				"item",
+				"itemID"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"su",
+				"success"
+			],
+			[
+				"ite",
+				"itemId"
+			],
+			[
+				"itemid",
+				"itemID"
+			],
+			[
+				"suppl",
+				"supplierName"
+			],
+			[
+				"items",
+				"itemsService"
+			],
+			[
+				"$rou",
+				"$routeParams"
+			],
+			[
+				"$ro",
+				"$routeParams"
+			],
+			[
+				"c",
+				"controller"
+			],
+			[
+				"mo",
+				"modal"
+			],
+			[
+				"dialo",
+				"dialogFade"
+			],
+			[
+				"save",
+				"saveDialog"
+			],
+			[
+				"modu",
+				"module	AngularJS"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"or",
+				"ordersIndexController"
+			],
+			[
+				"dashb",
+				"dashboardIndexController"
+			],
+			[
+				"$rout",
+				"$routeProvider.when	AngularJS"
+			],
+			[
+				"mod",
+				"module	AngularJS"
+			],
+			[
+				"rou",
+				"routes"
+			],
+			[
+				"te",
+				"templateUrl"
+			],
+			[
+				"it",
+				"itemsController"
+			],
+			[
+				"cons",
+				"console"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lib/email/mailer.js",
+			"settings":
+			{
+				"buffer_size": 3201,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/development.json",
+			"settings":
+			{
+				"buffer_size": 945,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/development/email/emailTemplateSpec.js",
+			"settings":
+			{
+				"buffer_size": 914,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/development/email/sendMailSpec.js",
+			"settings":
+			{
+				"buffer_size": 1019,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "controllers/users.js",
+			"settings":
+			{
+				"buffer_size": 8318,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/JSLint/JSLint.sublime-build",
+	"command_palette":
+	{
+		"height": 388.0,
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"lint",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"",
+				"Code Folding: Fold Tag Attributes"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"git",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 125.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/kingkoded/Projects/ixit/.gitignore",
+		"/home/kingkoded/Projects/ixit/ixit.sublime-project",
+		"/home/kingkoded/Projects/dk33p/lib/issuedownload.js",
+		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/userController.js",
+		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
+		"/home/kingkoded/Projects/dk33p/lib/utility.js",
+		"/home/kingkoded/Projects/ixit/server.js",
+		"/home/kingkoded/Projects/ixit/controllers/routes.js",
+		"/home/kingkoded/Projects/ixit/public/js/main.js",
+		"/home/kingkoded/Projects/ixit/views/layouts/default.jade",
+		"/home/kingkoded/Projects/ixit/views/includes/navigation.jade",
+		"/home/kingkoded/Projects/ixit/views/home/login.jade",
+		"/home/kingkoded/Projects/ixit/views/home/recover.jade",
+		"/home/kingkoded/Projects/ixit/views/home/register.jade",
+		"/home/kingkoded/Projects/ixit/public/js/public-app.js",
+		"/home/kingkoded/Projects/ixit/controllers/site.js",
+		"/home/kingkoded/Projects/ixit/controllers/users.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/controllers/site/auth.js",
+		"/home/kingkoded/Projects/ixit/views/includes/public-top-nav.jade",
+		"/home/kingkoded/Projects/ixit/views/layouts/public.jade",
+		"/home/kingkoded/Projects/ixit/public/js/app.js",
+		"/home/kingkoded/Projects/ixit/node_modules/mongoose/node_modules/mongodb/lib/mongodb/connection/url_parser.js",
+		"/home/kingkoded/Projects/ixit/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/url_parser.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/mongoose/node_modules/mongodb/lib/mongodb/connection/url_parser.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/url_parser.js",
+		"/home/kingkoded/Projects/ixit/node_modules/grunt-nodemon/node_modules/nodemon/oldtests/express/node_modules/ejs/test/fixtures/user.ejs",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-nodemon/node_modules/nodemon/oldtests/express/node_modules/ejs/test/fixtures/user.ejs",
+		"/home/kingkoded/Projects/ixit/node_modules/forever/node_modules/nconf/test/fixtures/hierarchy/user.json",
+		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/nconf/test/fixtures/hierarchy/user.json",
+		"/home/kingkoded/Projects/ixit/node_modules/grunt-mocha-test/node_modules/mocha/node_modules/jade/testing/user.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-mocha-test/node_modules/mocha/node_modules/jade/testing/user.js",
+		"/home/kingkoded/Projects/ixit/test/development/user/user.spec.js",
+		"/home/kingkoded/Projects/ixit/models/user/user.js",
+		"/home/kingkoded/Projects/ixit/public/css/compiled/user-list.css",
+		"/home/kingkoded/Projects/ixit/models/user.js",
+		"/home/kingkoded/Projects/dk33p/models/user.js",
+		"/home/kingkoded/Projects/ixit/node_modules/lingua/example/app.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/express/lib/application.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/pkginfo/examples/all-properties.js",
+		"/home/kingkoded/Projects/ixit/public/js/public.js",
+		"/home/kingkoded/Projects/ixit/public/css/public.css",
+		"/home/kingkoded/Projects/ixit/node_modules/less/node_modules/source-map/build/prefix-utils.jsm",
+		"/home/kingkoded/Projects/dk33p/package.json",
+		"/home/kingkoded/Projects/ixit/package.json",
+		"/home/kingkoded/Projects/dk33p/controllers/routes.js",
+		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/runner-browser-options.js",
+		"/home/kingkoded/Projects/dk33p/README.md",
+		"/home/kingkoded/Projects/ixit/config/development.json",
+		"/home/kingkoded/Projects/ixit/lib/email/mailer.js",
+		"/home/kingkoded/Projects/ixit/lib/commons.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/lib/utilities.js",
+		"/home/kingkoded/Projects/ixit/test/development/email/emailTemplateSpec.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/lib/email/sendMessage.js",
+		"/home/kingkoded/Projects/ixit/lib/mailer.js",
+		"/home/kingkoded/Projects/ixit/controllers/dashboard.js",
+		"/home/kingkoded/Projects/ixit/lib/db.js",
+		"/home/kingkoded/Projects/dk33p/config/development.json",
+		"/home/kingkoded/Projects/ixit/lib/passport.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IXit/server.js",
+		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
+		"/home/kingkoded/Projects/ixit/gruntfile.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IXit/config/env/all.js",
+		"/home/kingkoded/Projects/ixit/lib/middlewares/client_session.js",
+		"/home/kingkoded/Projects/dk33p/server.js",
+		"/home/kingkoded/Projects/dk33p/models/media.js",
+		"/home/kingkoded/Projects/dk33p/controllers/v4ult.js",
+		"/home/kingkoded/Projects/dk33p/gruntfile.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/package.json",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/Gruntfile.js",
+		"/home/kingkoded/Projects/dk33p/controllers/clients.js",
+		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
+		"/home/kingkoded/Projects/dk33p/models/tags.js",
+		"/home/kingkoded/Projects/dk33p/lib/passport.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IntegraSup/server.js",
+		"/home/kingkoded/Projects/dk33p/lib/db.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IntegraSup/lib/db.js",
+		"/home/kingkoded/Projects/dk33p/config/express.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IntegraSup/config/development.json",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IntegraSup/package.json",
+		"/home/kingkoded/Projects/dk33p/node_modules/mongoose/examples/population-across-three-collections.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/ixit/public/js/public-app.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/ixit/Procfile",
+		"/home/kingkoded/Projects/dk33p/node_modules/supertest/test/fixtures/test_key.pem",
+		"/home/kingkoded/Projects/dk33p/temp/3.resumable-ojPbjonlELhxJ047wK4b-26246026-Wildlifewmv",
+		"/home/kingkoded/Projects/IXit/public/js/modules/controllers/userController.js",
+		"/home/kingkoded/Projects/IXit/app/views/includes/dashboard-top-nav.jade",
+		"/home/kingkoded/Projects/IXit/app/views/includes/dashboard-side-nav.jade",
+		"/home/kingkoded/Projects/IXit/public/css/layout.css",
+		"/home/kingkoded/Projects/IXit/public/js/modules/services/service.js",
+		"/home/kingkoded/Projects/IXit/public/js/app.js",
+		"/home/kingkoded/Projects/IXit/public/js/main.js",
+		"/home/kingkoded/Projects/IXit/public/js/jquery.slimscroll.min.js",
+		"/home/kingkoded/Projects/IXit/app/views/layouts/dashboard.jade",
+		"/home/kingkoded/Projects/IXit/app/views/dashboard.jade",
+		"/home/kingkoded/Projects/IXit/app/views/dashboard/all.jade",
+		"/home/kingkoded/Projects/dk33p/app/models/media.js",
+		"/home/kingkoded/Projects/IXit/public/js/modules/controllers/dashboardController.js",
+		"/home/kingkoded/Projects/IXit/public/js/modules/directives.js",
+		"/home/kingkoded/Projects/dk33p/_sftp-config.json",
+		"/home/kingkoded/Projects/IXit/node_modules/less/.idea/jsLibraryMappings.xml",
+		"/home/kingkoded/Projects/dk33p/node_modules/mongoose/node_modules/sliced/lib/sliced.js",
+		"/home/kingkoded/Projects/IXit/node_modules/moment/lang/sl.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt/test/fixtures/spawn-multibyte.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/src/number/MAX_INT.js",
+		"/home/kingkoded/Projects/IXit/node_modules/less/test/less/errors/imports/subfolder/mixin-not-defined.less",
+		"/home/kingkoded/Projects/IXit/public/js/public-app.js",
+		"/home/kingkoded/Projects/IXit/config/routes.js",
+		"/home/kingkoded/Projects/IXit/public/js/modules/controllers/homeController.js",
+		"/home/kingkoded/Projects/IXit/public/js/modules/lang.js",
+		"/home/kingkoded/Projects/dk33p/log.log",
+		"/home/kingkoded/Projects/IXit/app/views/includes/navigation.jade",
+		"/home/kingkoded/Projects/IXit/app/views/layouts/public.jade",
+		"/home/kingkoded/Projects/IXit/app/views/layouts/default.jade",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-nodemon/node_modules/nodemon/oldtests/express/node_modules/ejs/test/fixtures/include.ejs",
+		"/home/kingkoded/Projects/dk33p/install-elasticsearch-centos.sh",
+		"/home/kingkoded/Projects/IXit/node_modules/less/test/less/errors/import-no-semi.less",
+		"/home/kingkoded/Projects/IXit/app/views/home/index.jade",
+		"/home/kingkoded/Projects/IXit/app/views/home/login.jade",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/object/hasOwn.js",
+		"/home/kingkoded/Projects/IXit/lib/hash.js",
+		"/home/kingkoded/Projects/IXit/public/js/public.js",
+		"/home/kingkoded/Projects/IXit/config/config.js",
+		"/home/kingkoded/Projects/dk33p/config/env/development.json",
+		"/home/kingkoded/Projects/IXit/app/controllers/users.js",
+		"/home/kingkoded/Projects/IXit/app/views/index.jade",
+		"/home/kingkoded/.config/sublime-text-3/Packages/User/notice.sublime-snippet",
+		"/home/kingkoded/Projects/IXit/app/views/templates/notice-alert-tpl.jade"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"/home/kingkoded/Projects/ixit,-node_modules/",
+			"/home/kingkoded/Projects/dk33p",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"utils",
+			"\"",
+			"Users",
+			"mUtils",
+			".",
+			"redis_client",
+			"requestF",
+			"redis_client",
+			"app/",
+			"OAuthClient",
+			"config",
+			"height",
+			"contact",
+			"path",
+			"current",
+			"'#'",
+			"mongoosastic",
+			"open_folder",
+			"browsefilesbtn",
+			"rout",
+			"serveFile",
+			"requestFileDownload",
+			"\"",
+			"save",
+			"_deleteTemp",
+			"\"",
+			"smallbox",
+			"smallBox",
+			"botsimple1",
+			"\"",
+			"fonts/fontawesome-webfont.svg",
+			"fonts",
+			"\"",
+			"_deleteTemp",
+			"bigBox",
+			"BigBoxCall1",
+			"),",
+			"deleteUserFile",
+			"param",
+			"console",
+			"process.env.HOME",
+			"getChunkFilename",
+			"generateUniqueIdentifier",
+			"generateUniqueIdentifier ",
+			"getChunkFilename",
+			"_deleteTemp",
+			"downloadCount",
+			"januzaj",
+			"console.",
+			"getChunkFilename",
+			"User.",
+			"utility.",
+			"getChunkFilename",
+			"$",
+			"$.",
+			"$",
+			"fileParameterName",
+			"getChunkFilename",
+			"validateRequest",
+			"cookie",
+			"passport",
+			"finish",
+			"post",
+			"handler",
+			"res",
+			"UploadHandler",
+			"html",
+			"min.map",
+			"users.prototype",
+			"exports",
+			"/app",
+			"<?php echo HTML::",
+			"; ?>",
+			"'/app",
+			"<?php echo HTML::",
+			"; ?>",
+			"mini",
+			"over",
+			".bt",
+			"scopeApply",
+			"myForm",
+			"port",
+			"<?",
+			"Wow Slider",
+			"time",
+			"display_err",
+			"app",
+			"css",
+			"app"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'",
+			"utils",
+			"",
+			"''",
+			"'",
+			"process.cwd()",
+			"Client.",
+			"utility.prototype.",
+			"Users.prototype",
+			"user.prototype",
+			"user.prototype.",
+			"",
+			"src='/app",
+			"",
+			"registration_form",
+			"angular.module('filters')",
+			"angular.module('directives')"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lib/email/mailer.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3201,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1347,
+								1347
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 294.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "config/development.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								629,
+								629
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "test/development/email/emailTemplateSpec.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 914,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "test/development/email/sendMailSpec.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								836,
+								836
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "controllers/users.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5621,
+								5621
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2730.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 100.0
+	},
+	"project": "ixit.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ixit/deve",
+				"ixit/config/development.json"
+			],
+			[
+				"user",
+				"ixit/controllers/users.js"
+			],
+			[
+				"user.js",
+				"ixit/public/js/modules/controllers/userController.js"
+			],
+			[
+				"app",
+				"ixit/public/js/app.js"
+			],
+			[
+				"public",
+				"ixit/public/js/public-app.js"
+			],
+			[
+				"routes",
+				"ixit/controllers/routes.js"
+			],
+			[
+				"packa",
+				"dk33p/package.json"
+			],
+			[
+				"slimscr",
+				"IXit/public/js/jquery.slimscroll.min.js"
+			],
+			[
+				"directive",
+				"IXit/public/js/modules/directives.js"
+			],
+			[
+				"layout",
+				"IXit/public/css/layout.css"
+			],
+			[
+				"include/naviga",
+				"IXit/app/views/includes/navigation.jade"
+			],
+			[
+				"home/inde",
+				"IXit/app/views/home/index.jade"
+			],
+			[
+				"lang",
+				"IXit/public/js/modules/lang.js"
+			],
+			[
+				"notice",
+				"IXit/app/views/templates/notice-alert-tpl.jade"
+			],
+			[
+				"direct",
+				"IXit/public/js/modules/directives.js"
+			],
+			[
+				"app.j",
+				"IXit/public/js/app.js"
+			],
+			[
+				"login.js",
+				"IXit/public/js/modules/login.js"
+			],
+			[
+				"service",
+				"IXit/public/js/modules/services/service.js"
+			],
+			[
+				"ixit/user",
+				"IXit/public/js/modules/controllers/userController.js"
+			],
+			[
+				"passpo",
+				"IXit/config/passport.js"
+			],
+			[
+				"eleme",
+				"IXit/public/css/elements.css"
+			],
+			[
+				"side",
+				"IXit/app/views/includes/dashboard-side-nav.jade"
+			],
+			[
+				"applica",
+				"dk33p/node_modules/express/lib/application.js"
+			],
+			[
+				"directi",
+				"IXit/public/js/modules/directives.js"
+			],
+			[
+				"utili",
+				"dk33p\\lib\\utility.js"
+			],
+			[
+				"index.css",
+				"IXit\\public\\css\\compiled\\index.css"
+			],
+			[
+				"v4",
+				"dk33p\\app\\controllers\\v4ult.js"
+			],
+			[
+				"dash",
+				"IXit\\app\\views\\includes\\dashboard-top-nav.jade"
+			],
+			[
+				"lang.",
+				"IXit\\public\\js\\modules\\lang.js"
+			],
+			[
+				"n.j",
+				"IXit/public/js/vendor/n.js"
+			],
+			[
+				"lang.j",
+				"IXit/public/js/modules/lang.js"
+			],
+			[
+				"element",
+				"IXit/public/css/elements.css"
+			],
+			[
+				"route",
+				"IXit/config/routes.js"
+			],
+			[
+				"elem",
+				"IXit/public/css/elements.css"
+			],
+			[
+				"direc",
+				"IXit/public/js/modules/directives.js"
+			],
+			[
+				"media",
+				"dk33p/app/models/media.js"
+			],
+			[
+				"top-n",
+				"IXit/app/views/includes/dashboard-top-nav.jade"
+			],
+			[
+				"k33",
+				"IXit/app/controllers/k33per.js"
+			],
+			[
+				"cabi",
+				"dk33p/app/controllers/cabinet.js"
+			],
+			[
+				"uti",
+				"dk33p/lib/utility.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/Integra/integra.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 261.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,19 @@
+extends ../layouts/email-layout
+
+block email
+    table.twelve.columns
+        tbody
+            tr
+                td
+                    h4 User login multiple failures
+                    dl
+                      dt Email
+                      dd #{email}
+                      dt IPAddress
+                      dd #{ipAddress}
+                      dt Count
+                      dd #{count}
+                      dt First Attempt
+                      dd #{firstAttempt}
+                      dt Last Attempt
+                      dd #{lastAttempt}

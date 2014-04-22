@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/home/kingkoded/Projects/dk33p"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	]
+}

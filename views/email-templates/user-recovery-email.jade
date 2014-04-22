@@ -1,0 +1,19 @@
+extends ../layouts/email-layout
+
+block email
+    table.row.note
+        tbody
+            tr
+                td
+                    h4 BNC Password Recovery
+                    p 
+                      | We received a request to recover your BNCAuth account password.
+                    p 
+                      | If this request was initiated by you, please click the link below to proceed.
+                    table.twelve.columns(style='margin-bottom: 10px;')
+                        tbody
+                            tr
+                              td.panel
+                                a(href="#{verificationLink}") #{verificationLink}
+                              td.expander
+                    p If clicking the URL above does not work, copy and paste the URL into a browser window.

@@ -1,0 +1,34 @@
+{
+    "db": {
+        "server": "localhost",
+        "database": "documents",
+        "port": 27017,
+        "user": "",
+        "pass": ""
+    },
+    "redis": {
+      "port": 6379,
+      "host": "192.168.56.2"
+      },
+    "app": {
+        "name": "IXIT - File Sharing and Hosting",
+        "user_agent": "IXIT Client"
+    },
+    "express": {    
+        "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509"
+    },
+    "api_url": "http://192.168.2.11:3000",
+    "appID": "08E54688615982ADB5D8E3FEB8DCE2C'",
+    "appSecret": "xynl7HycdsRulJ3IDvzernI8fsywclxod334lRFUIcKjkNJLEH6UFgVk7epXT9O",
+    "mail" : {
+        "defaultService": "postmark",
+        "defaultSenderName" : "IXIT Dispatch",
+        "defaultSenderEmail" : "dispatch@i-x.it",
+        "debug": false,
+        "postmark": {
+            "username": "c029d5dc-4cbb-4aa7-a6c8-559fc83cf8b0",
+            "password": "c029d5dc-4cbb-4aa7-a6c8-559fc83cf8b0",
+            "host": "smtp.postmarkapp.com"
+        }
+    }
+}

@@ -1,8 +1,0 @@
-{
-    "db": "mongodb://localhost/local",
-    "app": {
-        "name": "IXIT - File Sharing and Hosting",
-        "user_agent": "IXIT Client"
-    },
-    "api_url": "http://192.168.2.11:3000"
-}

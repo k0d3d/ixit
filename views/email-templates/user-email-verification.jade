@@ -1,0 +1,16 @@
+extends ../layouts/email-layout
+
+block email
+    table.row.note
+        tbody
+            tr
+                td
+                    h4 BNC Email Verification
+                    p Please click the following URL to verify your account:
+                    table.twelve.columns(style='margin-bottom: 10px;')
+                        tbody
+                            tr
+                              td.panel
+                                a(href="#{verificationLink}") #{verificationLink}
+                              td.expander
+                    p If clicking the URL above does not work, copy and paste the URL into a browser window.

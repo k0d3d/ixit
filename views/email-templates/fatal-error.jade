@@ -1,0 +1,11 @@
+extends ../layouts/email-layout
+
+block email
+    table.twelve.columns
+        tbody
+            tr
+                td
+                    h4 Critical Error Occurred in BNC Authentication Service
+                    h5 Error: #{err.message}
+                    p Here's the full stack:
+                    pre=err.stack

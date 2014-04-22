@@ -1,0 +1,17 @@
+extends ../layouts/email-layout
+
+block email
+    table.row.note
+        tbody
+            tr
+                td
+                    h4 Successful BNC Email Verification!
+                    p The following user successfully verified through email:
+                    table
+                        tbody
+                            tr
+                                td username
+                                td #{username}
+                            tr
+                                td email address
+                                td #{email}
