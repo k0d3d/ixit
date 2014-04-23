@@ -25,7 +25,8 @@ var express = require('express'),
     favicon = require('static-favicon'),
     compress = require('compression'),
     restler = require('restler'),
-    helpers = require('view-helpers');
+    helpers = require('view-helpers'),
+    crashProtector = require('common-errors').middleware.crashProtector;
 var MongoStore = require('connect-mongo')(session);
 
 
@@ -52,6 +53,9 @@ function afterResourceFilesLoad(redis_client) {
     
 
     app.set('showStackError', true);
+
+    console.log('Enabling crash protector...');
+    app.use(crashProtector());
 
 
     // make everything in the public folder publicly accessible - do this high up as possible

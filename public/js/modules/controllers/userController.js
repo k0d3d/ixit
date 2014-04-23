@@ -55,10 +55,11 @@ angular.module('user',[])
     $scope.signup = function(){
         $scope.isLoading = true;
         var regData = {
+            username: $sanitize($scope.form.username),
             email: $sanitize($scope.form.email),
             password: $sanitize($scope.form.password)
         };
-        $http.post('/api/users', {param : regData}).
+        $http.post('/api/internal/users', regData).
         success(function(c){
             $scope.isRegistered = true;
         }).

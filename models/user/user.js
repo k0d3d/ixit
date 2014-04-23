@@ -3,9 +3,8 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto'),
+    encrypt = require('../../lib/commons.js').encrypt,
     _ = require('underscore'),
-    authTypes = ['twitter', 'facebook', 'google'],
     uniqueValidator = require('mongoose-unique-validator');
 
 
@@ -13,19 +12,29 @@ var mongoose = require('mongoose'),
  * User Schema
  */
 var UserSchema = new Schema({
-    email: {type: String, unique:true},
-    username: {type: String, unique:true},
+    /*
+    Mini profile
+     */
     firstname: {type: String},
     lastname: {type: String},
     photo: {type: String, default: 'prettyme.jpg'},
-    provider: String,
-    hashed_password: String,
-    salt: String,
-    facebook: {},
-    twitter: {},
-    google: {},
-    isDeveloper: {type: Boolean},
-    clientKey: {type: String}
+    /*
+    account credentials
+     */
+    email: {type: String, unique:true},
+    username: {type: String, unique:true},
+    password: String,
+    type: { type: String, default: 'user' },
+    /*
+    loggin and audit
+     */
+    createdOn: { type: Date, default: Date.now },
+    lastLoggedInOn: { type: Date},
+    lastUpdatedOn: { type: Date },
+    verifiedEmailOn: { type: Date },
+    verifiedEmailAddress: { type: Boolean, default: false},
+    disabledOn: { type: Date },    
+    enabled: { type: Boolean, default: false }
 });
 
 /**
@@ -34,16 +43,6 @@ var UserSchema = new Schema({
 UserSchema.plugin(uniqueValidator, {mongoose: mongoose});
 
 
-/**
- * Virtuals
- */
-UserSchema.virtual('password').set(function(password) {
-    this._password = password;
-    this.salt = this.makeSalt();
-    this.hashed_password = this.encryptPassword(password);
-}).get(function() {
-    return this._password;
-});
 
 /**
  * Validations
@@ -52,38 +51,13 @@ var validatePresenceOf = function(value) {
     return value && value.length;
 };
 
-// the below 4 validations only apply if you are signing up traditionally
-
-//Check if email address was entered
-UserSchema.path('email').validate(function(email) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (authTypes.indexOf(this.provider) !== -1) return true;
-    return email.length;
-}, 'Email cannot be blank');
-
-//Check if username was entered
-UserSchema.path('username').validate(function(username) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (authTypes.indexOf(this.provider) !== -1) return true;
-    if(username == 'admin' || username == 'administrator') return false;
-    return username.length;
-}, 'Username cannot be blank');
-
-//Check if password was entered
-UserSchema.path('hashed_password').validate(function(hashed_password) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (authTypes.indexOf(this.provider) !== -1) return true;
-    return hashed_password.length;
-}, 'Password cannot be blank');
-
 
 /**
  * Pre-save hook
  */
 UserSchema.pre('save', function(next) {
     if (!this.isNew) return next();
-
-    if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1)
+    if (!validatePresenceOf(this.password))
         next(new Error('Invalid password'));
     else
         next();
@@ -103,18 +77,6 @@ UserSchema.methods = {
     authenticate: function(plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;
     },
-
-    /**
-     * Make salt
-     *
-     * @return {String}
-     * @api public
-     */
-    makeSalt: function() {
-        return crypto.randomBytes(256).toString('base64');
-        //return Math.round((new Date().valueOf() * Math.random())) + '';
-    },
-
     /**
      * Encrypt password
      *
@@ -124,9 +86,30 @@ UserSchema.methods = {
      */
     encryptPassword: function(password) {
         if (!password) return '';
-        return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
-    }
+        return encrypt(password)
+        .then(function (hash) {
+          return hash;
+        });
+        //return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
+    }    
 };
 
 mongoose.model('User', UserSchema);
-module.exports = mongoose.model('User');
+module.exports.UserModel = mongoose.model('User');
+
+/**
+ * [VerificationSchema description]
+ * @type {Schema}
+ */
+var VerificationSchema = new Schema({
+  userId : {type: Schema.ObjectId, ref: 'User'},
+  token: {type: String},
+  //Could be either new registration verifcation
+  //or password reset request i.e. 
+  //registeration or password-reset
+  verifyType: {type: String},
+  created: {type: Date, default: Date.now}
+});
+
+mongoose.model('UserVerification', VerificationSchema);
+module.exports.UserVerification = mongoose.model('UserVerification');

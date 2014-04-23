@@ -3,13 +3,15 @@
  * @module models
  * */
 
-var UserModel = require('./user/user.js'),
+var UserModel = require('./user/user.js').UserModel,
+    VerificationModel = require('./user/user.js').VerificationModel,
     Q = require('q'),    
     utils = require('../lib/commons.js'),
     _ = require('underscore'),
     sendMessage = require('../lib/email/mailer.js'),
     moment = require('moment'),
     EventRegister = require('../lib/event_register.js').register,
+    crypt = require('../lib/commons.js'),
     configuration = require('config'); // we generally want to load the whole config
 
 
@@ -52,6 +54,7 @@ var userFunctions = {
     },
     prepUserVerificationToken: function prepUserVerificationToken(data) {
         console.log('Creating verification token');
+        console.log(data);
         var d = Q.defer();
 
         var vm = new VerificationModel();
@@ -59,6 +62,7 @@ var userFunctions = {
         vm.token = utils.uid(32);
         vm.verifyType = data.verifyType || 'registration';
         vm.save(function(err, i) {
+            console.log(err, i);
             if (err) {
                 return d.reject(err);
             }
@@ -165,6 +169,7 @@ var userFunctions = {
         return d.promise;
     },
     saveBasicProfileData: function saveBasicProfileData(data) {
+        console.log('Saving basic profile...');
 
         var user = new UserModel(data),
             d = Q.defer();
@@ -182,84 +187,6 @@ var userFunctions = {
 
         return d.promise;
 
-    },
-    addUserToHopper: function addUserToHopper(userToAdd) {
-
-        return hopperSvc.addUserToHopper(userToAdd);
-
-    },
-    ifGreyListedEmailShowSecondStep: function ifGreyListedEmailShowSecondStep(data) {
-        var domain = data.email.replace(/.*@/, "");
-        var d = Q.defer();
-
-        checkDomain(domain).then(function(r) {
-            if (r.BlackListed) {
-                data.blacklisted = true;
-                return d.reject('blacklisted');
-            }
-
-            if (r.GreyListed) {
-                data.extendedReg = true;
-                return d.resolve(data);
-            }
-
-            data.extendedReg = false;
-            return d.resolve(data);
-        }).fail(function(err) {
-            console.log(err);
-            return d.reject(err);
-        });
-
-        return d.promise;
-    },
-    saveExtendedProfileData: function saveExtendedProfileData(data) {
-        var d = Q.defer();
-        var copyUserInfo = _.omit(data, ['_id, password,']);
-        UserModel.update({
-            _id: data.userId
-        }, {
-            $set: copyUserInfo
-        }, function(err, i) {
-            if (err) {
-                return d.reject(err);
-            }
-            if (i > 0) {
-                return d.resolve(data);
-            }
-            else {
-                return d.reject(new Error('Extending Profile Data Failed'));
-            }
-
-            return d.resolve(data);
-        });
-    },
-    /**
-     * saves an audit event / log to the database.
-     * @param  {Object} data should contain a necessary email
-     * address and an optional action and category params / properties,
-     * which defaults to 'registeration' and 'auth' respectively.
-     * @return {Object}      Promise Object with initial 'data' argument
-     */
-    saveAuditInformation: function saveAuditInformation(data) {
-        console.log('Audit Save');
-        console.log(data);
-        var d = Q.defer();
-
-        var audit = new Audit();
-        audit.log({
-            action: data.action || 'registration',
-            userId: data.email || data.userId,
-            category: data.category || 'auth',
-            verdict: data.verdict,
-            error: data.error ? data.error.message : ''
-        }).then(function(r) {
-            return d.resolve(data);
-        }, function(err) {
-            console.log(err);
-            return d.reject(err);
-        });
-
-        return d.promise;
     },
     sendUserVerificationEmail: function sendUserVerificationEmail(data) {
         // we want to send user who has registered
@@ -736,14 +663,6 @@ User.prototype.create = function(options) {
     var userInfo = options;
     if (userInfo.username === '') userInfo.username = userInfo.email;
 
-    if (userInfo.two_factor_check) {
-
-        // retrieve code
-        var tfCode = tFCode.generate();
-        userInfo.twoFactorKey = tfCode.base32;
-        userInfo.twoFactorQR = tfCode.google_auth_qr;
-
-    }
 
     var checkIfUserExists = userFunctions.validateUser(userInfo);
 
@@ -752,44 +671,31 @@ User.prototype.create = function(options) {
         if (!doesNotExist) {
 
             // we cannot add
-            d.resolve('User Exists');
+            d.reject(new Error('User Exists'));
 
         }
         else {
 
-            userFunctions.encryptPassword(userInfo).then(userFunctions.saveBasicProfileData)
-            //.then(userFunctions.addUserToHopper)
-            .then(userFunctions.saveAuditInformation).then(userFunctions.ifGreyListedEmailShowSecondStep).then(userFunctions.prepUserVerificationToken).then(userFunctions.sendUserVerificationEmail).then(function(r) {
+            userFunctions.encryptPassword(userInfo)
+            .then(userFunctions.saveBasicProfileData)
+            .then(userFunctions.prepUserVerificationToken)
+            .then(userFunctions.sendUserVerificationEmail)
+            .then(function(r) {
                 if (r) {
                     userInfo.sentVerification = true;
                 }
                 else {
                     userInfo.sentVerification = false;
                 }
-                
-                // add to the hopper as the final step
-                hopperSvc.addUserToHopper(userInfo).then(function (addHopperResult) {
-                    
-                    d.resolve(userInfo);
-                    
-                }).catch(function addHopperError(err) {
-                    
-                    console.log('error adding to the hopper!');
-                    // probably should send error email at this point
-                    d.resolve(err);
-                    
-                });
-                
+                d.resolve(userInfo);
                 
             }).
             catch (function(err) {
 
                 // something went wrong with the signup - return error screen
-                d.resolve(err);
+                d.reject(err);
 
-            }
-
-            );
+            });
         }
 
     }).

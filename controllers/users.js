@@ -200,11 +200,13 @@ Users.prototype.register = function (options, cb) {
   var createUser = user.create(options);
   createUser.then(function (result) {
     cb(result);
-  });
-  createUser.fail(function (err) {
-    console.log(err);
+  }, function (err) {
     cb(err);
-  }); 
+  });
+  // createUser.catch(function (err) {
+  //   console.log(err);
+  //   cb(err);
+  // }); 
 };
 
 //module.exports.users = users;
@@ -212,10 +214,25 @@ Users.prototype.register = function (options, cb) {
 module.exports.routes = function(app){
   var users = new Users();
     
-    //app.post('/logout', users.signout);
+    //logs out a currently logged in user
+    app.post('/logout', users.signout);
 
     //Setting up the users api
-    //app.post('/api/internal/users', users.create);
+    app.post('/api/internal/users', function (req, res) {
+      users.register(req.body, function (r) {
+
+        console.log(r);
+
+
+        if (util.isError(r)) {
+            //next(r);
+            return res.json(400, {nextUrl: '/register/failed'} );
+        }
+
+        return res.json(200, r);
+          
+      });             
+    });
 
     
     //User Login

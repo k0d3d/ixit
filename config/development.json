@@ -1,7 +1,7 @@
 {
     "db": {
         "server": "localhost",
-        "database": "documents",
+        "database": "client-db",
         "port": 27017,
         "user": "",
         "pass": ""
