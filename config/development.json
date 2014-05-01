@@ -12,7 +12,8 @@
       },
     "app": {
         "name": "IXIT - File Sharing and Hosting",
-        "user_agent": "IXIT Client"
+        "user_agent": "IXIT Client",
+        "http_app_domain": "http://localhost"
     },
     "express": {    
         "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509"

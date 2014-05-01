@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"Verification",
+				"VerificationModel"
+			],
+			[
+				"Verifica",
+				"VerificationModel"
+			],
+			[
 				"margi",
 				"margin"
 			],
@@ -439,31 +447,23 @@
 			"file": "lib/email/mailer.js",
 			"settings":
 			{
-				"buffer_size": 3201,
+				"buffer_size": 3296,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "config/development.json",
+			"file": "models/user.js",
 			"settings":
 			{
-				"buffer_size": 945,
+				"buffer_size": 30074,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/development/email/emailTemplateSpec.js",
+			"file": "server.js",
 			"settings":
 			{
-				"buffer_size": 914,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/development/email/sendMailSpec.js",
-			"settings":
-			{
-				"buffer_size": 1019,
+				"buffer_size": 6147,
 				"line_ending": "Unix"
 			}
 		},
@@ -471,8 +471,56 @@
 			"file": "controllers/users.js",
 			"settings":
 			{
-				"buffer_size": 8318,
+				"buffer_size": 8690,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/commons.js",
+			"settings":
+			{
+				"buffer_size": 2479,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "config/development.json",
+			"settings":
+			{
+				"buffer_size": 1016,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "models/user/user.js",
+			"settings":
+			{
+				"buffer_size": 2684,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user.js",
+			"settings":
+			{
+				"buffer_size": 35654,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/modules/controllers/userController.js",
+			"settings":
+			{
+				"buffer_size": 3515,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/modules/services/service.js",
+			"settings":
+			{
+				"buffer_size": 8373,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -485,6 +533,10 @@
 			[
 				"ins",
 				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
 			],
 			[
 				"inst",
@@ -501,10 +553,6 @@
 			[
 				"insta",
 				"Package Control: Install Package"
-			],
-			[
-				"remo",
-				"Package Control: Remove Package"
 			],
 			[
 				"install",
@@ -560,12 +608,35 @@
 	},
 	"file_history":
 	[
+		"/home/kingkoded/Projects/ixit/test/development/email/sendMailSpec.js",
+		"/home/kingkoded/Projects/dk33p/config/development.json",
+		"/home/kingkoded/Projects/ixit/node_modules/lingua/node_modules/traverse/test/lib/deep_equal.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/home/kingkoded/Projects/ixit/lib/commons.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/controllers/site/auth.js",
+		"/home/kingkoded/Projects/ixit/config/development.json",
+		"/home/kingkoded/Projects/dk33p/package.json",
+		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/phantom-runner.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/pureautoinc/pre-commit",
+		"/home/kingkoded/Projects/ixit/node_modules/moment/test/moment/preparse_postformat.js",
+		"/home/kingkoded/Projects/ixit/models/user/profile.js",
+		"/home/kingkoded/Projects/ixit/controllers/users.js",
+		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
+		"/home/kingkoded/Projects/dk33p/lib/utility.js",
+		"/home/kingkoded/Projects/dk33p/server.js",
+		"/home/kingkoded/Projects/ixit/node_modules/moment/test/moment/sod_eod.js",
+		"/home/kingkoded/Projects/ixit/views/email-templates/successful-email-verification-notice.jade",
+		"/home/kingkoded/Projects/ixit/models/user/user.js",
+		"/home/kingkoded/Projects/ixit/test/development/email/emailTemplateSpec.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user/user-verification.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user/user.js",
+		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/lib/encryption.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/connect-mongo/lib/connect-mongo.js",
+		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 		"/home/kingkoded/Projects/ixit/.gitignore",
 		"/home/kingkoded/Projects/ixit/ixit.sublime-project",
 		"/home/kingkoded/Projects/dk33p/lib/issuedownload.js",
 		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/userController.js",
-		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
-		"/home/kingkoded/Projects/dk33p/lib/utility.js",
 		"/home/kingkoded/Projects/ixit/server.js",
 		"/home/kingkoded/Projects/ixit/controllers/routes.js",
 		"/home/kingkoded/Projects/ixit/public/js/main.js",
@@ -576,8 +647,6 @@
 		"/home/kingkoded/Projects/ixit/views/home/register.jade",
 		"/home/kingkoded/Projects/ixit/public/js/public-app.js",
 		"/home/kingkoded/Projects/ixit/controllers/site.js",
-		"/home/kingkoded/Projects/ixit/controllers/users.js",
-		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/controllers/site/auth.js",
 		"/home/kingkoded/Projects/ixit/views/includes/public-top-nav.jade",
 		"/home/kingkoded/Projects/ixit/views/layouts/public.jade",
 		"/home/kingkoded/Projects/ixit/public/js/app.js",
@@ -592,7 +661,6 @@
 		"/home/kingkoded/Projects/ixit/node_modules/grunt-mocha-test/node_modules/mocha/node_modules/jade/testing/user.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-mocha-test/node_modules/mocha/node_modules/jade/testing/user.js",
 		"/home/kingkoded/Projects/ixit/test/development/user/user.spec.js",
-		"/home/kingkoded/Projects/ixit/models/user/user.js",
 		"/home/kingkoded/Projects/ixit/public/css/compiled/user-list.css",
 		"/home/kingkoded/Projects/ixit/models/user.js",
 		"/home/kingkoded/Projects/dk33p/models/user.js",
@@ -602,36 +670,29 @@
 		"/home/kingkoded/Projects/ixit/public/js/public.js",
 		"/home/kingkoded/Projects/ixit/public/css/public.css",
 		"/home/kingkoded/Projects/ixit/node_modules/less/node_modules/source-map/build/prefix-utils.jsm",
-		"/home/kingkoded/Projects/dk33p/package.json",
 		"/home/kingkoded/Projects/ixit/package.json",
 		"/home/kingkoded/Projects/dk33p/controllers/routes.js",
 		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/runner-browser-options.js",
 		"/home/kingkoded/Projects/dk33p/README.md",
-		"/home/kingkoded/Projects/ixit/config/development.json",
 		"/home/kingkoded/Projects/ixit/lib/email/mailer.js",
-		"/home/kingkoded/Projects/ixit/lib/commons.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/lib/utilities.js",
-		"/home/kingkoded/Projects/ixit/test/development/email/emailTemplateSpec.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/lib/email/sendMessage.js",
 		"/home/kingkoded/Projects/ixit/lib/mailer.js",
 		"/home/kingkoded/Projects/ixit/controllers/dashboard.js",
 		"/home/kingkoded/Projects/ixit/lib/db.js",
-		"/home/kingkoded/Projects/dk33p/config/development.json",
 		"/home/kingkoded/Projects/ixit/lib/passport.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IXit/server.js",
 		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
 		"/home/kingkoded/Projects/ixit/gruntfile.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IXit/config/env/all.js",
 		"/home/kingkoded/Projects/ixit/lib/middlewares/client_session.js",
-		"/home/kingkoded/Projects/dk33p/server.js",
 		"/home/kingkoded/Projects/dk33p/models/media.js",
 		"/home/kingkoded/Projects/dk33p/controllers/v4ult.js",
 		"/home/kingkoded/Projects/dk33p/gruntfile.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/package.json",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/Gruntfile.js",
 		"/home/kingkoded/Projects/dk33p/controllers/clients.js",
-		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 		"/home/kingkoded/Projects/dk33p/models/tags.js",
 		"/home/kingkoded/Projects/dk33p/lib/passport.js",
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IntegraSup/server.js",
@@ -674,20 +735,7 @@
 		"/home/kingkoded/Projects/IXit/app/views/includes/navigation.jade",
 		"/home/kingkoded/Projects/IXit/app/views/layouts/public.jade",
 		"/home/kingkoded/Projects/IXit/app/views/layouts/default.jade",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-nodemon/node_modules/nodemon/oldtests/express/node_modules/ejs/test/fixtures/include.ejs",
-		"/home/kingkoded/Projects/dk33p/install-elasticsearch-centos.sh",
-		"/home/kingkoded/Projects/IXit/node_modules/less/test/less/errors/import-no-semi.less",
-		"/home/kingkoded/Projects/IXit/app/views/home/index.jade",
-		"/home/kingkoded/Projects/IXit/app/views/home/login.jade",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/object/hasOwn.js",
-		"/home/kingkoded/Projects/IXit/lib/hash.js",
-		"/home/kingkoded/Projects/IXit/public/js/public.js",
-		"/home/kingkoded/Projects/IXit/config/config.js",
-		"/home/kingkoded/Projects/dk33p/config/env/development.json",
-		"/home/kingkoded/Projects/IXit/app/controllers/users.js",
-		"/home/kingkoded/Projects/IXit/app/views/index.jade",
-		"/home/kingkoded/.config/sublime-text-3/Packages/User/notice.sublime-snippet",
-		"/home/kingkoded/Projects/IXit/app/views/templates/notice-alert-tpl.jade"
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-nodemon/node_modules/nodemon/oldtests/express/node_modules/ejs/test/fixtures/include.ejs"
 	],
 	"find":
 	{
@@ -708,6 +756,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"crypt.",
+			"crypt",
 			"utils",
 			"\"",
 			"Users",
@@ -831,7 +881,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -840,15 +890,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3201,
+						"buffer_size": 3296,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1347,
-								1347
+								2233,
+								2233
 							]
 						],
 						"settings":
@@ -861,7 +911,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 294.0,
+						"translation.y": 966.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -869,19 +919,53 @@
 				},
 				{
 					"buffer": 1,
-					"file": "config/development.json",
+					"file": "models/user.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 945,
+						"buffer_size": 30074,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								629,
-								629
+								174,
+								174
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"sftp_duplicate_views": 0,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 9335.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "server.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6147,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1087,
+								1087
 							]
 						],
 						"settings":
@@ -889,24 +973,58 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 168.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "test/development/email/emailTemplateSpec.js",
+					"buffer": 3,
+					"file": "controllers/users.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 914,
+						"buffer_size": 8690,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4699,
+								4699
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2718.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "lib/commons.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2479,
 						"regions":
 						{
 						},
@@ -923,6 +1041,79 @@
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "models/user.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 30074,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5099,
+								5099
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"sftp_duplicate_views": 0,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2378.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "config/development.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1016,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								345,
+								345
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -934,20 +1125,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "test/development/email/sendMailSpec.js",
+					"buffer": 6,
+					"file": "models/user/user.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1019,
+						"buffer_size": 2684,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								836,
-								836
+								2646,
+								2646
 							]
 						],
 						"settings":
@@ -957,46 +1148,112 @@
 							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 840.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/models/user.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35654,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								25422,
+								25422
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 11390.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "public/js/modules/controllers/userController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3515,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2387,
+								2387
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 126.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "public/js/modules/services/service.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8373,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "controllers/users.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8318,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5621,
-								5621
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2730.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -1019,11 +1276,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.400542495479,
 			1.0
 		],
 		"rows":
@@ -1056,6 +1320,30 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"deve",
+				"ixit/config/development.json"
+			],
+			[
+				"common",
+				"ixit/lib/commons.js"
+			],
+			[
+				"user/user",
+				"ixit/models/user/user.js"
+			],
+			[
+				"servi",
+				"ixit/public/js/modules/services/service.js"
+			],
+			[
+				"usercon",
+				"ixit/public/js/modules/controllers/userController.js"
+			],
+			[
+				"commons",
+				"ixit/lib/commons.js"
+			],
 			[
 				"ixit/deve",
 				"ixit/config/development.json"

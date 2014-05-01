@@ -26,9 +26,11 @@ var express = require('express'),
     compress = require('compression'),
     restler = require('restler'),
     helpers = require('view-helpers'),
-    crashProtector = require('common-errors').middleware.crashProtector;
+    crashProtector = require('common-errors').middleware.crashProtector,
+    Q = require('q');
 var MongoStore = require('connect-mongo')(session);
 
+Q.longStackSupport = true;
 
 //color  on console output
 require('colors');
@@ -45,17 +47,18 @@ function afterResourceFilesLoad(redis_client) {
 
 
     console.log('Loading ' + 'passport'.inverse + ' config...');
-    try {
-      require('./lib/passport.js')(passport);
-    } catch(e) {
-      console.log(e);
-    }
+    // try {
+    // } catch(e) {
+    //   console.log('Error Loading Passport Config...');
+    //   console.trace(e);
+    // }
+    require('./lib/auth/passport.js')(passport);
     
 
     app.set('showStackError', true);
 
-    console.log('Enabling crash protector...');
-    app.use(crashProtector());
+    // console.log('Enabling crash protector...');
+    //app.use(crashProtector());
 
 
     // make everything in the public folder publicly accessible - do this high up as possible
@@ -173,24 +176,32 @@ function afterResourceFilesLoad(redis_client) {
       // error page
       //res.status(500).json({ error: err.stack });
       //res.json(500, err.message);
-      res.status(500).render('500', {
-        url: req.originalUrl,
-        error: err.message
-      });
+      var t = '/api/internal/';
+      if (req.url.indexOf(t) > -1) {
+        res.json(500, err.message);        
+      } else {
+        res.status(500).render('500', {
+          url: req.originalUrl,
+          error: err.message
+        }); 
+      }   
+
     });
 
     // assume 404 since no middleware responded
     app.use(function(req, res){
-      if (req.xhr) {
-        res.json(404, {message: 'resource not found'});
+
+      var t = '/api/internal/';
+      if (req.url.indexOf(t) > -1) {
+        res.json(404, {message: 'resource not found'});        
       } else {
         res.status(404).render('404', {
           url: req.originalUrl,
           error: 'Not found'
-        });        
-      }
+        });
+      }          
 
-    });      
+    });       
 
 
     // development env config
@@ -239,7 +250,7 @@ require('./lib/db').open()
 
 })
 .catch(function (e) {
-  console.trace(e);
+  console.log(e);
 });
 
 

@@ -4,7 +4,7 @@ angular.module('services', [])
       var a = {};
 
       a.postParam = function(loginParams){
-        return $http.post('/api/users/session', loginParams)
+        return $http.post('/api/internal/users/session', loginParams)
           .then(function (d) {
             return d;
           }, function (e) {

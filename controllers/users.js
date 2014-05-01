@@ -236,22 +236,22 @@ module.exports.routes = function(app){
 
     
     //User Login
-    // app.post('/api/internal/users/session', function(req, res, next){
-    //   passport.authenticate('local', function(err, user){
-    //     if (err) return next(err);
-    //     if(!user) return res.json(400, {message: 'User not found'});
-    //     req.logIn(user, function(err){
-    //       if(err) return next(err);
-    //       req.user = {
-    //         username: user.username
-    //       };
-    //       if(!_.isUndefined(user.isDeveloper)){
-    //         req.user.isDeveloper = user.isDeveloper;
-    //       }
-    //       return res.json(200, {status: true});
-    //     });
-    //   })(req, res, next);
-    // });
+    app.post('/api/internal/users/session', function(req, res, next){
+      passport.authenticate('local', function(err, user){
+        if (err) return next(err);
+        if(!user) return res.json(400, {message: 'User not found'});
+        req.logIn(user, function(err){
+          if(err) return next(err);
+          req.user = {
+            username: user.username
+          };
+          if(!_.isUndefined(user.isDeveloper)){
+            req.user.isDeveloper = user.isDeveloper;
+          }
+          return res.json(200, {status: true});
+        });
+      })(req, res, next);
+    });
 
     // app.get('/users/me', users.me);
     // app.get('/users/:userId', users.show);

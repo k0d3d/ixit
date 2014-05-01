@@ -40,7 +40,7 @@ angular.module('user',[])
                 $window.location = '/dashboard/#/dashboard';
             } else {
                 $scope.isLoading = false;
-                $scope.flash = 'Error Occured wit Authentication Request';
+                $scope.flash = 'An Error Occured with the Authentication Request';
                 $timeout(function(){
                     $scope.flash = '';
                 }, 7000);

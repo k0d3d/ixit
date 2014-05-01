@@ -4,7 +4,7 @@
  * */
 
 var UserModel = require('./user/user.js').UserModel,
-    VerificationModel = require('./user/user.js').VerificationModel,
+    VerificationModel = require('./user/user.js').UserVerification,
     Q = require('q'),    
     utils = require('../lib/commons.js'),
     _ = require('underscore'),
@@ -54,7 +54,6 @@ var userFunctions = {
     },
     prepUserVerificationToken: function prepUserVerificationToken(data) {
         console.log('Creating verification token');
-        console.log(data);
         var d = Q.defer();
 
         var vm = new VerificationModel();
@@ -70,7 +69,7 @@ var userFunctions = {
                 data.token = i.token;
                 return d.resolve(data);
             }
-        });
+        });            
 
         return d.promise;
     },
@@ -189,23 +188,20 @@ var userFunctions = {
 
     },
     sendUserVerificationEmail: function sendUserVerificationEmail(data) {
+        console.log('Sending Verification Token...');
         // we want to send user who has registered
-        var sendTemplateEmail = sendMessage.sendTemplateEmail;
+        var sendTemplateEmail = sendMessage.sendHTMLMail;
 
         console.log('in before send of email');
         
-        var _conf = require("config");
-        
-        console.log(JSON.stringify(_conf));
-        
-        var config = _conf.users;
+        var config = require("config");        
 
-        console.log(config);
+        var prefix = config.app.http_app_domain; // need to put in http:// based upon where we are (local, dev, test, prod) - can be config
 
-        var prefix = config.httpPrefix; // need to put in http:// based upon where we are (local, dev, test, prod) - can be config
-
-        return sendTemplateEmail(data.email, config.fromDefaultEmailAddress,
-        config.userVerificationEmailSubject, "views/email-templates/user-email-verification.jade", {
+        return sendTemplateEmail({
+            to: data.email, // list of receivers
+            subject: 'Welcome to IXIT', // Subject line
+        }, "views/email-templates/user-email-verification.jade", {
             verificationLink: prefix + "/email-verification?reg_key=" + data.token
         });
 
@@ -691,7 +687,7 @@ User.prototype.create = function(options) {
                 
             }).
             catch (function(err) {
-
+                console.log(err);
                 // something went wrong with the signup - return error screen
                 d.reject(err);
 
@@ -788,7 +784,7 @@ User.prototype.findUserObject = function(options) {
  * @param  {Object} req             the request object 
  * @return {Object}                 Promise Object
  */
-User.prototype.checkAuthCredentials = function(usernameOrEmail, password, twoFactorCode, req) {
+User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
     console.log('Checking Auth credentials');
     console.log(req);
     var d = Q.defer();
@@ -805,40 +801,38 @@ User.prototype.checkAuthCredentials = function(usernameOrEmail, password, twoFac
         .then(function(r) {
             console.log('After password validation');
             console.log(r);
-            // validate two factor
-            if (r.two_factor_check) {
 
-            }
             //validatePassword returns boolean
             //send back the user document
             if (r) {
-                var i = {
-                    action: 'login-attempt',
-                    verdict: 'passed',
-                    userId: userInfo.email,
-                    category: 'auth',
-                    ipAddress: userInfo.ipAddress
-                };
-                userFunctions.recordAttemptnAudit(i)
-                .then(function () {
-                    console.log('Sending back user info');
+                d.resolve(user);
+                // var i = {
+                //     action: 'login-attempt',
+                //     verdict: 'passed',
+                //     userId: userInfo.email,
+                //     category: 'auth',
+                //     ipAddress: userInfo.ipAddress
+                // };
+                // userFunctions.recordAttemptnAudit(i)
+                // .then(function () {
+                //     console.log('Sending back user info');
 
-                    //trigger a logged-in event fr 
-                    //this user
-                    try {
-                        userFunctions.userAuthEvent(user);
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    //return back the userInfo 
-                    //which should contain the user 
-                    //account data
-                    d.resolve(user);
-                }, function (err) {
-                    //Errors with recording and 
-                    //auditing 
-                    d.reject(err);
-                });
+                //     //trigger a logged-in event fr 
+                //     //this user
+                //     try {
+                //         userFunctions.userAuthEvent(user);
+                //     } catch (e) {
+                //         console.log(e);
+                //     }
+                //     //return back the userInfo 
+                //     //which should contain the user 
+                //     //account data
+                //     d.resolve(user);
+                // }, function (err) {
+                //     //Errors with recording and 
+                //     //auditing 
+                //     d.reject(err);
+                // });
 
             } else {
                 
@@ -846,26 +840,26 @@ User.prototype.checkAuthCredentials = function(usernameOrEmail, password, twoFac
             }
 
         }, function(err) {
-            console.log('Error Logging');
-            console.log(err);
-            //Errors with password verification
-            var i = {
-                action: 'login-attempt',
-                verdict: 'failed',
-                userId: userInfo.email,
-                category: 'auth',
-                error: err.message,
-                ipAddress: userInfo.ipAddress                
-            };
-            userFunctions.recordAttemptnAudit(i)
-            .then(function () {
-                //Errors with validatePassword.
-                //reject promise. 
-                d.reject(err);
-            }, function (err) {
-                d.reject(err);
-            });
-
+            // console.log('Error Logging');
+            // console.log(err);
+            // //Errors with password verification
+            // var i = {
+            //     action: 'login-attempt',
+            //     verdict: 'failed',
+            //     userId: userInfo.email,
+            //     category: 'auth',
+            //     error: err.message,
+            //     ipAddress: userInfo.ipAddress                
+            // };
+            // userFunctions.recordAttemptnAudit(i)
+            // .then(function () {
+            //     //Errors with validatePassword.
+            //     //reject promise. 
+            //     d.reject(err);
+            // }, function (err) {
+            //     d.reject(err);
+            // });
+            d.reject(err);
         });
 
     }, function(err) {
