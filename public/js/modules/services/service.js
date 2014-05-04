@@ -33,20 +33,20 @@ angular.module('services', [])
   
       a.fetchFolder = function(folderParam, cb){
         console.log(folderParam);
-        $http.get('/api/user/folder?'+ $.param(folderParam))
+        $http.get('/api/internal/user/folder?'+ $.param(folderParam))
         .success(function(list){
           cb(list);
         })
         .error(function(err){
           Alert.set_notice({
             message: err,
-            type: 'error',
+            type: 'danger',
           });  
         });
       };
 
       a.createSubFolder = function(name, parentId, cb){
-        $http.post('/api/user/folder', {
+        $http.post('/api/internal/user/folder', {
           name: name,
           parentId: parentId,
           type: 'sub'
@@ -69,7 +69,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.thisUserFiles = function(param, callback){
-        $http.get('/api/user/files', param)
+        $http.get('/api/internal/user/files', param)
         .success(function(data, status){
             callback(data);
         })
@@ -86,7 +86,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.thisUserQueue = function(param, callback){
-        $http.get('/api/user/queue', param)
+        $http.get('/api/internal/user/queue', param)
         .success(function(data, status){
             callback(data);
           })
@@ -103,7 +103,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.deleteThisFile = function(ixid, callback){
-        $http.delete('/api/user/files/'+ixid)
+        $http.delete('/api/internal/user/files/'+ixid)
         .success(function(data, status){
           callback(data);
         })
@@ -119,7 +119,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.removeFromQueue = function(mid, callback){
-        $http.delete('/api/user/queue/'+mid)
+        $http.delete('/api/internal/user/queue/'+mid)
         .success(function(data, success){
           callback();
         })
@@ -135,7 +135,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.updateTags = function(tags, file_id, cb){
-        $http.put('/api/user/files/'+file_id+'/tags', {tags: tags})
+        $http.put('/api/internal/user/files/'+file_id+'/tags', {tags: tags})
         .success(function(d){
   
         })

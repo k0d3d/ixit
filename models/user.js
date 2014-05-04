@@ -786,7 +786,6 @@ User.prototype.findUserObject = function(options) {
  */
 User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
     console.log('Checking Auth credentials');
-    console.log(req);
     var d = Q.defer();
 
     var userInfo = {

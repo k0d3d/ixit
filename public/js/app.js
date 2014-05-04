@@ -3,7 +3,6 @@ var app = angular.module('ixitApp',[
     'filters',
     'directives',
     'language',
-    'home',
     'user',
     'dashboard',
     'services',
@@ -22,14 +21,14 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
   return {
     responseError: function (response) {
-      N.notifier({
+      N.set_notice({
         message: response.data.message || response.data,
         type: 'danger'
       });
       return $q.reject(response);
     }
   };
-}])
+}]);
 
 
 app.controller('MainController', 

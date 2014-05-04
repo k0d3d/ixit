@@ -43,17 +43,7 @@ var port = process.env.PORT || 3000;
 
 function afterResourceFilesLoad(redis_client) {
 
-    console.log('configuring application, please wait...');
-
-
-    console.log('Loading ' + 'passport'.inverse + ' config...');
-    // try {
-    // } catch(e) {
-    //   console.log('Error Loading Passport Config...');
-    //   console.trace(e);
-    // }
-    require('./lib/auth/passport.js')(passport);
-    
+    console.log('configuring application, please wait...');   
 
     app.set('showStackError', true);
 
@@ -80,6 +70,14 @@ function afterResourceFilesLoad(redis_client) {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
 
+
+    console.log('Loading ' + 'passport'.inverse + ' config...');
+    // try {
+    // } catch(e) {
+    //   console.log('Error Loading Passport Config...');
+    //   console.trace(e);
+    // }
+    require('./lib/auth/passport.js')(passport);
 
     // set logging level - dev for now, later change for production
     app.use(logger('dev'));
@@ -221,7 +219,20 @@ redis_client.on('ready', function (data) {
   console.log('Redis connection is....ok');
 });
 redis_client.on('error', function (data) {
+  console.log(data);
   console.log('Redis connection failure...%s:%s', config.redis.host, config.redis.port);
+});
+
+console.log("Checking connection to IXIT Document Server...");
+restler.get(config.api_url + '/ping')
+.on('success', function (data) {
+  // console.log(data);
+  if (data === 'ready' ) {
+    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.api_url);
+  }
+})
+.on('error', function (data) {
+  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.api_url);
 });
 
 
@@ -229,29 +240,27 @@ console.log("Setting up database communication...");
 // setup database connection
 require('./lib/db').open()
 .then(function () {
-  console.log('Connection open...');
-  afterResourceFilesLoad(redis_client);
-
-  // actual application start
-  app.listen(port);
-  console.log('IXIT Document Client started on port '+port);
-
-  // expose app
-  exports = module.exports = app;
-  // CATASTROPHIC ERROR
-  app.use(function(err, req, res){
-    
-    console.error(err.stack);
-    
-    // make this a nicer error later
-    res.send(500, 'Ewww! Something got broken on IXIT. Getting some tape and glue');
-    
-  });
-
+  console.log('Database Connection open...');
 })
 .catch(function (e) {
   console.log(e);
 });
 
+//load resources
+afterResourceFilesLoad(redis_client);
 
+// actual application start
+app.listen(port);
+console.log('IXIT Document Client started on port '+port);
 
+// expose app
+exports = module.exports = app;
+// CATASTROPHIC ERROR
+app.use(function(err, req, res){
+  
+  console.error(err.stack);
+  
+  // make this a nicer error later
+  res.send(500, 'Ewww! Something got broken on IXIT. Getting some tape and glue');
+  
+});

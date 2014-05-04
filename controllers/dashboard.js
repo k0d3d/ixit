@@ -4,11 +4,9 @@
 var User = require('../models/user.js'),
     util = require('util'),
     _ = require('underscore'),
-    Keeper = require('./k33per').keeper,
+    Keeper = require('./k33per').K33per,
     hashr = require('../lib/hash.js'),  
-    commons = require('../lib/commons'),
-    passport = require("passport");
-
+    commons = require('../lib/commons');
 
 //Initialize Dashboard Object
 function Dashboard (){
@@ -30,7 +28,14 @@ Dashboard.prototype.getClientKey = function(userId, cb){
 var dashboard = new Dashboard();
 module.exports.dashboard = dashboard;
 
-module.exports.routes = function(app){
+module.exports.routes = function(app, isLoggedIn, passport){
+	  //Dashboard
+  app.all('/dashboard/*', isLoggedIn(), function (req, res, next) {
+    res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+    console.log('yes is');
+    return next(); 
+  });
+
 	app.get('/dashboard', function(req, res){
 		var keeper = new Keeper();
 		var owner = hashr.hashOid(req.session.passport.user);
@@ -61,23 +66,10 @@ module.exports.routes = function(app){
 		keeper.count(owner, function(d){
 			var r = (!_.isEmpty(d))? d[0]: {files: 0, size: 0};
 			res.render('dashboard/all', {
-				size: commons._formatFileSize(r.size),
-				files: r.files
+				// size: commons._formatFileSize(r.size),
+				// files: r.files
 			});
 		});
-	});
-
-	//Show All Files on the user dashboard
-	app.get('/dashboard/files/all', passport.ensureAuthenticated, function(req, res){
-		res.render('dashboard');
-	});
-
-	app.get('/dashboard/user/account', passport.ensureAuthenticated, function(req, res){
-		res.render('dashboard');
-	});
-
-	app.get('/dashboard/user/developer', passport.ensureAuthenticated, function(req, res){
-		res.render('dashboard');
 	});
 
 };

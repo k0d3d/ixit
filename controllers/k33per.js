@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
     passport = require('passport'),
     rest = require('restler'),
     hashr = require('../lib/hash.js'),
-    _ = require('underscore'),
+    _ = require('lodash'),
     config = require('config'),
     commons = require('../lib/commons'),
     util = require('util'),
@@ -62,7 +62,6 @@ function strip_queue_result(mongooseResult, callback){
     if(mongooseResult.length === i + 1){
       callback(h);
     }
-    console.log(i);
   });
 }
 
@@ -101,6 +100,7 @@ K33per.prototype.loadFolder = function(user, options, cb){
   register.once('reqFolder', function(data, isDone){
     rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
     .on('complete', function(r){
+
       isDone(r);
     });    
   });
@@ -108,10 +108,16 @@ K33per.prototype.loadFolder = function(user, options, cb){
   //Event strips out propeties that shouldnt be sent to the view from the 
   //files object
   register.once('stripOnFiles', function(data, isDone){
+
+    if (_.isEmpty(data.files) || !data.files) {
+      cab.files = [];
+    } else {
     //Remove unecessary properties and hash the ObjectId;
     //Keep the stripped result in 
-    //the files property     
-    cab.files = strip_files_result(data.files);
+    //the files property   
+      cab.files = strip_files_result(data.files);
+    }
+    
     //Pass in data again so the next event
     //can use it    
     isDone(data); 
@@ -120,20 +126,24 @@ K33per.prototype.loadFolder = function(user, options, cb){
   //Event strips out propeties that shouldnt be sent to the view from the 
   //files object
   register.once('stripOnFolder', function(data, isDone){
-    //Remove unecessary properties and hash the ObjectId;
-    //Keep the stripped result in 
-    //the folders property   
-    //console.log(r);    
-    cab.folders = strip_folder_result(data.folders);
+    if (_.isEmpty(data.folders || !data.folders)) {
+      cab.folders = [];
+    } else {
+      //Remove unecessary properties and hash the ObjectId;
+      //Keep the stripped result in 
+      //the folders property   
+      //console.log(r);     
+      cab.folders = strip_folder_result(data.folders);
+    }
     //pass it on, nothing to do thou
-    isDone(data);
+    isDone(cab);
       
   });
 
   register
   .queue('reqFolder', 'stripOnFiles', 'stripOnFolder')
   .onEnd(function(data){
-    cb(cab);
+    cb(data);
   })
   .onError(function(err){
     cb(err);
@@ -150,6 +160,7 @@ K33per.prototype.loadFolder = function(user, options, cb){
  * @return {[type]}              [description]
  */
 K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb){
+  console.log('Attempting to create new folder.');
   var dataTo = {
       name: foldername,
       parent: hashr.unhashOid(parent_id),
@@ -164,7 +175,6 @@ K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb)
       data: data
     }))
     .on('complete', function(r){
-      console.log(r);
       isDone(r);
     });    
   });
@@ -212,6 +222,7 @@ K33per.prototype.getUsersFiles = function(userId, callback){
 };
 
 K33per.prototype.getUserQueue = function(userId, callback){
+  console.log('loading user queue...');
   rest.get(config.api_url+ '/user/'+userId+'/queue',{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
@@ -316,7 +327,7 @@ K33per.prototype.count = function(userId, cb){
 };
 
 
-module.exports.keeper = K33per;
+module.exports.K33per = K33per;
 
 var k33per = new K33per();
 
@@ -324,7 +335,7 @@ module.exports.routes = function(app, redis_client){
   //Request all files in a folder belonging to a user
   //Using the req.cookies to determine what folder is 
   //'current'
-  app.get('/api/user/folder', function(req, res, next){
+  app.get('/api/internal/user/folder', function(req, res, next){
     var currentFolder = hashr.unhashOid(req.query.id);
     //Users are always stored as hashes on the vault
     var owner = hashr.hashOid(req.session.passport.user);
@@ -345,7 +356,7 @@ module.exports.routes = function(app, redis_client){
   });
 
   //Request all files uploaded by a user
-  app.get('/api/user/files', function(req, res, next){
+  app.get('/api/internal/user/files', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUsersFiles(owner, function(r){
       if( r instanceof Error){
@@ -356,7 +367,7 @@ module.exports.routes = function(app, redis_client){
     });
   });
 
-  app.get('/api/user/queue', function(req, res, next){
+  app.get('/api/internal/user/queue', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUserQueue(owner, function(r){
       if( r instanceof Error){
@@ -367,7 +378,7 @@ module.exports.routes = function(app, redis_client){
     });
   });
   //Searches for files using filenames and tags
-  app.get('/api/search/:queryString', function(req, res, next){
+  app.get('/api/internal/search/:queryString', function(req, res, next){
     k33per.search(req.params.queryString, function(r){
       if(util.isError(r)){
         next(r);
@@ -377,7 +388,7 @@ module.exports.routes = function(app, redis_client){
     });
   });
 
-  app.get('/api/media/:mediaId/request/', function(req, res, next){
+  app.get('/api/internal/media/:mediaId/request/', function(req, res, next){
     k33per.requestFileDownload(req.params.mediaId, redis_client, function(r){
       if(util.isError(r)){
         next(r);
@@ -388,8 +399,8 @@ module.exports.routes = function(app, redis_client){
   });
 
   //calls the method which creates a new folder or subfolder
-  app.post('/api/user/folder', function(req, res, next){
-    return res.json(500, false);
+  app.post('/api/internal/user/folder', function(req, res, next){
+    // return res.json(500, false);
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.createFolder( req.body.name, req.body.parentId, req.body.type, owner, function(r){
       if(util.isError(r)){
@@ -401,7 +412,7 @@ module.exports.routes = function(app, redis_client){
   }); 
 
   //Update tags for a file
-  app.put('/api/user/files/:fileId/tags', function(req, res, next){
+  app.put('/api/internal/user/files/:fileId/tags', function(req, res, next){
     var tags = req.body.tags;
     var file_id = req.params.fileId;
     var owner = hashr.hashOid(req.session.passport.user);
@@ -415,7 +426,7 @@ module.exports.routes = function(app, redis_client){
   });
 
 
-  app.del('/api/user/files/:fileId', function(req, res, next){
+  app.del('/api/internal/user/files/:fileId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
@@ -428,7 +439,7 @@ module.exports.routes = function(app, redis_client){
   });
 
   //Delete a file on the upload queue
-  app.del('/api/user/queue/:queueId', function(req, res, next){
+  app.del('/api/internal/user/queue/:queueId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user); 
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){

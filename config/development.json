@@ -18,7 +18,7 @@
     "express": {    
         "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509"
     },
-    "api_url": "http://192.168.2.11:3000",
+    "api_url": "http://127.0.0.1:3001",
     "appID": "08E54688615982ADB5D8E3FEB8DCE2C'",
     "appSecret": "xynl7HycdsRulJ3IDvzernI8fsywclxod334lRFUIcKjkNJLEH6UFgVk7epXT9O",
     "mail" : {

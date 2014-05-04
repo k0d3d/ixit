@@ -73,7 +73,7 @@ appDirective.directive('uploadHandler',['$cookies','Sharer','$rootScope', functi
   };
   function link (scope, element, attrs){
     var r = new Resumable({
-      target:'http://ixit.vm:3000/upload',
+      target:'http://localhost:3001/upload',
       chunkSize:1*1024*1024,
       simultaneousUploads:4,
       testChunks:true,
@@ -311,7 +311,7 @@ appDirective.directive('notification', ['$timeout', function notification ($time
       //Close the notification after 3 secs
       $timeout(function(){
         scope.close_note(0);
-      }, 50000);
+      }, 10000);
     };
   }
   function NoticeCtrl ($scope){

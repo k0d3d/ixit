@@ -1,6 +1,6 @@
 
 // routes for app views and templates
-module.exports = function (app, isLoggedIn) {
+module.exports = function (app, isLoggedIn, passport) {
   // home route
   app.get('/', function(req, res){
     res.render('index');
@@ -34,9 +34,6 @@ module.exports = function (app, isLoggedIn) {
       res.render('partials/' + name);
     }
   );
-
-  //Dashboard
-  app.all('/dashboard', isLoggedIn());
   
   // home route
   app.get('/:parent/:child', function(req, res){

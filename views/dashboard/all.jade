@@ -23,7 +23,7 @@ div.files-ctrlr
                 input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
             button.btn.btn-flat.btn-success(type="submit") Create Folder 
         .clearfix
-  .row(ng-show="cabinetTabs.length > 0")       
+  .row(ng-show="cabinetTabs[0].list.files.length > 0 || cabinetTabs[0].list.folders.length > 0")       
     .table-wrapper.files-table.vprt
       .col-md-12.fz
         ul.nav.nav-tabs.ftbz(folder-tabs)
@@ -55,7 +55,7 @@ div.files-ctrlr
                   td
                     i.fa.fa-folder-o
                   td
-                    a.name(ui-sref='.folder({folderId: d.id})', ng-click="open_folder($index)") {{d.name}}
+                    a.name(ui-sref='.folder', ng-click="open_folder($index)") {{d.name}}
                   td
                   td
                   td.align-right
@@ -88,7 +88,7 @@ div.files-ctrlr
                     .btn-group.btn-group-sm
                       button.btn.btn-primary(href='#') Share
                       button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
-  .row-header(ng-show="cabinetTabs[0].list.length == 0")
+  .row-header(ng-show="cabinetTabs[0].list.files.length == 0 && cabinetTabs[0].list.folders.length == 0")
     #pad-wrapper
       .no-gallery
         .center

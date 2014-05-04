@@ -221,9 +221,6 @@ module.exports.routes = function(app){
     app.post('/api/internal/users', function (req, res) {
       users.register(req.body, function (r) {
 
-        console.log(r);
-
-
         if (util.isError(r)) {
             //next(r);
             return res.json(400, {nextUrl: '/register/failed'} );

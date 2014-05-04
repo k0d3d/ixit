@@ -21,7 +21,7 @@ module.exports = function (app, passport, redis_client) {
   users.routes(app);
 
   var dashboard = require('../controllers/dashboard');
-  dashboard.routes(app, redis_client);
+  dashboard.routes(app, isLoggedIn, passport);
 
   var keeper = require('../controllers/k33per.js');
   keeper.routes(app, redis_client);
@@ -29,12 +29,13 @@ module.exports = function (app, passport, redis_client) {
   /**
    * Views and template routes
    */
-  require('./site.js')(app, isLoggedIn);
+  require('./site.js')(app, isLoggedIn, passport);
 
 
   app.get('/:hashrid', function(req, res, next){
     var mediaId = hashr.unhashInt(req.params.hashrid);
-    keeper.keeper.downloadPage(mediaId, function(r){
+    var k = new keeper.K33per();
+    k.downloadPage(mediaId, function(r){
       if(util.isError(r)){
         next(r);
       }else{
