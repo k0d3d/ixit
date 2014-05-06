@@ -37,14 +37,16 @@ module.exports.routes = function(app, isLoggedIn, passport){
   });
 
 	app.get('/cabinet', isLoggedIn(), function(req, res){
-		var keeper = new Keeper();
-		var owner = hashr.hashOid(req.session.passport.user);
-		keeper.loadHome(owner, function(d){
-			res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
-			res.render('dashboard', {
-				home_folder: hashr.hashOid(d)
-			});
-		});		
+		// var keeper = new Keeper();
+		// var owner = hashr.hashOid(req.session.passport.user);
+		res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});		
+		res.render('dashboard');		
+		// keeper.loadHome(owner, function(d){
+		// 	res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+		// 	res.render('dashboard', {
+		// 		home_folder: hashr.hashOid(d)
+		// 	});
+		// });		
 	});
 
 	// app.get('/dashboard/developer', function(req, res){

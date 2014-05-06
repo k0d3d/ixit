@@ -336,23 +336,50 @@ module.exports.routes = function(app, redis_client){
   //Using the req.query.id to determine what folder is 
   //'current'
   app.get('/api/internal/users/folder', function(req, res, next){
-    var currentFolder = hashr.unhashOid(req.query.id);
-    //Users are always stored as hashes on the vault
-    var owner = hashr.hashOid(req.session.passport.user);
+    var currentFolder;
     //The parent folder if any
     var parent = req.query.parent;
 
-    //
-    k33per.loadFolder(owner, {
-      id: currentFolder,
-      parentId: parent
-    }, function(r){
-      if(util.isError(r)){
-        next(r);
-      }else{
-        res.json(200, r);
-      }
-    });
+    //Users are always stored as hashes on the vault
+    var owner = hashr.hashOid(req.session.passport.user);
+
+    if (req.query.id === 'home') {
+      //load home fetches the ObjectId of
+      //the currently logged-in user's
+      //home folder
+      k33per.loadHome(owner, function(d){
+        if(util.isError(d)){
+          next(d);
+        }else{
+          //gotten the ObjectId...
+          //lets load the folder files 
+          k33per.loadFolder(owner, {
+            id: d,
+            parentId: parent
+          }, function(r){
+            if(util.isError(r)){
+              next(r);
+            }else{
+              res.json(200, r);
+            }
+          });   
+
+        }
+      });        
+    } else {
+      currentFolder = hashr.unhashOid(req.query.id);
+
+      k33per.loadFolder(owner, {
+        id: currentFolder,
+        parentId: parent
+      }, function(r){
+        if(util.isError(r)){
+          next(r);
+        }else{
+          res.json(200, r);
+        }
+      });
+    }
   });
 
   //Request all files uploaded by a user

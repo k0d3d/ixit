@@ -58,26 +58,15 @@ app.controller('MainController',
   function href(target){
     $location.path(target);
   }
-  function backBtn(){
-    history.back();
-  }
-  function _clearAll(){
-    $scope.filequeue = '';
-  }
 
   //Initialize breadcrumbs 
-  $scope.path = [
-    {
-      name: 'Home',
-      id: $scope.current_folder
-    }
-  ];
+  $scope.path = [];
 
 
   $scope.commons = {
-    href : href,
-    backBtn: backBtn,
-    clearAll: _clearAll
+    clearAll:  function _clearAll(){
+      $scope.filequeue = '';
+    }
   };
   $scope.clickBrowse = function(){
     $('.browsefiles').click();
@@ -108,6 +97,10 @@ app.controller('MainController',
   //Listener for notifincation 
   $scope.$on('newNotice', function(){
     $scope.notices = Alert.notes;
+  });
+
+  $scope.$on('refresh_breadcrumb', function () {
+    $scope.path = Keeper.path; 
   });
 
   // When the scope is destroyed, be sure to unbind

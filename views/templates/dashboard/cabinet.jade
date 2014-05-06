@@ -1,4 +1,4 @@
-.row(ng-show="cabinetTabs[0].list.files.length > 0 || cabinetTabs[0].list.folders.length > 0")       
+.row(ng-show="hasContent()")       
   .table-wrapper.files-table.vprt
     .col-md-12.fz
       ul.nav.nav-tabs.ftbz(folder-tabs)
@@ -63,7 +63,7 @@
                   .btn-group.btn-group-sm
                     button.btn.btn-primary(href='#') Share
                     button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
-.row-header(ng-show="cabinetTabs[0].list.files.length == 0 && cabinetTabs[0].list.folders.length == 0")
+.row-header(ng-show="hasContent()")
   #pad-wrapper
     .no-gallery
       .center

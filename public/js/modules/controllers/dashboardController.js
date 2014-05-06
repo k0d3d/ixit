@@ -5,46 +5,30 @@ angular.module('dashboard',[])
     abstract: true,
     url: '/cabinet',
     views: {
-      main : {
+      'main' : {
         templateUrl: '/dashboard/all', 
-        controller: 'indexController',
-        resolve: {
-          contenter: function ($scope, $http) {
-            return $http.get('/api/internal/users/folder?id=' + $scope.current_folder)
-            .then(function (data) {
-              return data.data;
-            });
-            // console.log($stateParams);
-          }
-        },    
       }
     },
-    
+    controller: 'indexController'
   })
   .state('cabinet.files', {
     url: '/files/all',
     views: {
       'cabinetView@cabinet' : {
         templateUrl: '/templates/dashboard/cabinet',
-        controller: 'filesController',
-        // resolve: {
-        //   contenter: function ($scope, $http) {
-        //     return $http.get('/api/internal/users/folder?id=' + $scope.current_folder)
-        //     .then(function (data) {
-        //       return data.data;
-        //     });
-        //     // console.log($stateParams);
-        //   }
-        // }
       }
     },
-    // controller: 'filesController'
+    controller: 'filesController',
+    resolve: {
+      contenter: function (Keeper, $http) {
+        return $http.get('/api/internal/users/folder?id=home')
+        .then(function (data) {
+          return data.data;
+        });
+        // console.log($stateParams);
+      }
+    }
   })
-  // .state('dashboard.files', {
-  //   url: '/cabinet/files/all',
-  //   templateUrl: '/templates/dashboard/cabinet', 
-  //   // controller: 'filesController'
-  // })
   .state('cabinet.folder', {
     url: '/folder/:folderId',
     views: {
@@ -63,49 +47,21 @@ angular.module('dashboard',[])
       }
     }
   })
-  // .state('dashboard.account', {
-  //   url: '/dashboard/user/account',
-  //   templateUrl: '/dashboard/personal', 
-  //   // controller: 'accountController'
-  // })
+  
   ;    
 }])
 .controller('indexController', ['$scope', '$http', '$cookies', '$state', function indexController($scope, $http, $cookies, $state){
   $state.transitionTo('cabinet.files');
   console.log('message');
 }])
-// .controller('developerController', ['$scope', '$sanitize', 'Authenticate', function($scope, $sanitize, Auth){
-//   $scope.submit4key = function(){
-//     Auth.getApiKey(function(r){
-//       $scope.thisClientKey = r.clientKey;
-//     });
-//   };
-// }])
-// .controller('accountController', ['$scope', 'accountServices', function($scope, as){
-
-//   as.getUser(function(r){
-//     $scope.user = _.extend({_id: $scope.cuser}, r);
-//   });
-
-//   $scope.updateAc = function(){
-//     // if($scope.user.password !== $scope.passwordC){
-//     //     $scope.accountForm.passwordC.$invalid = true;
-//     //     return false;
-//     // }
-//     as.update($scope.user, function(r){
-
-//     });
-//   };
-// }])
 .controller('filesController', [
   '$scope', 
   '$http', 
   'Keeper', 
   'Tabs', 
   '$state', 
-  function filesController ($scope, $http, Keeper, Tabs) {
+  function filesController ($scope, $http, Keeper, Tabs, contenter) {
   function init(){
-    var contenter;
     console.log('contenter');
     if (contenter.length) {
       // T.reloadHome({
@@ -127,6 +83,15 @@ angular.module('dashboard',[])
     }
   }
   init();
+
+  $scope.hasContent = function () {
+    if ($scope.cabinetTabs[0].list.files.length > 0 || 
+      $scope.cabinetTabs[0].list.folders.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   $scope.trashFile = function(index, tabIndex){         
     //var ixid = $scope.files[index].ixid;

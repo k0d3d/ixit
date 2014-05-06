@@ -28,8 +28,17 @@ angular.module('services', [])
 
       return a;
   })
-  .factory('Keeper', ['$http', 'Alert', function($http, Alert){
+  .factory('Keeper', ['$http', 'Alert', '$rootScope', function($http, Alert, $rootScope){
       var a = {};
+
+      a.currentFolder = '';
+
+      a.path = [];
+
+      a.addToCrumb = function (ob) {
+        a.path.push(ob);
+        $rootScope.$broadcast('refresh_breadcrumb');
+      };
   
       a.fetchFolder = function(folderParam, cb){
         $http.get('/api/internal/users/folder?'+ $.param(folderParam))
@@ -156,7 +165,7 @@ angular.module('services', [])
       a.makeFolder = function(foldername, parent, cb){
   
       };
-  
+
       return a;
     }])
   .factory('Sharer', function($rootScope){
