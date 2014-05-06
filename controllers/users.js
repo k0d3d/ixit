@@ -245,7 +245,8 @@ module.exports.routes = function(app){
           if(!_.isUndefined(user.isDeveloper)){
             req.user.isDeveloper = user.isDeveloper;
           }
-          return res.json(200, {status: true});
+          console.log(req.session.returnTo);
+          return res.json(200, {returnTo: req.session.returnTo, status: 200});
         });
       })(req, res, next);
     });

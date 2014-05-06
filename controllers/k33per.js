@@ -333,9 +333,9 @@ var k33per = new K33per();
 
 module.exports.routes = function(app, redis_client){
   //Request all files in a folder belonging to a user
-  //Using the req.cookies to determine what folder is 
+  //Using the req.query.id to determine what folder is 
   //'current'
-  app.get('/api/internal/user/folder', function(req, res, next){
+  app.get('/api/internal/users/folder', function(req, res, next){
     var currentFolder = hashr.unhashOid(req.query.id);
     //Users are always stored as hashes on the vault
     var owner = hashr.hashOid(req.session.passport.user);
@@ -356,7 +356,7 @@ module.exports.routes = function(app, redis_client){
   });
 
   //Request all files uploaded by a user
-  app.get('/api/internal/user/files', function(req, res, next){
+  app.get('/api/internal/users/files', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUsersFiles(owner, function(r){
       if( r instanceof Error){
@@ -367,7 +367,7 @@ module.exports.routes = function(app, redis_client){
     });
   });
 
-  app.get('/api/internal/user/queue', function(req, res, next){
+  app.get('/api/internal/users/queue', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUserQueue(owner, function(r){
       if( r instanceof Error){
@@ -399,7 +399,7 @@ module.exports.routes = function(app, redis_client){
   });
 
   //calls the method which creates a new folder or subfolder
-  app.post('/api/internal/user/folder', function(req, res, next){
+  app.post('/api/internal/users/folder', function(req, res, next){
     // return res.json(500, false);
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.createFolder( req.body.name, req.body.parentId, req.body.type, owner, function(r){
@@ -412,7 +412,7 @@ module.exports.routes = function(app, redis_client){
   }); 
 
   //Update tags for a file
-  app.put('/api/internal/user/files/:fileId/tags', function(req, res, next){
+  app.put('/api/internal/users/files/:fileId/tags', function(req, res, next){
     var tags = req.body.tags;
     var file_id = req.params.fileId;
     var owner = hashr.hashOid(req.session.passport.user);
@@ -426,7 +426,7 @@ module.exports.routes = function(app, redis_client){
   });
 
 
-  app.del('/api/internal/user/files/:fileId', function(req, res, next){
+  app.del('/api/internal/users/files/:fileId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
@@ -439,7 +439,7 @@ module.exports.routes = function(app, redis_client){
   });
 
   //Delete a file on the upload queue
-  app.del('/api/internal/user/queue/:queueId', function(req, res, next){
+  app.del('/api/internal/users/queue/:queueId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user); 
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){

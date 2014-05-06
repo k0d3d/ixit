@@ -1,0 +1,77 @@
+.row(ng-show="cabinetTabs[0].list.files.length > 0 || cabinetTabs[0].list.folders.length > 0")       
+  .table-wrapper.files-table.vprt
+    .col-md-12.fz
+      ul.nav.nav-tabs.ftbz(folder-tabs)
+      .tab-content
+        .tab-pane.fade(ng-repeat="tabC in cabinetTabs", id="{{tabC.id}}", ng-init="tabIndex = $index", scroll-bar)
+          table.table.table-hover
+            thead
+              tr
+                th.col-md-2
+                  input(type='checkbox')
+                  | Date
+                th.th-icon
+                th.col-md-5
+                  span.line
+                  | Name
+                th.col-md-1
+                  span.line
+                  | Size
+                th.col-md-1
+                  span.line
+                  | Downloads
+                th.col-md-2
+                  span.line
+            tbody
+              tr(ng-repeat="d in tabC.list.folders")
+                td 
+                  input(type='checkbox')
+                  | {{d.created | moment}}
+                td
+                  i.fa.fa-folder-o
+                td
+                  a.name(ui-sref='cabinet.folder({folderId: d.id})', ng-click="open_folder($index)") {{d.name}}
+                td
+                td
+                td.align-right
+                  .btn-group.btn-group-sm
+                    button.btn.btn-primary(href='#') Share
+                    button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
+
+              tr(ng-repeat="f in tabC.list.files")
+                td 
+                  input(type='checkbox')
+                  | {{f.completedDate | moment}}
+                td
+                  i.fa.fa-file-o
+                td
+                  a.name(href='#') {{f.filename}}
+                  .btn-group(style="float: right")
+                    button.btn.btn-default.dropdown-toggle.btn-xs(type="button", dropdown-hover)
+                      | #tags
+                      span.caret
+                    ul.dropdown-menu(style="padding: 0")
+                      li
+                        form
+                          .form-group(style="margin-bottom:0")
+                            input(name="tags", class="tag-field", tags-input, ng-model="f.tags", ixid="{{f.ixid}}")
+                td
+                  | {{f.size | formatFileSize}}
+                td
+                  | {{f.downloadCount}}
+                td.align-right
+                  .btn-group.btn-group-sm
+                    button.btn.btn-primary(href='#') Share
+                    button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
+.row-header(ng-show="cabinetTabs[0].list.files.length == 0 && cabinetTabs[0].list.folders.length == 0")
+  #pad-wrapper
+    .no-gallery
+      .center
+        img(src='/img/1379620524_add_file.png')
+        h6 You don't have any files on your storage
+        p
+          | Click the button below to select files from your computer. 
+          | You can drag files into this space and drop to upload. 
+        a.btn-glow.primary(data-ng-click="clickBrowse()") Add files
+  // end blank state 
+              

@@ -13,7 +13,7 @@ var app = angular.module('ixitApp',[
 
 app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-  $urlRouterProvider.otherwise('/dashboard');
+  $urlRouterProvider.otherwise('/cabinet/files/all');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
 });
@@ -95,6 +95,12 @@ app.controller('MainController',
   $scope.$on('newTab', function(){
     $scope.cabinetTabs.push(T.tab);
   });
+
+  $scope.$on('reloadTab', function (index) {
+    console.log(index);
+    $scope.cabinetTabs[index] = T.tab;
+  });
+
   //Listener for prompts
   $scope.$on('newPrompt', function(){
     $scope.alerts = Alert.prompts;

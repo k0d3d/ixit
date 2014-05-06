@@ -18,7 +18,7 @@ angular.module('user',[])
         controller: 'registerController'
     });
 }])
-.controller('loginController', function($scope, $sanitize, $location, Authenticate, $timeout, $window){
+.controller('loginController', function($scope, $sanitize, $location, Authenticate, $timeout, $state){
     $scope.form = {};
     $scope.flash = '';
     $scope.login = function(){
@@ -37,7 +37,7 @@ angular.module('user',[])
                     $scope.flash = '';
                 }, 7000);
             } else if (r.status === 200) {
-                $window.location = '/dashboard/#/dashboard';
+                $state.transitionTo('cabinet.files');
             } else {
                 $scope.isLoading = false;
                 $scope.flash = 'An Error Occured with the Authentication Request';

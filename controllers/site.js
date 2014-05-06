@@ -29,9 +29,10 @@ module.exports = function (app, isLoggedIn, passport) {
     res.render('index');
   });
 
-  app.get('/partials/:name', function (req, res) {
+  app.get('/templates/:parent/:name', function (req, res) {
       var name = req.params.name;
-      res.render('partials/' + name);
+      var parent = req.params.parent;
+      res.render('templates/' + parent + '/' + name);
     }
   );
   

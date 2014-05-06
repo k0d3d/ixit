@@ -32,8 +32,7 @@ angular.module('services', [])
       var a = {};
   
       a.fetchFolder = function(folderParam, cb){
-        console.log(folderParam);
-        $http.get('/api/internal/user/folder?'+ $.param(folderParam))
+        $http.get('/api/internal/users/folder?'+ $.param(folderParam))
         .success(function(list){
           cb(list);
         })
@@ -46,7 +45,7 @@ angular.module('services', [])
       };
 
       a.createSubFolder = function(name, parentId, cb){
-        $http.post('/api/internal/user/folder', {
+        $http.post('/api/internal/users/folder', {
           name: name,
           parentId: parentId,
           type: 'sub'
@@ -69,7 +68,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.thisUserFiles = function(param, callback){
-        $http.get('/api/internal/user/files', param)
+        $http.get('/api/internal/users/files', param)
         .success(function(data, status){
             callback(data);
         })
@@ -86,7 +85,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.thisUserQueue = function(param, callback){
-        $http.get('/api/internal/user/queue', param)
+        $http.get('/api/internal/users/queue', param)
         .success(function(data, status){
             callback(data);
           })
@@ -103,7 +102,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.deleteThisFile = function(ixid, callback){
-        $http.delete('/api/internal/user/files/'+ixid)
+        $http.delete('/api/internal/users/files/'+ixid)
         .success(function(data, status){
           callback(data);
         })
@@ -119,7 +118,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.removeFromQueue = function(mid, callback){
-        $http.delete('/api/internal/user/queue/'+mid)
+        $http.delete('/api/internal/users/queue/'+mid)
         .success(function(data, success){
           callback();
         })
@@ -135,7 +134,7 @@ angular.module('services', [])
        * @return {[type]}
        */
       a.updateTags = function(tags, file_id, cb){
-        $http.put('/api/internal/user/files/'+file_id+'/tags', {tags: tags})
+        $http.put('/api/internal/users/files/'+file_id+'/tags', {tags: tags})
         .success(function(d){
   
         })
@@ -329,6 +328,14 @@ angular.module('services', [])
       this.reTab();
     };
 
+    s.reloadHome = function (id, content) {
+      this.tab = content;
+      this.reloadTab(0);
+    };
+
+    s.reloadTab = function(index){
+      $rootScope.$broadcast('reloadTab', index);
+    };
     s.reTab = function(){
       $rootScope.$broadcast('newTab');
     };

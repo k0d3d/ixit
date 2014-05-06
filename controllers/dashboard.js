@@ -30,37 +30,38 @@ module.exports.dashboard = dashboard;
 
 module.exports.routes = function(app, isLoggedIn, passport){
 	  //Dashboard
-  app.all('/dashboard/*', isLoggedIn(), function (req, res, next) {
+  app.all('/cabinet/*', isLoggedIn(), function (req, res, next) {
     res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
     console.log('yes is');
     return next(); 
   });
 
-	app.get('/dashboard', function(req, res){
+	app.get('/cabinet', isLoggedIn(), function(req, res){
 		var keeper = new Keeper();
 		var owner = hashr.hashOid(req.session.passport.user);
 		keeper.loadHome(owner, function(d){
+			res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 			res.render('dashboard', {
 				home_folder: hashr.hashOid(d)
 			});
 		});		
 	});
 
-	app.get('/dashboard/developer', function(req, res){
-		dashboard.getClientKey(req.session.passport.user, function(r){
-			var key;
-			if(util.isError(r) || _.isEmpty(r)){
-				key = '';
-			}else{
-				key = r;
-			}
-			res.render('dashboard/developer', {
-				key: key
-			});			
-		});
-	});
+	// app.get('/dashboard/developer', function(req, res){
+	// 	dashboard.getClientKey(req.session.passport.user, function(r){
+	// 		var key;
+	// 		if(util.isError(r) || _.isEmpty(r)){
+	// 			key = '';
+	// 		}else{
+	// 			key = r;
+	// 		}
+	// 		res.render('dashboard/developer', {
+	// 			key: key
+	// 		});			
+	// 	});
+	// });
 
-	app.get('/dashboard/all', function(req, res){
+	app.get('/cabinet/files/all', isLoggedIn(), function(req, res){
 		var keeper = new Keeper();
 		var owner = hashr.hashOid(req.session.passport.user);
 		keeper.count(owner, function(d){
