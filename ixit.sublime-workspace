@@ -451,7 +451,7 @@
 			"file": "public/js/modules/controllers/dashboardController.js",
 			"settings":
 			{
-				"buffer_size": 5898,
+				"buffer_size": 5212,
 				"line_ending": "Windows"
 			}
 		},
@@ -459,7 +459,23 @@
 			"file": "public/js/modules/services/service.js",
 			"settings":
 			{
-				"buffer_size": 8613,
+				"buffer_size": 8811,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/app.js",
+			"settings":
+			{
+				"buffer_size": 2353,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "controllers/dashboard.js",
+			"settings":
+			{
+				"buffer_size": 2168,
 				"line_ending": "Windows"
 			}
 		},
@@ -467,47 +483,7 @@
 			"file": "controllers/k33per.js",
 			"settings":
 			{
-				"buffer_size": 12786,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "views/templates/dashboard/cabinet.jade",
-			"settings":
-			{
-				"buffer_size": 3095,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/app.js",
-			"settings":
-			{
-				"buffer_size": 2414,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/home/kingkoded/Downloads/plunk-7FD5Wf/index.html",
-			"settings":
-			{
-				"buffer_size": 1166,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "controllers/dashboard.js",
-			"settings":
-			{
-				"buffer_size": 1856,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/modules/controllers/homeController.js",
-			"settings":
-			{
-				"buffer_size": 311,
+				"buffer_size": 13435,
 				"line_ending": "Windows"
 			}
 		},
@@ -524,6 +500,30 @@
 			"settings":
 			{
 				"buffer_size": 794,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/templates/dashboard/cabinet.jade",
+			"settings":
+			{
+				"buffer_size": 2961,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/layouts/dashboard.jade",
+			"settings":
+			{
+				"buffer_size": 4401,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
+			"settings":
+			{
+				"buffer_size": 13326,
 				"line_ending": "Windows"
 			}
 		}
@@ -612,10 +612,25 @@
 	},
 	"file_history":
 	[
+		"/home/kingkoded/Projects/ixit/public/js/dashboard.js",
+		"/home/kingkoded/Projects/ixit/views/includes/dashboard-side-nav.jade",
+		"/home/kingkoded/Projects/dk33p/node_modules/grunt-contrib-imagemin/node_modules/image-min/node_modules/mout/array/sortBy.js",
+		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-aws/node_modules/aws-sdk/lib/services.js",
 		"/home/kingkoded/Projects/ixit/public/js/modules/services/service.js",
 		"/home/kingkoded/Projects/ixit/server.js",
 		"/home/kingkoded/Projects/ixit/controllers/site.js",
+		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/homeController.js",
+		"/home/kingkoded/Projects/ixit/controllers/users.js",
+		"/home/kingkoded/Projects/ixit/models/user.js",
+		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/userController.js",
+		"/home/kingkoded/Projects/ixit/public/js/public-app.js",
+		"/home/kingkoded/Downloads/plunk-7FD5Wf/index.html",
+		"/home/kingkoded/Projects/ixit/lib/hash.js",
+		"/home/kingkoded/Projects/dk33p/package.json",
+		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
+		"/home/kingkoded/Projects/dk33p/lib/utility.js",
+		"/home/kingkoded/Projects/dk33p/models/user.js",
 		"/home/kingkoded/Projects/dk33p/test/cabinet.spec.js",
 		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/jade/node_modules/monocle/node_modules/readdirp/examples/callback-api.js",
@@ -628,11 +643,8 @@
 		"/home/kingkoded/Projects/ixit/views/templates/dashboard/cabinet.jade",
 		"/home/kingkoded/Projects/ixit/views/layouts/dashboard.jade",
 		"/home/kingkoded/Projects/ixit/views/includes/dashboard-top-nav.jade",
-		"/home/kingkoded/Projects/ixit/public/js/public-app.js",
-		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
 		"/home/kingkoded/Projects/ixit/controllers/dashboard.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/object/hasOwn.js",
-		"/home/kingkoded/Projects/ixit/lib/hash.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-timer/node_modules/duration/node_modules/es5-ext/lib/Object/to-plain-object.js",
 		"/home/kingkoded/Projects/ixit/node_modules/nodemailer/node_modules/mailcomposer/lib/topunycode.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/formidable/test/integration/test-octet-stream.js",
@@ -641,29 +653,21 @@
 		"/home/kingkoded/Projects/ixit/node_modules/less/node_modules/source-map/build/assert-shim.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/suffix-browser.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/handlebars/handlebars-source.gemspec",
-		"/home/kingkoded/Projects/dk33p/package.json",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-clean/node_modules/grunt/docs/api_log.md",
 		"/home/kingkoded/Projects/ixit/public/js/app.js",
 		"/home/kingkoded/Projects/ixit/views/dashboard.jade",
 		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/dashboardController.js",
-		"/home/kingkoded/Projects/ixit/controllers/users.js",
 		"/home/kingkoded/Projects/dk33p/lib/uploader.js",
 		"/home/kingkoded/Projects/dk33p/server.js",
 		"/home/kingkoded/Projects/dk33p/controllers/routes.js",
-		"/home/kingkoded/Projects/ixit/models/user.js",
 		"/home/kingkoded/Projects/ixit/lib/auth/passport.js",
 		"/home/kingkoded/Projects/dk33p/controllers/v4ult.js",
 		"/home/kingkoded/Projects/ixit/public/js/modules/directives.js",
-		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/userController.js",
-		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
-		"/home/kingkoded/Projects/dk33p/lib/utility.js",
 		"/home/kingkoded/Projects/dk33p/config/production.json",
 		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/forever-monitor/examples/signal-ignore.js",
 		"/home/kingkoded/Projects/ixit/views/dashboard/all.jade",
 		"/home/kingkoded/Projects/dk33p/lib/passport.js",
-		"/home/kingkoded/Projects/ixit/public/js/dashboard.js",
 		"/home/kingkoded/Projects/ixit/views/layouts/default.jade",
-		"/home/kingkoded/Projects/ixit/views/includes/dashboard-side-nav.jade",
 		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/forever-monitor/examples/spawn-and-error.js",
 		"/home/kingkoded/Projects/dk33p/app.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/mongoose/lib/errors/divergentArray.js",
@@ -719,7 +723,6 @@
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-mocha-test/node_modules/mocha/node_modules/jade/testing/user.js",
 		"/home/kingkoded/Projects/ixit/test/development/user/user.spec.js",
 		"/home/kingkoded/Projects/ixit/public/css/compiled/user-list.css",
-		"/home/kingkoded/Projects/dk33p/models/user.js",
 		"/home/kingkoded/Projects/ixit/node_modules/lingua/example/app.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/express/lib/application.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/pkginfo/examples/all-properties.js",
@@ -736,14 +739,11 @@
 		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/IXit/config/env/all.js",
 		"/home/kingkoded/Projects/ixit/lib/middlewares/client_session.js",
 		"/home/kingkoded/Projects/dk33p/models/media.js",
-		"/home/kingkoded/Projects/dk33p/gruntfile.js",
-		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/package.json",
-		"/mnt/e6224e80-6563-4e23-8cf0-92086de10e93/home/kingkoded/Projects/bncauth/Gruntfile.js",
-		"/home/kingkoded/Projects/dk33p/controllers/clients.js"
+		"/home/kingkoded/Projects/dk33p/gruntfile.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 45.0
 	},
 	"find_in_files":
 	{
@@ -761,6 +761,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"r",
+			"UserModel",
 			"/user",
 			"/api/",
 			"message",
@@ -894,7 +896,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -903,15 +905,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5898,
+						"buffer_size": 5212,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								975,
-								975
+								587,
+								587
 							]
 						],
 						"settings":
@@ -924,10 +926,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 429.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -936,15 +938,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8613,
+						"buffer_size": 8811,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8473,
-								8473
+								875,
+								875
 							]
 						],
 						"settings":
@@ -957,93 +959,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3627.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "controllers/k33per.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12786,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9567,
-								9567
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 4147.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "views/templates/dashboard/cabinet.jade",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3095,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1111,
-								1111
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 39.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
+					"buffer": 2,
 					"file": "public/js/app.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2414,
+						"buffer_size": 2353,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1947,
-								1947
+								1100,
+								1100
 							]
 						],
 						"settings":
@@ -1055,61 +991,28 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 624.0,
+						"translation.x": 0.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/home/kingkoded/Downloads/plunk-7FD5Wf/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1166,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								334,
-								334
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 3,
 					"file": "controllers/dashboard.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1856,
+						"buffer_size": 2168,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1533,
-								1533
+								1437,
+								1437
 							]
 						],
 						"settings":
@@ -1121,45 +1024,48 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 234.0,
+						"translation.y": 225.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "public/js/modules/controllers/homeController.js",
+					"buffer": 4,
+					"file": "controllers/k33per.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 311,
+						"buffer_size": 13435,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								165,
-								165
+								10028,
+								10036
 							]
 						],
 						"settings":
 						{
 							"incomplete_sync": null,
 							"remote_loading": false,
+							"sftp_duplicate_views": 0,
 							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4935.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 5,
 					"file": "views/dashboard.jade",
 					"semi_transient": false,
 					"settings":
@@ -1188,11 +1094,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 6,
 					"file": "views/dashboard/all.jade",
 					"semi_transient": false,
 					"settings":
@@ -1204,8 +1110,8 @@
 						"selection":
 						[
 							[
-								791,
-								791
+								792,
+								792
 							]
 						],
 						"settings":
@@ -1221,6 +1127,145 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "views/templates/dashboard/cabinet.jade",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2961,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								451,
+								451
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "views/layouts/dashboard.jade",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "controllers/k33per.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13435,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2610,
+								2610
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"sftp_duplicate_views": 0,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1387.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13326,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2559,
+								2559
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 823.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 2,
 					"type": "text"
 				}
@@ -1229,7 +1274,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -1244,11 +1289,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1273,7 +1325,7 @@
 	"project": "ixit.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1282,12 +1334,32 @@
 		"selected_items":
 		[
 			[
+				"k33",
+				"ixit/controllers/k33per.js"
+			],
+			[
+				"das",
+				"ixit/views/layouts/dashboard.jade"
+			],
+			[
 				"service",
 				"ixit/public/js/modules/services/service.js"
 			],
 			[
-				"k33",
-				"ixit/controllers/k33per.js"
+				"home",
+				"ixit/public/js/modules/controllers/homeController.js"
+			],
+			[
+				"public",
+				"ixit/public/js/public-app.js"
+			],
+			[
+				"usercon",
+				"ixit/public/js/modules/controllers/userController.js"
+			],
+			[
+				"user",
+				"ixit/controllers/users.js"
 			],
 			[
 				"cabinet",
@@ -1296,10 +1368,6 @@
 			[
 				"site",
 				"ixit/controllers/site.js"
-			],
-			[
-				"home",
-				"ixit/public/js/modules/controllers/homeController.js"
 			],
 			[
 				"top-nav",
@@ -1362,10 +1430,6 @@
 				"ixit/lib/auth/passport.js"
 			],
 			[
-				"das",
-				"ixit/controllers/dashboard.js"
-			],
-			[
 				"users",
 				"ixit/controllers/users.js"
 			],
@@ -1390,10 +1454,6 @@
 				"ixit/server.js"
 			],
 			[
-				"public",
-				"ixit/public/js/public-app.js"
-			],
-			[
 				"deve",
 				"ixit/config/development.json"
 			],
@@ -1406,20 +1466,12 @@
 				"ixit/models/user/user.js"
 			],
 			[
-				"usercon",
-				"ixit/public/js/modules/controllers/userController.js"
-			],
-			[
 				"commons",
 				"ixit/lib/commons.js"
 			],
 			[
 				"ixit/deve",
 				"ixit/config/development.json"
-			],
-			[
-				"user",
-				"ixit/controllers/users.js"
 			],
 			[
 				"user.js",

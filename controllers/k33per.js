@@ -17,33 +17,43 @@ var mongoose = require('mongoose'),
 function strip_files_result(m){
   //if its an array use the map function to loop 
   //over the process
-  if(util.isArray(m)){
-    return _.map(m, function(v){
-      var ixid = hashr.hashInt(v.mediaNumber);
-      var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-      return _.extend({ixid: ixid}, n);
-    });
-  }else{
-    //Just one object
-    var ixid = hashr.hashInt(m.mediaNumber);
-    var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-    return _.extend({ixid: ixid}, n);    
+  try {
+    if(util.isArray(m)){
+      return _.map(m, function(v){
+        var ixid = hashr.hashInt(v.mediaNumber);
+        var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+        return _.extend({ixid: ixid}, n);
+      });
+    }else{
+      //Just one object
+      var ixid = hashr.hashInt(m.mediaNumber);
+      var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+      return _.extend({ixid: ixid}, n);    
+    }
+
+  } catch (e) {
+    console.log(e);    
   }
 
 }
 function strip_folder_result(m){
   //If its an array
-  if(util.isArray(m)){
-    return _.map(m, function(v){
-      var id = hashr.hashOid(v._id);
-      var n = _.omit(v, ['_id', 'folderId', 'visible', '__v']);
-      return _.extend({id: id}, n);
-    });    
-  }else{
-    //Just one object
-    var id = hashr.hashOid(m._id);
-    var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
-    return _.extend({id: id}, n);    
+  try {
+
+    if(util.isArray(m)){
+      return _.map(m, function(v){
+        var id = hashr.hashOid(v._id);
+        var n = _.omit(v, ['_id', 'folderId', 'visible', '__v']);
+        return _.extend({id: id}, n);
+      });    
+    }else{
+      //Just one object
+      var id = hashr.hashOid(m._id);
+      var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
+      return _.extend({id: id}, n);    
+    }
+  } catch (e) {
+    console.log(e);
   }
 
 }
@@ -100,7 +110,7 @@ K33per.prototype.loadFolder = function(user, options, cb){
   register.once('reqFolder', function(data, isDone){
     rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
     .on('complete', function(r){
-
+      cab.props = strip_folder_result(r.props);
       isDone(r);
     });    
   });

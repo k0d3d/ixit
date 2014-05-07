@@ -15,7 +15,9 @@ div.files-ctrlr
       .crumb-block
         .pull-left
           ul.breadcrumb
-            li(ng-repeat="p in $parent.path") {{p.name}}
+            li <a ui-sref='cabinet.files'>Home</a>
+            li(ng-repeat="p in $parent.path") <a ui-sref='cabinet.folder({folderId: p.id})'>{{p.name}}</a>
+
         .pull-right    
           form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder()")
             .form-group

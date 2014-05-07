@@ -30,13 +30,13 @@ module.exports.dashboard = dashboard;
 
 module.exports.routes = function(app, isLoggedIn, passport){
 	  //Dashboard
-  app.all('/cabinet/*', isLoggedIn(), function (req, res, next) {
+  app.all('/dash/*', isLoggedIn(), function (req, res, next) {
     res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
     console.log('yes is');
     return next(); 
   });
 
-	app.get('/cabinet', isLoggedIn(), function(req, res){
+	app.get('/dash', isLoggedIn(), function(req, res){
 		// var keeper = new Keeper();
 		// var owner = hashr.hashOid(req.session.passport.user);
 		res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});		

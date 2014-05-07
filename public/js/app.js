@@ -14,6 +14,7 @@ var app = angular.module('ixitApp',[
 app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $urlRouterProvider.otherwise('/cabinet/files/all');
+  // $urlRouterProvider.otherwise('/cabinet');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
 });
@@ -85,9 +86,15 @@ app.controller('MainController',
     $scope.cabinetTabs.push(T.tab);
   });
 
-  $scope.$on('reloadTab', function (index) {
-    console.log(index);
-    $scope.cabinetTabs[index] = T.tab;
+  $scope.$on('reloadTab', function () {
+    var index = _.findIndex($scope.cabinetTabs, {id: T.tab.id});
+    console.log(index, T.tab);
+    if (index < 0) {
+      $scope.cabinetTabs.push(T.tab);
+    } else {
+      $scope.cabinetTabs[index] = T.tab;
+    }
+    
   });
 
   //Listener for prompts

@@ -9,25 +9,26 @@ angular.module('dashboard',[])
         templateUrl: '/dashboard/all', 
       }
     },
-    controller: 'indexController'
+    // controller: 'indexController'
   })
   .state('cabinet.files', {
     url: '/files/all',
     views: {
       'cabinetView@cabinet' : {
         templateUrl: '/templates/dashboard/cabinet',
+        controller: 'indexController',
+        resolve: {
+          contenter: function ($http, Keeper) {
+            return Keeper.openFolder({id: 'home'});
+            // return $http.get('/api/internal/users/folder?id=home')
+            // .then(function (data) {
+            //   return data.data;
+            // });
+            // console.log($stateParams);
+          }
+        }
       }
     },
-    controller: 'filesController',
-    resolve: {
-      contenter: function (Keeper, $http) {
-        return $http.get('/api/internal/users/folder?id=home')
-        .then(function (data) {
-          return data.data;
-        });
-        // console.log($stateParams);
-      }
-    }
   })
   .state('cabinet.folder', {
     url: '/folder/:folderId',
@@ -38,11 +39,12 @@ angular.module('dashboard',[])
     },
     controller: 'filesController',
     resolve: {
-      contenter: function ($stateParams, $http) {
-        return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
-        .then(function (data) {
-          return data.data;
-        });
+      contenter: function ($stateParams, Keeper) {
+        return Keeper.openFolder({id: $stateParams.folderId});
+        // return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
+        // .then(function (data) {
+        //   return data.data;
+        // });
         // console.log($stateParams);
       }
     }
@@ -50,48 +52,40 @@ angular.module('dashboard',[])
   
   ;    
 }])
-.controller('indexController', ['$scope', '$http', '$cookies', '$state', function indexController($scope, $http, $cookies, $state){
-  $state.transitionTo('cabinet.files');
-  console.log('message');
+.controller('indexController', [
+  '$scope', 
+  '$http', 
+  '$cookies', 
+  '$state', 
+  'Tabs',
+  'contenter',
+  function indexController($scope, $http, $cookies, $state, Tabs, contenter){
+  $scope.contenter = contenter;
+  Tabs.reloadTab({
+    title: 'Home',
+    id: 'home-tab',
+    list: $scope.contenter
+  });  
+
+  $scope.hasContent = function () {
+    if ($scope.contenter.files.length > 0 || 
+      $scope.contenter.folders.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 }])
 .controller('filesController', [
   '$scope', 
   '$http', 
   'Keeper', 
   'Tabs', 
-  '$state', 
+  'contenter', 
   function filesController ($scope, $http, Keeper, Tabs, contenter) {
-  function init(){
-    console.log('contenter');
-    if (contenter.length) {
-      // T.reloadHome({
-      //     title: 'Home',
-      //     id: 'home-tab',
-      //     list: $scope.cabinetContent       
-      // });
-    } else {
-      //Call for the home folder and its content
-      Keeper.fetchFolder({id: $scope.current_folder}, function(r){
-        if(r !== false){
-          Tabs.createTab({
-            title: 'Home',
-            id: 'home-tab',
-            list: r
-          });
-        }
-      });
-    }
-  }
-  init();
+    console.log('files');
+  $scope.contenter = contenter;
 
-  $scope.hasContent = function () {
-    if ($scope.cabinetTabs[0].list.files.length > 0 || 
-      $scope.cabinetTabs[0].list.folders.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   $scope.trashFile = function(index, tabIndex){         
     //var ixid = $scope.files[index].ixid;
@@ -118,13 +112,17 @@ angular.module('dashboard',[])
     });
   };
   $scope.open_folder = function(index){
-    var _folder = $scope.cabinetTabs[0].list.folders[index];
-    //push the foldername into our path
-    $scope.$parent.path.push(_folder);
+    // var _folder = $scope.cabinetTabs[0].list.folders[index];
+    // //push the foldername into our path
+    // $scope.$parent.path.push(_folder);
+
   };
   $scope.up_folder = function(){
     
   };
+
+  //Current Folder
+  $scope.current_folder = Keeper.tab;
 }])
 .controller('queueController', ['$scope', '$http', 'Keeper', 'Sharer', function queueController($scope, $http, Keeper, Sharer){
   function init(){
@@ -175,8 +173,8 @@ angular.module('dashboard',[])
     $scope.$on('onQueue', function(){
       $scope.filequeue = Sharer.filequeue;
     });
-  }]).
-filter('formatFileSize', function(){
+  }])
+.filter('formatFileSize', function(){
   return function(bytes){
     if (typeof bytes !== 'number') {
       return '';
@@ -188,12 +186,14 @@ filter('formatFileSize', function(){
       return (bytes / 1000000).toFixed(2) + ' MB';
     }
     return (bytes / 1000).toFixed(2) + ' KB';
-  }
+  };
 })
 .filter('moment', function(){
   return function(time){
     var m = moment(time);
     return m.fromNow();
-  }
-});
+  };
+})
+
+;
 

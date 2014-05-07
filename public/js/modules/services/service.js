@@ -40,16 +40,18 @@ angular.module('services', [])
         $rootScope.$broadcast('refresh_breadcrumb');
       };
   
-      a.fetchFolder = function(folderParam, cb){
-        $http.get('/api/internal/users/folder?'+ $.param(folderParam))
-        .success(function(list){
-          cb(list);
-        })
-        .error(function(err){
-          Alert.set_notice({
-            message: err,
-            type: 'danger',
-          });  
+      a.openFolder = function(folderParam){
+        return $http.get('/api/internal/users/folder?'+ $.param(folderParam))
+        .then(function(list){
+          if (folderParam.id !== 'home') {
+            a.addToCrumb({
+              id : list.data.props.id,
+              name : list.data.props.name
+            });            
+          } else {
+            $rootScope.$broadcast('refresh_breadcrumb');
+          }
+          return list.data;
         });
       };
 
@@ -337,13 +339,14 @@ angular.module('services', [])
       this.reTab();
     };
 
-    s.reloadHome = function (id, content) {
+    s.reloadTab = function (content) {
       this.tab = content;
-      this.reloadTab(0);
+      this._reloadTab();
     };
 
-    s.reloadTab = function(index){
-      $rootScope.$broadcast('reloadTab', index);
+
+    s._reloadTab = function(){
+      $rootScope.$broadcast('reloadTab');
     };
     s.reTab = function(){
       $rootScope.$broadcast('newTab');

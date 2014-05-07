@@ -63,12 +63,15 @@
                   .btn-group.btn-group-sm
                     button.btn.btn-primary(href='#') Share
                     button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
-.row-header(ng-show="hasContent()")
+.row-header(ng-show="!hasContent()")
   #pad-wrapper
     .no-gallery
       .center
         img(src='/img/1379620524_add_file.png')
-        h6 You don't have any files on your storage
+        p
+          span.label.label-success {{current_folder.name}}
+          span Je
+        h6 You don't have any files in this folder
         p
           | Click the button below to select files from your computer. 
           | You can drag files into this space and drop to upload. 
