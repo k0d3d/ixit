@@ -44,7 +44,7 @@ html
     .container
       .content
         // main container 
-        div.main-container(ng-controller='MainController', dragover='.drop-overlay', data-upload-handler, data-upload-browse=".browsefiles", ng-init="current_folder = '#{home_folder}'")
+        div.main-container(ng-controller='MainController', flow-init)
           input.browsefiles(type="file",multiple="multiple")
           .x-prompt
             .alert-block.notice(notification="notices")
@@ -74,6 +74,7 @@ html
       script(src='/js/angular-sanitize.min.js')
       script(src='/js/angular-cookies.min.js')     
       script(src='/js/angular-ui-router.min.js')     
+      script(src='/js/ng-flow-standalone.min.js')
       script(src='/js/tab.js')      
       script(src='/js/cors/jquery.postmessage-transport.js')
       script(src='/js/cors/jquery.xdr-transport.js')

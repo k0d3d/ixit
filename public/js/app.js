@@ -8,16 +8,43 @@ var app = angular.module('ixitApp',[
     'services',
     'ngResource',
     'ngSanitize',
-    'ngCookies'
+    'ngCookies',
+    'flow'
   ]);
-
-app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
+app.run(function($http, $cookies) {
+  $http.defaults.headers.post.xAuthr = $cookies.throne;
+});
+app.config([
+  '$stateProvider', 
+  '$urlRouterProvider', 
+  '$httpProvider', 
+  'flowFactoryProvider', 
+  function ($stateProvider, $urlRouterProvider, $httpProvider, flowFactoryProvider) {
+  flowFactoryProvider.defaults = {
+      target:'http://localhost:3001/upload',
+      chunkSize:1*1024*1024,
+      simultaneousUploads:4,
+      testChunks:true,
+      maxFiles: 10,
+      query: function queryParams (fileObj, chunkObj){
+        return {
+          fileType : fileObj.file.type.length > 0 ? fileObj.file.type : 'noMime',
+          // throne: Keeper.currentUser
+        };
+      },
+      permanentErrors:[404, 500, 501]
+  };
+  // You can also set default events:
+  // flowFactoryProvider.on('catchAll', function (event) {
+  //   // ...
+  // });
+    // Can be used with different implementations of Flow.js
+    // flowFactoryProvider.factory = fustyFlowFactory;  
   $urlRouterProvider.otherwise('/cabinet/files/all');
   // $urlRouterProvider.otherwise('/cabinet');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
-});
+}]);
 
 app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
   return {

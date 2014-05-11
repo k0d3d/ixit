@@ -11,7 +11,7 @@
       li.notification-dropdown.hidden-phone(ng-controller="queueController")
         a.trigger(href='') Queue
         span.badge.pull-right {{filequeue.length}}
-        .pop-dialog(ng-show="filequeue.length > 0")
+        .pop-dialog(ng-show="filequeue.length > 0 || $flow.files.length > 0")
           .pointer
             .arrow
             .arrow_border
@@ -19,8 +19,8 @@
             a.close-icon(href='')
               i.icon-remove-sign
             .notifications
-              h3 You have {{filequeue.length}} uploads on queue
-              .item(href='', ng-repeat="queue in filequeue", class="file-{{queue.identifier}}")
+              h3 You have {{$flow.files.length}} uploads on queue
+              .item(href='', ng-repeat="queue in $flow.files", class="file-{{queue.identifier}}")
                 i.fa.fa-cloud-upload
                 | {{queue.filename}}
                 .progress

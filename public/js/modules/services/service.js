@@ -28,10 +28,12 @@ angular.module('services', [])
 
       return a;
   })
-  .factory('Keeper', ['$http', 'Alert', '$rootScope', function($http, Alert, $rootScope){
+  .factory('Keeper', ['$http', 'Alert', '$rootScope', '$cookies', function($http, Alert, $rootScope, $cookies){
       var a = {};
 
       a.currentFolder = '';
+
+      a.currentUser = $cookies.throne;
 
       a.path = [];
 
@@ -51,6 +53,7 @@ angular.module('services', [])
           } else {
             $rootScope.$broadcast('refresh_breadcrumb');
           }
+          a.currentFolder = list.data.props.id;
           return list.data;
         });
       };
