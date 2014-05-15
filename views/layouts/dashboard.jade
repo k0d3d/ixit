@@ -40,11 +40,11 @@ html
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();    
-  body(ng-app='ixitApp', flow-init, flow-prevent-drop, flow-drag-enter="style={display: 'block'}", flow-drag-leave="style={display: 'none'}")
+  body(ng-app='ixitApp', flow-prevent-drop)
     .container
       .content
         // main container 
-        div.main-container(flow-drop, ng-controller='MainController')
+        div.main-container(flow-init, flow-drop, flow-drag-enter="style={display: 'block'}", flow-drag-leave="style={display: 'none'}", ng-controller='MainController')
           input.browsefiles(type="file",multiple="multiple")
           .x-prompt
             .alert-block.notice(notification="notices")
