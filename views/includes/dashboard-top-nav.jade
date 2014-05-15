@@ -10,8 +10,8 @@
             input.search(type='search', ng-model="queryString", placeholder="Filenames or Tags")
       li.notification-dropdown.hidden-phone(ng-controller="queueController")
         a.trigger(href='') Queue
-        span.badge.pull-right {{filequeue.length}}
-        .pop-dialog(ng-show="filequeue.length > 0 || $flow.files.length > 0")
+        span.badge.pull-right {{$parent.$flow.files.length}}
+        .pop-dialog(ng-show="$parent.$flow.files.length > 0")
           .pointer
             .arrow
             .arrow_border
@@ -19,13 +19,12 @@
             a.close-icon(href='')
               i.icon-remove-sign
             .notifications
-              h3 You have {{$flow.files.length}} uploads on queue
-              .item(href='', ng-repeat="queue in $flow.files", class="file-{{queue.identifier}}")
+              h3 You have {{$parent.$flow.files.length}} uploads on queue
+              .item(href='', ng-repeat="queue in $parent.$flow.files", class="file-{{queue.identifier}}")
                 i.fa.fa-cloud-upload
-                | {{queue.filename}}
+                | {{queue.name}}
                 .progress
                   .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100')
-                    span.sr-only 60% Complete
                 span.stat
                   i.fa.fa-hdd-o
                   | {{queue.size | formatFileSize}}                
@@ -45,14 +44,12 @@
           | Your account
           b.caret
         ul.dropdown-menu
-          li
-            a(href='', ng-click="commons.href('/dashboard/user/account')") Profile
-          li
-            a(href='', ng-click="commons.href('/dashboard/user/developer')") Developer
+          //- li
+          //-   a(href='', ng-click="commons.href('/dashboard/user/account')") Profile
           li
             a(href='') Support
       li.settings.hidden-phone
         a(href='/logout', role='button', title="Logout", target="_self")
           i.fa.fa-sign-out
-  .progress(ng-show="isUploading")
-    .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="overallUploadProgress")
+  .progress(ng-show="$flow.isUploading()")
+    .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="{width: $flow.progress() * 100 + 'px'}")

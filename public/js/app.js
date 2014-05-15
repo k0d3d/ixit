@@ -11,39 +11,43 @@ var app = angular.module('ixitApp',[
     'ngCookies',
     'flow'
   ]);
-app.run(function($http, $cookies) {
-  $http.defaults.headers.post.xAuthr = $cookies.throne;
-});
+// app.run(function($http, $cookies) {
+//   $http.defaults.headers.common.ixAuthr = $cookies.throne;
+// });
 app.config([
   '$stateProvider', 
   '$urlRouterProvider', 
   '$httpProvider', 
   'flowFactoryProvider', 
-  function ($stateProvider, $urlRouterProvider, $httpProvider, flowFactoryProvider) {
+  '$cookiesProvider',
+  function ($stateProvider, $urlRouterProvider, $httpProvider, flowFactoryProvider, $cookies) {
   flowFactoryProvider.defaults = {
       target:'http://localhost:3001/upload',
       chunkSize:1*1024*1024,
       simultaneousUploads:4,
       testChunks:true,
       maxFiles: 10,
-      query: function queryParams (fileObj, chunkObj){
-        return {
-          fileType : fileObj.file.type.length > 0 ? fileObj.file.type : 'noMime',
-          // throne: Keeper.currentUser
-        };
-      },
-      permanentErrors:[404, 500, 501]
+      // query: function queryParams (fileObj, chunkObj){
+      //   return {
+      //     fileType : fileObj.file.type.length > 0 ? fileObj.file.type : 'noMime',
+      //     // throne: Keeper.currentUser
+      //   };
+      // },
+      permanentErrors:[404, 500, 501],
+      maxChunkRetries: 1,
+      chunkRetryInterval: 5000,      
   };
   // You can also set default events:
-  // flowFactoryProvider.on('catchAll', function (event) {
-  //   // ...
-  // });
+  flowFactoryProvider.on('catchAll', function (event) {
+    // ...
+    console.log('catchAll', arguments);
+  });
     // Can be used with different implementations of Flow.js
     // flowFactoryProvider.factory = fustyFlowFactory;  
   $urlRouterProvider.otherwise('/cabinet/files/all');
-  // $urlRouterProvider.otherwise('/cabinet');
   //$locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('errorNotifier');
+  $httpProvider.interceptors.push('httpRequestInterceptor');
 }]);
 
 app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
@@ -57,7 +61,15 @@ app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
     }
   };
 }]);
-
+app.factory('httpRequestInterceptor', ['$cookies', function($cookies) {
+    return {
+        request: function($config) {
+            $config.headers['xAuthr'] =  $cookies.throne;
+            $config.headers['x-auth-r'] =  "$cookies.throne";
+            return $config;
+        }
+    };
+}]);
 
 app.controller('MainController', 
   [ '$scope',
@@ -79,7 +91,7 @@ app.controller('MainController',
 
   $scope.cabinetTabs = [];
 
-  $rootScope.completedUploads = 0;
+  // $rootScope.completedUploads = 0;
 
   $scope.filequeue = [];
 
@@ -135,6 +147,10 @@ app.controller('MainController',
 
   $scope.$on('refresh_breadcrumb', function () {
     $scope.path = Keeper.path; 
+  });
+
+  $scope.$on('folder_change', function () {
+    $scope.currentFolder = Keeper.currentFolder; 
   });
 
   // When the scope is destroyed, be sure to unbind

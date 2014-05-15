@@ -54,6 +54,7 @@ angular.module('services', [])
             $rootScope.$broadcast('refresh_breadcrumb');
           }
           a.currentFolder = list.data.props.id;
+          $rootScope.$broadcast('folder_change');
           return list.data;
         });
       };

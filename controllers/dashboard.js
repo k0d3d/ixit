@@ -40,6 +40,7 @@ module.exports.routes = function(app, isLoggedIn, passport){
 		// var keeper = new Keeper();
 		// var owner = hashr.hashOid(req.session.passport.user);
 		res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});		
+		res.locals.current_user = hashr.hashOid(req.session.passport.user);
 		res.render('dashboard');		
 		// keeper.loadHome(owner, function(d){
 		// 	res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});

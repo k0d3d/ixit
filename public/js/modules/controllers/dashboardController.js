@@ -135,18 +135,20 @@ angular.module('dashboard',[])
         })
       }
     });
+    $scope.uploadStateText = 'Resume';
+    $scope.uploadStateClass = 'fa-play';    
   }
   init();
 
   $scope.toggleUpload = function(){
-    if(Sharer.resumable.isUploading()){
+    if($scope.$flow.isUploading()){
       $scope.uploadStateText = 'Resume';
       $scope.uploadStateClass = 'fa-play';
-      Sharer.resumable.pause();
+      $scope.$flow.pause();
     }else{
       $scope.uploadStateText = 'Pause';
       $scope.uploadStateClass = 'fa-pause';
-      Sharer.resumable.upload();
+      $scope.$flow.upload();
     }
 
   };
@@ -162,11 +164,11 @@ angular.module('dashboard',[])
       Keeper.removeFromQueue(mid, function(){
         Sharer.removeFromQueue(uid);
       });          
-    }
+    };
 
     //Cancels all uploads on the queue
     $scope.clearAll = function(){
-      Sharer.resumable.cancel();
+      $scope.$flow.cancel();
       Sharer.cancel();
     };
 
