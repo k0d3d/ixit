@@ -1596,7 +1596,10 @@ angular.module('flow.init', ['flow.provider'])
 
     $scope.$watch('currentFolder', function (n) {
       if (n) {    
-        $scope.$flow.opts.query = {'x-Authr': $scope.currentFolder};
+        $scope.$flow.opts.query = {
+          'folder': $scope.currentFolder,
+          'x-Authr' : $scope.cuser
+        };
         // return console.log($scope.$flow.opts);
       }
     });

@@ -6,7 +6,7 @@ angular.module('dashboard',[])
     url: '/cabinet',
     views: {
       'main' : {
-        templateUrl: '/dashboard/all', 
+        templateUrl: '/dashboard/all'
       }
     },
     // controller: 'indexController'
@@ -34,18 +34,18 @@ angular.module('dashboard',[])
     url: '/folder/:folderId',
     views: {
       'cabinetView@cabinet' : {
-        templateUrl: '/templates/dashboard/cabinet'
-      }
-    },
-    controller: 'filesController',
-    resolve: {
-      contenter: function ($stateParams, Keeper) {
-        return Keeper.openFolder({id: $stateParams.folderId});
-        // return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
-        // .then(function (data) {
-        //   return data.data;
-        // });
-        // console.log($stateParams);
+        templateUrl: '/templates/dashboard/cabinet',
+        controller: 'filesController',
+        resolve: {
+          contenter: function ($stateParams, Keeper) {
+            return Keeper.openFolder({id: $stateParams.folderId});
+            // return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
+            // .then(function (data) {
+            //   return data.data;
+            // });
+            // console.log($stateParams);
+          }
+        }
       }
     }
   })
@@ -66,15 +66,6 @@ angular.module('dashboard',[])
     id: 'home-tab',
     list: $scope.contenter
   });  
-
-  $scope.hasContent = function () {
-    if ($scope.contenter.files.length > 0 || 
-      $scope.contenter.folders.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 }])
 .controller('filesController', [
   '$scope', 
@@ -85,7 +76,11 @@ angular.module('dashboard',[])
   function filesController ($scope, $http, Keeper, Tabs, contenter) {
     console.log('files');
   $scope.contenter = contenter;
-
+  Tabs.reloadTab({
+    title: 'Home',
+    id: 'home-tab',
+    list: $scope.contenter
+  }); 
 
   $scope.trashFile = function(index, tabIndex){         
     //var ixid = $scope.files[index].ixid;

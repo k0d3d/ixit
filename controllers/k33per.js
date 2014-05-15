@@ -17,18 +17,23 @@ var mongoose = require('mongoose'),
 function strip_files_result(m){
   //if its an array use the map function to loop 
   //over the process
+  var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'id', 'folder'];
   try {
     if(util.isArray(m)){
       return _.map(m, function(v){
-        var ixid = hashr.hashInt(v.mediaNumber);
-        var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-        return _.extend({ixid: ixid}, n);
+        // var ixid = hashr.hashInt(v.mediaNumber);
+        // var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+        // return _.extend({ixid: ixid}, n);
+
+        return _.omit(v, omit);
       });
     }else{
       //Just one object
-      var ixid = hashr.hashInt(m.mediaNumber);
-      var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-      return _.extend({ixid: ixid}, n);    
+      // var ixid = hashr.hashInt(m.mediaNumber);
+      // var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
+      // return _.extend({ixid: ixid}, n); 
+
+      return _.omit(m, omit);
     }
 
   } catch (e) {
@@ -38,19 +43,24 @@ function strip_files_result(m){
 }
 function strip_folder_result(m){
   //If its an array
+  var omit = ['_id', 'folderId', 'visible', '__v', 'id'];
   try {
 
     if(util.isArray(m)){
       return _.map(m, function(v){
-        var id = hashr.hashOid(v._id);
-        var n = _.omit(v, ['_id', 'folderId', 'visible', '__v']);
-        return _.extend({id: id}, n);
+        // var id = hashr.hashOid(v._id);
+        // var n = _.omit(v, ['_id', 'folderId', 'visible', '__v']);
+        // return _.extend({id: id}, n);
+
+        return _.omit(v, omit);
       });    
     }else{
       //Just one object
-      var id = hashr.hashOid(m._id);
-      var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
-      return _.extend({id: id}, n);    
+      // var id = hashr.hashOid(m._id);
+      // var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
+      // return _.extend({id: id}, n);  
+
+      return _.omit(m, omit);
     }
   } catch (e) {
     console.log(e);
@@ -64,7 +74,18 @@ function strip_queue_result(mongooseResult, callback){
     //var ixid = hashr.hashInt(v._id);
     var l = v.owner+'-';
 
-    var n = _.omit(v, ['_id', 'chunkCount', 'progress', 'visible', 'downloadCount', '__v', 'owner', 'identifier', 'completedDate']);
+    var n = _.omit(v, [
+      '_id', 
+      'chunkCount', 
+      'progress', 
+      'visible', 
+      'downloadCount', 
+      '__v', 
+      'owner', 
+      'identifier', 
+      'completedDate',
+      'id'
+      ]);
     h[i] = _.extend({
       identifier: v.identifier.substr(l.length)
     }, n);

@@ -64,8 +64,7 @@ app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
 app.factory('httpRequestInterceptor', ['$cookies', function($cookies) {
     return {
         request: function($config) {
-            $config.headers['xAuthr'] =  $cookies.throne;
-            $config.headers['x-auth-r'] =  "$cookies.throne";
+            $config.headers['x-Authr'] =  $cookies.throne;
             return $config;
         }
     };

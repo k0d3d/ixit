@@ -45,15 +45,15 @@ angular.module('services', [])
       a.openFolder = function(folderParam){
         return $http.get('/api/internal/users/folder?'+ $.param(folderParam))
         .then(function(list){
-          if (folderParam.id !== 'home') {
+          if (folderParam.fid !== 'home') {
             a.addToCrumb({
-              id : list.data.props.id,
+              id : list.data.props.fid,
               name : list.data.props.name
             });            
           } else {
             $rootScope.$broadcast('refresh_breadcrumb');
           }
-          a.currentFolder = list.data.props.id;
+          a.currentFolder = list.data.props.fid;
           $rootScope.$broadcast('folder_change');
           return list.data;
         });
