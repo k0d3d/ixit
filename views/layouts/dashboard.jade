@@ -40,17 +40,17 @@ html
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();    
-  body(ng-app='ixitApp')
+  body(ng-app='ixitApp', flow-init, flow-prevent-drop, flow-drag-enter="style={display: 'block'}", flow-drag-leave="style={display: 'none'}")
     .container
       .content
         // main container 
-        div.main-container(ng-controller='MainController', flow-init)
+        div.main-container(flow-drop, ng-controller='MainController')
           input.browsefiles(type="file",multiple="multiple")
           .x-prompt
             .alert-block.notice(notification="notices")
             .alert-block(prompt="alerts")
 
-          .drop-overlay
+          .drop-overlay(ng-style="style")
             .h1t
               h1 drop 
               p files and links in here. 
