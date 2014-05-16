@@ -124,6 +124,21 @@ angular.module('services', [])
         .error(function(data, status){
   
         });
+      };  
+      /**
+       * [deleteThisFolder deletes a folder belonging to the user]
+       * @param  {[type]}   folderId
+       * @param  {Function} callback
+       * @return {[type]}
+       */
+      a.deleteThisFolder = function(folderId, callback){
+        $http.delete('/api/internal/users/folder/' + folderId)
+        .success(function(data, status){
+          callback(data);
+        })
+        .error(function(data, status){
+  
+        });
       };
   
       /**

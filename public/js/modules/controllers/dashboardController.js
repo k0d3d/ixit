@@ -56,7 +56,8 @@ angular.module('dashboard',[])
 .controller('cabinetController', [
   '$scope', 
   'Keeper',
-  function cabinetController($scope, Keeper){
+  'Tabs',
+  function cabinetController($scope, Keeper, Tabs){
     $scope.create_folder = function(newFolderInput){
       if(!newFolderInput) return false;
       //Using the current_folder scope property from the parent scope
@@ -66,6 +67,23 @@ angular.module('dashboard',[])
         $scope.cabinetTabs[0].list.folders.push(r);
       });
     };
+
+
+  $scope.trashFile = function(index, tabIndex){         
+    //var ixid = $scope.files[index].ixid;
+    var ixid = $scope.cabinetTabs[tabIndex].list.files[index].ixid;
+    // return console.log(ixid);
+    Keeper.deleteThisFile(ixid, function(){
+      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
+    });
+  }; 
+  $scope.trashFolder = function(index, tabIndex){         
+    //var ixid = $scope.files[index].ixid;
+    var ixid = $scope.cabinetTabs[tabIndex].list.folders[index].fid;
+    Keeper.deleteThisFolder(ixid, function(){
+      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
+    });
+  };    
 }])
 .controller('indexController', [
   '$scope', 
@@ -96,15 +114,6 @@ angular.module('dashboard',[])
     id: 'home-tab',
     list: $scope.contenter
   }); 
-
-  $scope.trashFile = function(index, tabIndex){         
-    //var ixid = $scope.files[index].ixid;
-    var fileList = Tabs.tabs[tabIndex].list[index];
-    var ixid = fileList.ixid;
-    Keeper.deleteThisFile(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
-    });
-  };
 
   $scope.refresh_tab = function(index){
     console.log(index);

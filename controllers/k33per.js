@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     config = require('config'),
     commons = require('../lib/commons'),
     util = require('util'),
+    errors = require('../lib/errors.js'),
     //redis = require('redis'),
     EventRegister = require('../lib/event_register').register;
     //redis_client = redis.createClient();
@@ -110,7 +111,7 @@ K33per.prototype.constructor = K33per;
  * @return {[type]}        [description]
  */
 K33per.prototype.loadHome = function(user, cb){
-  rest.get(config.api_url+'/user/'+user+'/home', commons.restParams())
+  rest.get(config.api_url+'/users/'+user+'/home', commons.restParams())
   .on('complete', function(r){
     cb(r._id);
   });
@@ -129,7 +130,7 @@ K33per.prototype.loadFolder = function(user, options, cb){
 
   //Event send d request for the folder content
   register.once('reqFolder', function(data, isDone){
-    rest.get(config.api_url+'/user/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
+    rest.get(config.api_url+'/users/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
     .on('complete', function(r){
       cab.props = strip_folder_result(r.props);
       isDone(r);
@@ -202,7 +203,7 @@ K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb)
 
   //Event send d request for the folder to be created
   register.once('reqNewFolder', function(data, isDone){
-    rest.post(config.api_url+'/user/'+owner+'/folder', commons.restParams({
+    rest.post(config.api_url+'/users/'+owner+'/folder', commons.restParams({
       data: data
     }))
     .on('complete', function(r){
@@ -237,7 +238,7 @@ K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb)
  * @return {[type]}            [description]
  */
 K33per.prototype.getUsersFiles = function(userId, callback){
-  rest.get(config.api_url+'/user/'+userId+'/files', {
+  rest.get(config.api_url+'/users/'+userId+'/files', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
@@ -254,7 +255,7 @@ K33per.prototype.getUsersFiles = function(userId, callback){
 
 K33per.prototype.getUserQueue = function(userId, callback){
   console.log('loading user queue...');
-  rest.get(config.api_url+ '/user/'+userId+'/queue',{
+  rest.get(config.api_url+ '/users/'+userId+'/queue',{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
@@ -272,7 +273,7 @@ K33per.prototype.getUserQueue = function(userId, callback){
 
 K33per.prototype.deleteUserFile = function(userId, fileId, callback){
   fileId = hashr.unhashInt(fileId);
-  rest.del(config.api_url+'/user/'+userId+'/file/'+fileId,{
+  rest.del(config.api_url+'/users/'+userId+'/file/'+fileId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
@@ -281,8 +282,22 @@ K33per.prototype.deleteUserFile = function(userId, fileId, callback){
   });
 };
 
+
+K33per.prototype.deleteUserFolder = function deleteFolder (userId, folderId, cb) {
+  // body...
+  rest.del(config.api_url+'/users/'+userId+'/folder/' + folderId, commons.restParams())
+  .on('success', function(data){
+    console.log(data instanceof Error);
+    cb(data);
+  })
+  .on('fail', function(data, response){
+
+    cb(errors.httpError(response.statusCode));
+  });
+};
+
 K33per.prototype.removeUserQueue = function(mediaNumber, owner, callback){
-  rest.del(config.api_url+'/user/'+owner+'/queue/'+mediaNumber, {
+  rest.del(config.api_url+'/users/'+owner+'/queue/'+mediaNumber, {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result){
     callback(result);
@@ -293,7 +308,7 @@ K33per.prototype.removeUserQueue = function(mediaNumber, owner, callback){
 
 K33per.prototype.updateTags = function(file_id, owner, tags, cb){
   var fileId = hashr.unhashInt(file_id);
-  rest.put(config.api_url+'/user/'+owner+'/file/'+fileId+'/tags', {
+  rest.put(config.api_url+'/users/'+owner+'/file/'+fileId+'/tags', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent },
     data: {tags: tags}
   })
@@ -320,7 +335,7 @@ K33per.prototype.search = function(query, cb){
 
 K33per.prototype.downloadPage = function(mediaId, cb){
   //return cb(true);
-  rest.get(config.api_url+'/user/media/'+mediaId,{
+  rest.get(config.api_url+'/users/media/'+mediaId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('complete', function(rz, rs){
@@ -351,7 +366,7 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
  * @return {[type]}          [description]
  */
 K33per.prototype.count = function(userId, cb){
-  rest.get(config.api_url+'/user/'+userId+'/media/count', commons.restParams())
+  rest.get(config.api_url+'/users/'+userId+'/media/count', commons.restParams())
   .on('complete', function(data){
     cb(data);
   });
@@ -488,6 +503,19 @@ module.exports.routes = function(app, redis_client){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
+      if( r instanceof Error){
+        next(r);
+      }else{
+        res.json(200, r);
+      }
+    });
+  });
+
+  app.del('/api/internal/users/folder/:folderId', function(req, res, next){
+    var owner = hashr.hashOid(req.session.passport.user);
+    var folderId = req.params.folderId;
+    k33per.deleteUserFolder(owner, folderId, function(r){
+      console.log(r);
       if( r instanceof Error){
         next(r);
       }else{
