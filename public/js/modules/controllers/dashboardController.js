@@ -6,7 +6,8 @@ angular.module('dashboard',[])
     url: '/cabinet',
     views: {
       'main' : {
-        templateUrl: '/dashboard/all'
+        templateUrl: '/dashboard/all',
+        controller: 'cabinetController'
       }
     },
     // controller: 'indexController'
@@ -51,6 +52,20 @@ angular.module('dashboard',[])
   })
   
   ;    
+}])
+.controller('cabinetController', [
+  '$scope', 
+  'Keeper',
+  function cabinetController($scope, Keeper){
+    $scope.create_folder = function(newFolderInput){
+      if(!newFolderInput) return false;
+      //Using the current_folder scope property from the parent scope
+      //as the parentId for the subfolder being created.
+      Keeper.createSubFolder(newFolderInput, $scope.$parent.currentFolder, function(r){
+        //The home tab is the first tab so we push in there.
+        $scope.cabinetTabs[0].list.folders.push(r);
+      });
+    };
 }])
 .controller('indexController', [
   '$scope', 
@@ -97,15 +112,7 @@ angular.module('dashboard',[])
   $scope.close_tab = function(index){
     console.log(index);
   };
-  $scope.create_folder = function(){
-    if(!$scope.newFolderInput) return false;
-    //Using the current_folder scope property from the parent scope
-    //as the parentId for the subfolder being created.
-    Keeper.createSubFolder($scope.newFolderInput, $scope.current_folder, function(r){
-      //The home tab is the first tab so we push in there.
-      $scope.cabinetTabs[0].list.folders.push(r);
-    });
-  };
+
   $scope.open_folder = function(index){
     // var _folder = $scope.cabinetTabs[0].list.folders[index];
     // //push the foldername into our path
@@ -127,7 +134,7 @@ angular.module('dashboard',[])
       if(r !== false && !_.isEmpty(r)){
         _.each(r, function(v, i){
           Sharer.queue(v);
-        })
+        });
       }
     });
     $scope.uploadStateText = 'Resume';
@@ -143,7 +150,7 @@ angular.module('dashboard',[])
     }else{
       $scope.uploadStateText = 'Pause';
       $scope.uploadStateClass = 'fa-pause';
-      $scope.$flow.upload();
+      $scope.$flow.resume();
     }
 
   };

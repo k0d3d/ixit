@@ -19,7 +19,7 @@ div.files-ctrlr
             //- li(ng-repeat="p in $parent.path") <a ui-sref='cabinet.folder({folderId: p.id})'>{{p.name}}</a>
 
         .pull-right    
-          form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder()")
+          form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder(newFolderInput)")
             .form-group
               .folder-input()
                 input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
