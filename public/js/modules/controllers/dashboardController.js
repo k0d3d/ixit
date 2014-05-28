@@ -6,7 +6,8 @@ angular.module('dashboard',[])
     url: '/cabinet',
     views: {
       'main' : {
-        templateUrl: '/dashboard/all', 
+        templateUrl: '/dashboard/all',
+        controller: 'cabinetController'
       }
     },
     // controller: 'indexController'
@@ -34,23 +35,55 @@ angular.module('dashboard',[])
     url: '/folder/:folderId',
     views: {
       'cabinetView@cabinet' : {
-        templateUrl: '/templates/dashboard/cabinet'
-      }
-    },
-    controller: 'filesController',
-    resolve: {
-      contenter: function ($stateParams, Keeper) {
-        return Keeper.openFolder({id: $stateParams.folderId});
-        // return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
-        // .then(function (data) {
-        //   return data.data;
-        // });
-        // console.log($stateParams);
+        templateUrl: '/templates/dashboard/cabinet',
+        controller: 'filesController',
+        resolve: {
+          contenter: function ($stateParams, Keeper) {
+            return Keeper.openFolder({id: $stateParams.folderId});
+            // return $http.get('/api/internal/users/folder?id=' + $stateParams.folderId)
+            // .then(function (data) {
+            //   return data.data;
+            // });
+            // console.log($stateParams);
+          }
+        }
       }
     }
   })
   
   ;    
+}])
+.controller('cabinetController', [
+  '$scope', 
+  'Keeper',
+  'Tabs',
+  function cabinetController($scope, Keeper, Tabs){
+    $scope.create_folder = function(newFolderInput){
+      if(!newFolderInput) return false;
+      //Using the current_folder scope property from the parent scope
+      //as the parentId for the subfolder being created.
+      Keeper.createSubFolder(newFolderInput, $scope.$parent.currentFolder, function(r){
+        //The home tab is the first tab so we push in there.
+        $scope.cabinetTabs[0].list.folders.push(r);
+      });
+    };
+
+
+  $scope.trashFile = function(index, tabIndex){         
+    //var ixid = $scope.files[index].ixid;
+    var ixid = $scope.cabinetTabs[tabIndex].list.files[index].ixid;
+    // return console.log(ixid);
+    Keeper.deleteThisFile(ixid, function(){
+      $scope.cabinetTabs[tabIndex].list.files.splice(index, 1);
+    });
+  }; 
+  $scope.trashFolder = function(index, tabIndex){         
+    //var ixid = $scope.files[index].ixid;
+    var ixid = $scope.cabinetTabs[tabIndex].list.folders[index].fid;
+    Keeper.deleteThisFolder(ixid, function(){
+      $scope.cabinetTabs[tabIndex].list.folders.splice(index, 1);
+    });
+  };    
 }])
 .controller('indexController', [
   '$scope', 
@@ -66,15 +99,6 @@ angular.module('dashboard',[])
     id: 'home-tab',
     list: $scope.contenter
   });  
-
-  $scope.hasContent = function () {
-    if ($scope.contenter.files.length > 0 || 
-      $scope.contenter.folders.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 }])
 .controller('filesController', [
   '$scope', 
@@ -85,16 +109,11 @@ angular.module('dashboard',[])
   function filesController ($scope, $http, Keeper, Tabs, contenter) {
     console.log('files');
   $scope.contenter = contenter;
-
-
-  $scope.trashFile = function(index, tabIndex){         
-    //var ixid = $scope.files[index].ixid;
-    var fileList = Tabs.tabs[tabIndex].list[index];
-    var ixid = fileList.ixid;
-    Keeper.deleteThisFile(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
-    });
-  };
+  Tabs.reloadTab({
+    title: 'Home',
+    id: 'home-tab',
+    list: $scope.contenter
+  }); 
 
   $scope.refresh_tab = function(index){
     console.log(index);
@@ -102,15 +121,7 @@ angular.module('dashboard',[])
   $scope.close_tab = function(index){
     console.log(index);
   };
-  $scope.create_folder = function(){
-    if(!$scope.newFolderInput) return false;
-    //Using the current_folder scope property from the parent scope
-    //as the parentId for the subfolder being created.
-    Keeper.createSubFolder($scope.newFolderInput, $scope.current_folder, function(r){
-      //The home tab is the first tab so we push in there.
-      $scope.cabinetTabs[0].list.folders.push(r);
-    });
-  };
+
   $scope.open_folder = function(index){
     // var _folder = $scope.cabinetTabs[0].list.folders[index];
     // //push the foldername into our path
@@ -132,21 +143,23 @@ angular.module('dashboard',[])
       if(r !== false && !_.isEmpty(r)){
         _.each(r, function(v, i){
           Sharer.queue(v);
-        })
+        });
       }
     });
+    $scope.uploadStateText = 'Resume';
+    $scope.uploadStateClass = 'fa-play';    
   }
   init();
 
   $scope.toggleUpload = function(){
-    if(Sharer.resumable.isUploading()){
+    if($scope.$flow.isUploading()){
       $scope.uploadStateText = 'Resume';
       $scope.uploadStateClass = 'fa-play';
-      Sharer.resumable.pause();
+      $scope.$flow.pause();
     }else{
       $scope.uploadStateText = 'Pause';
       $scope.uploadStateClass = 'fa-pause';
-      Sharer.resumable.upload();
+      $scope.$flow.resume();
     }
 
   };
@@ -162,11 +175,11 @@ angular.module('dashboard',[])
       Keeper.removeFromQueue(mid, function(){
         Sharer.removeFromQueue(uid);
       });          
-    }
+    };
 
     //Cancels all uploads on the queue
     $scope.clearAll = function(){
-      Sharer.resumable.cancel();
+      $scope.$flow.cancel();
       Sharer.cancel();
     };
 

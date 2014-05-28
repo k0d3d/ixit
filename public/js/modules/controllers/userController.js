@@ -37,7 +37,7 @@ angular.module('user',[])
                     $scope.flash = '';
                 }, 7000);
             } else if (r.status === 200) {
-                $window.localtion = '/dash';
+                $window.location = r.data.returnTo;
             } else {
                 $scope.isLoading = false;
                 $scope.flash = 'An Error Occured with the Authentication Request';

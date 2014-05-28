@@ -16,13 +16,13 @@ div.files-ctrlr
         .pull-left
           ul.breadcrumb
             li <a ui-sref='cabinet.files'>Home</a>
-            li(ng-repeat="p in $parent.path") <a ui-sref='cabinet.folder({folderId: p.id})'>{{p.name}}</a>
+            //- li(ng-repeat="p in $parent.path") <a ui-sref='cabinet.folder({folderId: p.id})'>{{p.name}}</a>
 
         .pull-right    
-          form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder()")
+          form.form-inline.create-folder(style="margin-left: 10px", ng-submit="create_folder(newFolderInput)")
             .form-group
               .folder-input()
                 input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
-            button.btn.btn-flat.btn-success(type="submit") Create Folder 
+            button.btn.btn-flat.btn-success(type="submit", ng-disabled="!newFolderInput") Create Folder 
         .clearfix
   div.ui-wrap(ui-view="cabinetView")

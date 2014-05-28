@@ -1,4 +1,4 @@
-.row(ng-show="hasContent()")       
+.row(ng-show="contenter.files.length > 0 || contenter.folders.length > 0")       
   .table-wrapper.files-table.vprt
     .col-md-12.fz
       ul.nav.nav-tabs.ftbz(folder-tabs)
@@ -30,13 +30,13 @@
                 td
                   i.fa.fa-folder-o
                 td
-                  a.name(ui-sref='cabinet.folder({folderId: d.id})', ng-click="open_folder($index)") {{d.name}}
+                  a.name(ui-sref='cabinet.folder({folderId: d.fid})', ng-click="open_folder($index)") {{d.name}}
                 td
                 td
                 td.align-right
                   .btn-group.btn-group-sm
-                    button.btn.btn-primary(href='#') Share
-                    button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
+                    //- button.btn.btn-primary(href='#') Share
+                    button.btn.btn-danger(href='#', ng-click="trashFolder($index, tabIndex)") Delete
 
               tr(ng-repeat="f in tabC.list.files")
                 td 
@@ -63,14 +63,13 @@
                   .btn-group.btn-group-sm
                     button.btn.btn-primary(href='#') Share
                     button.btn.btn-danger(href='#', ng-click="trashFile($index, tabIndex)") Delete
-.row-header(ng-show="!hasContent()")
+.row-header(ng-hide="contenter.files.length > 0 || contenter.folders.length > 0")
   #pad-wrapper
     .no-gallery
       .center
         img(src='/img/1379620524_add_file.png')
         p
           span.label.label-success {{current_folder.name}}
-          span Je
         h6 You don't have any files in this folder
         p
           | Click the button below to select files from your computer. 
