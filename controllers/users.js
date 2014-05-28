@@ -246,7 +246,7 @@ module.exports.routes = function(app){
             req.user.isDeveloper = user.isDeveloper;
           }
           console.log(req.session.returnTo);
-          return res.json(200, {returnTo: req.session.returnTo, status: 200});
+          return res.json(200, {returnTo: req.session.returnTo || '/dash', status: 200});
         });
       })(req, res, next);
     });
