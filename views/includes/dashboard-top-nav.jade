@@ -10,8 +10,8 @@
             input.search(type='search', ng-model="queryString", placeholder="Filenames or Tags")
       li.notification-dropdown.hidden-phone(ng-controller="queueController")
         a.trigger(href='') Queue
-        span.badge.pull-right {{$parent.$flow.files.length}}
-        .pop-dialog(ng-show="$parent.$flow.files.length > 0")
+        span.badge.pull-right {{$parent.$flow.files.length + filequeue.length}}
+        .pop-dialog(ng-show="$parent.$flow.files.length > 0 || filequeue.length > 0")
           .pointer
             .arrow
             .arrow_border
@@ -19,12 +19,26 @@
             a.close-icon(href='')
               i.icon-remove-sign
             .notifications
-              h3 You have {{$parent.$flow.files.length}} uploads on queue
+              h3(ng-show="$parent.$flow.files.length > 0") You have {{$parent.$flow.files.length}} uploads on queue
               .item(href='', ng-repeat="queue in $parent.$flow.files", class="file-{{queue.identifier}}")
                 i.fa.fa-cloud-upload
                 | {{queue.name}}
                 .progress
-                  .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', ng-style="{width: queue.progress() * 100 + 'px'}")
+                  .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', ng-style="{width: queue.progress() * 100 + '%'}")
+                span.stat
+                  i.fa.fa-hdd-o
+                  | {{queue.size | formatFileSize}}                
+                span.stat.pull-right
+                  a(href="#", ng-click="clear($event, queue.mediaNumber, queue.identifier)") Remove
+                span.stat
+                  i.fa.fa-info-circle(ng-show="queue.isQueued", queue-tip )              
+              hr(ng-show="$parent.$flow.files.length > 0")
+              h3 You have {{filequeue.length}} uncompleted uploads
+              .item(href='', ng-repeat="queue in filequeue", class="file-{{queue.identifier}}")
+                i.fa.fa-cloud-upload
+                | {{queue.filename}}
+                .progress
+                  .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', ng-style="{width: (queue.progress / queue.chunkCount) * 100 + '%'}")
                 span.stat
                   i.fa.fa-hdd-o
                   | {{queue.size | formatFileSize}}                
@@ -32,6 +46,7 @@
                   a(href="#", ng-click="clear($event, queue.mediaNumber, queue.identifier)") Remove
                 span.stat
                   i.fa.fa-info-circle(ng-show="queue.isQueued", queue-tip )
+
               .footer
                 button.btn.btn-default(ng-click="toggleUpload()", ng-init="uploadStateText = 'Start'") 
                   i.fa(ng-class="uploadStateClass")
@@ -52,4 +67,4 @@
         a(href='/logout', role='button', title="Logout", target="_self")
           i.fa.fa-sign-out
   .progress(ng-show="$flow.isUploading()")
-    .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="{width: $flow.progress() * 100 + 'px'}")
+    .progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", ng-style="{width: $flow.progress() * 100 + '%'}")

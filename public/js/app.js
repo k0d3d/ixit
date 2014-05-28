@@ -38,35 +38,53 @@ app.config([
       chunkRetryInterval: 5000,      
   };
   // You can also set default events:
-  flowFactoryProvider.on('catchAll', function (event) {
+  flowFactoryProvider.on('progress', function (event) {
     // ...
-    // console.log('catchAll', arguments);
+    // console.log('progress', arguments);
   });
     // Can be used with different implementations of Flow.js
     // flowFactoryProvider.factory = fustyFlowFactory;  
   $urlRouterProvider.otherwise('/cabinet/files/all');
   //$locationProvider.html5Mode(true);
-  $httpProvider.interceptors.push('errorNotifier');
+  // $httpProvider.interceptors.push('errorNotifier');
   $httpProvider.interceptors.push('httpRequestInterceptor');
 }]);
 
-app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
-  return {
-    responseError: function (response) {
-      N.set_notice({
-        message: response.data.message || response.data,
-        type: 'danger'
-      });
-      return $q.reject(response);
-    }
-  };
-}]);
-app.factory('httpRequestInterceptor', ['$cookies', function($cookies) {
+// app.factory('errorNotifier', ['$q', 'Alert', function($q, N) {
+//   return {
+//     responseError: function (response) {
+//       N.set_notice({
+//         message: response.data.message || response.data,
+//         type: 'danger'
+//       });
+//       return $q.reject(response);
+//     }
+//   };
+// }]);
+app.factory('httpRequestInterceptor', [
+  '$cookies', 
+  '$window', 
+  '$q', 
+  'Alert',
+  function($cookies, $window, $q, N) {
     return {
         request: function($config) {
             $config.headers['x-Authr'] =  $cookies.throne;
             return $config;
-        }
+        },
+        responseError: function (response) {
+          if(response.status === 401) {
+              $window.location.href = '/#/login';
+              return $q.reject(response);
+          }
+          else {
+            N.set_notice({
+              message: response.data.message || response.data,
+              type: 'danger'
+            });
+            return $q.reject(response);
+          }          
+        }      
     };
 }]);
 
@@ -149,6 +167,7 @@ app.controller('MainController',
   });
 
   $scope.$on('folder_change', function () {
+    console.log('folder chamhged');
     $scope.currentFolder = Keeper.currentFolder; 
   });
 

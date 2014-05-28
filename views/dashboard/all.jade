@@ -23,6 +23,6 @@ div.files-ctrlr
             .form-group
               .folder-input()
                 input.form-control(type="text", placeholder="Folder name", ng-model="newFolderInput")
-            button.btn.btn-flat.btn-success(type="submit") Create Folder 
+            button.btn.btn-flat.btn-success(type="submit", ng-disabled="!newFolderInput") Create Folder 
         .clearfix
   div.ui-wrap(ui-view="cabinetView")

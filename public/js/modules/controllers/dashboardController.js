@@ -74,14 +74,14 @@ angular.module('dashboard',[])
     var ixid = $scope.cabinetTabs[tabIndex].list.files[index].ixid;
     // return console.log(ixid);
     Keeper.deleteThisFile(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
+      $scope.cabinetTabs[tabIndex].list.files.splice(index, 1);
     });
   }; 
   $scope.trashFolder = function(index, tabIndex){         
     //var ixid = $scope.files[index].ixid;
     var ixid = $scope.cabinetTabs[tabIndex].list.folders[index].fid;
     Keeper.deleteThisFolder(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.splice(index, 1);
+      $scope.cabinetTabs[tabIndex].list.folders.splice(index, 1);
     });
   };    
 }])

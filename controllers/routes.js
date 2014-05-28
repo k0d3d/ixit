@@ -24,7 +24,7 @@ module.exports = function (app, passport, redis_client) {
   dashboard.routes(app, isLoggedIn, passport);
 
   var keeper = require('../controllers/k33per.js');
-  keeper.routes(app, redis_client);
+  keeper.routes(app, redis_client, isLoggedIn);
 
   /**
    * Views and template routes
