@@ -1,12 +1,12 @@
 
 // routes for app views and templates
-module.exports = function (app, isLoggedIn, passport) {
+module.exports = function (app, isLoggedOut, passport) {
   // home route
-  app.get('/', function(req, res){
+  app.get('/', isLoggedOut('/dash'), function(req, res){
     res.render('index');
   });
   // home route
-  app.get('/home', function(req, res){
+  app.get('/home', isLoggedOut(), function(req, res){
     res.render('index');
   });
 

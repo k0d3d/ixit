@@ -6,6 +6,7 @@ var util = require('util');
 var mime = require('mime');
 //var clientSession = require('../lib/middlewares/client_session');
 var isLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var isLoggedOut = require('connect-ensure-login').ensureLoggedOut;
 var moment = require('moment');
 
 /**
@@ -29,7 +30,7 @@ module.exports = function (app, passport, redis_client) {
   /**
    * Views and template routes
    */
-  require('./site.js')(app, isLoggedIn, passport);
+  require('./site.js')(app, isLoggedOut, passport);
 
 
   app.get('/:hashrid', function(req, res, next){
