@@ -714,8 +714,14 @@ div.tagsinput div { display:block; float: left; }
 	margin-left: 35px
 }
 
+.x-alert-success{
+  background-color: #2ecc71;
+}
 .x-alert-danger{
-	background-color: #D2322D;
+  background-color: #c0392b;
+}
+.x-alert-info{
+	background-color: #1abc9c;
 }
 
 .small-box{

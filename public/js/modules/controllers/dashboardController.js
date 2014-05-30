@@ -57,7 +57,8 @@ angular.module('dashboard',[])
   '$scope', 
   'Keeper',
   'Tabs',
-  function cabinetController($scope, Keeper, Tabs){
+  'Alert',
+  function cabinetController($scope, Keeper, Tabs, Alert){
     $scope.create_folder = function(newFolderInput){
       if(!newFolderInput) return false;
       //Using the current_folder scope property from the parent scope
@@ -69,20 +70,34 @@ angular.module('dashboard',[])
     };
 
 
-  $scope.trashFile = function(index, tabIndex){         
-    //var ixid = $scope.files[index].ixid;
-    var ixid = $scope.cabinetTabs[tabIndex].list.files[index].ixid;
-    // return console.log(ixid);
-    Keeper.deleteThisFile(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.files.splice(index, 1);
+  $scope.trashFile = function(index, tabIndex){ 
+    Alert.set_prompt({
+      type: 'info',
+      message: 'Confirm you really want to delete this?',
+      exec: function () {
+        //var ixid = $scope.files[index].ixid;
+        var ixid = $scope.cabinetTabs[tabIndex].list.files[index].ixid;
+        // return console.log(ixid);
+        Keeper.deleteThisFile(ixid, function(){
+          $scope.cabinetTabs[tabIndex].list.files.splice(index, 1);
+        });
+      }
     });
   }; 
-  $scope.trashFolder = function(index, tabIndex){         
-    //var ixid = $scope.files[index].ixid;
-    var ixid = $scope.cabinetTabs[tabIndex].list.folders[index].fid;
-    Keeper.deleteThisFolder(ixid, function(){
-      $scope.cabinetTabs[tabIndex].list.folders.splice(index, 1);
+  $scope.trashFolder = function(index, tabIndex){  
+    Alert.set_prompt({
+      type: 'info',
+      message: 'Confirm you really want to delete this?',
+      icon: 'fa-trash-o',
+      exec: function () {
+        //var ixid = $scope.files[index].ixid;
+        var ixid = $scope.cabinetTabs[tabIndex].list.folders[index].fid;
+        Keeper.deleteThisFolder(ixid, function(){
+          // $scope.cabinetTabs[tabIndex].list.folders.splice(index, 1);
+        });
+      }
     });
+
   };    
 }])
 .controller('indexController', [

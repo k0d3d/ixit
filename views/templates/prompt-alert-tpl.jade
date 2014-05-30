@@ -1,8 +1,8 @@
-.small-box(ng-repeat="an in a_p", ng-class="an.class")
-  .box-icon.pull-left
-    i.fa.fa-trash-o
+.small-box.prompt-box.animated(ng-repeat="an in a_p", ng-class="an.class")
+  .box-icon.pull-left(style="font-size: 35px")
+    i.fa(ng-class="an.icon")
   .pull-right
-    i.fa.fa-times
+    i.fa.fa-times(ng-click="close_an($index)")
   .box-content
     .box-title
       h6 {{an.heading}}

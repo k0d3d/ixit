@@ -327,25 +327,47 @@ appDirective.directive('notification', ['$timeout', function notification ($time
     controller: NoticeCtrl
   }
 }]);
+
+/**
+ * show the prompt dialog for user feed back.
+ * For instance, if a user clicks the delete folder button,
+ * the controller, initiates the prompt service by calling
+ * e.g. AlertService.set_prompt(n), where n is an object with
+ * type, heading, mesage and exec properties.  
+ * @return {[type]} [description]
+ */
 appDirective.directive('prompt', [function prompt(){
+
+  function _close (index, arr) {
+    
+    arr.splice(index, 1);
+  }
+
   function link(scope, element, attrs){
-    scope.a_p = []
+    scope.a_p = [];
+    // scope.$watch watches the prompts scope
+    // for any change in and 
     scope.$watch('prompts', function(n){
-      if(!_.isEmpty(n)) _queueAlert(n);
+
+      if(!_.isEmpty(n)){ 
+        _queueAlert(n);
+      }
     });
     function _queueAlert(n){
       scope.a_p.push(n);
-    };
+    }
   }
+
   function AlertCtrl ($scope){
     //Close an alert
     $scope.close_an = function(index){
-      $scope.a_p.splice(index, 1);
+      _close(index, $scope.a_p);
     };
     //Execute the acceptance function
     $scope.exec_yes = function(index){
       $scope.a_p[index].exec();
-      $scope.a_p.splice(index, 1);
+      _close(index, $scope.a_p);
+      // $scope.a_p.splice(index, 1);
     };
   }
   return {

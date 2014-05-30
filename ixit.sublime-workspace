@@ -472,26 +472,26 @@
 	"buffers":
 	[
 		{
-			"file": "public/js/modules/controllers/dashboardController.js",
+			"file": "public/js/modules/directives.js",
 			"settings":
 			{
-				"buffer_size": 5628,
+				"buffer_size": 11215,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/home/kingkoded/Projects/dk33p/models/vault.js",
+			"file": "public/js/modules/services/service.js",
 			"settings":
 			{
-				"buffer_size": 7978,
-				"line_ending": "Unix"
+				"buffer_size": 9781,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "controllers/k33per.js",
 			"settings":
 			{
-				"buffer_size": 15030,
+				"buffer_size": 14894,
 				"line_ending": "Windows"
 			}
 		},
@@ -499,79 +499,50 @@
 			"file": "server.js",
 			"settings":
 			{
-				"buffer_size": 7019,
+				"buffer_size": 7057,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/kingkoded/Projects/dk33p/lib/file-manager.js",
+			"contents": "var errors = require('errors'),\n    _ = require('lodash');\n\n\nfunction createError (args) {\n  errors.create(args);\n}\n\nmodule.exports.init = function () {\n  errors.stacks(true);\n  return function (req, res, next) {\n    var jsondata = require('../config/errors.json');\n    _.invoke(jsondata, createError);\n\n    next(); \n  };\n};\n\n/**\n * creates a new error object using the\n * errortype as an argument. Errors can be defined\n * in /config/errors.json file\n * @param  {String | Name} errorType the name of the error if \n * a string is supplied or the number code of an error if a \n * number is suplied.\n * @return {object}           Error Object\n */\nmodule.exports.nounce = function (errorType) {\n  var E;\n  // if (_.isNumber (errorType)) {\n  //   E = errors.find(errorType);\n\n  // } else if (_.isString(errorType)) {\n  //   E = errors[errorType];\n  // }\n  //   E = errors.find(\"FileNotFoundError\");\n  // console.log(E);\n  // return new E();\n  \n};\n\n/**\n * creates a new error using a http response \n * status code as an argument\n * @param  {Number | String} statusCode http response status code\n * @param {string} message optional message\n * @return {object}            error object\n */\nmodule.exports.httpError = function httpError (statusCode, message) {\n  var code = 'Http' + statusCode + 'Error';\n  return new errors[code](message);\n};",
+			"file": "lib/errors.js",
+			"file_size": 1322,
+			"file_write_time": 130459212495133369,
 			"settings":
 			{
-				"buffer_size": 5494,
+				"buffer_size": 1334,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/kingkoded/Projects/dk33p/models/media.js",
+			"file": "/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 			"settings":
 			{
-				"buffer_size": 12326,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/app.js",
-			"settings":
-			{
-				"buffer_size": 4509,
+				"buffer_size": 4495,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "controllers/users.js",
+			"file": "/home/kingkoded/Projects/dk33p/server.js",
 			"settings":
 			{
-				"buffer_size": 8703,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "controllers/site.js",
-			"settings":
-			{
-				"buffer_size": 1083,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "controllers/routes.js",
-			"settings":
-			{
-				"buffer_size": 2141,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "controllers/dashboard.js",
-			"settings":
-			{
-				"buffer_size": 2232,
+				"buffer_size": 6743,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "node_modules/connect-ensure-login/lib/ensureLoggedOut.js",
+			"file": "public/js/modules/controllers/dashboardController.js",
 			"settings":
 			{
-				"buffer_size": 1144,
-				"line_ending": "Unix"
+				"buffer_size": 5991,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "node_modules/connect-ensure-login/lib/ensureLoggedIn.js",
+			"file": "config/errors.json",
 			"settings":
 			{
-				"buffer_size": 1773,
+				"buffer_size": 1030,
 				"line_ending": "Unix"
 			}
 		}
@@ -664,39 +635,60 @@
 	},
 	"file_history":
 	[
-		"/home/kingkoded/Projects/ixit/views/dashboard.jade",
+		"/home/kingkoded/Projects/dk33p/lib/errors.js",
+		"/home/kingkoded/Projects/dk33p/config/errors.json",
+		"/home/kingkoded/Projects/ixit/lib/errors.js",
+		"/home/kingkoded/Projects/ixit/views/includes/dashboard-side-nav.jade",
 		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/dashboardController.js",
-		"/home/kingkoded/Projects/ixit/controllers/dashboard.js",
-		"/home/kingkoded/Projects/ixit/views/dashboard/all.jade",
 		"/home/kingkoded/Projects/ixit/views/layouts/dashboard.jade",
-		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/runner-browser-options.js",
+		"/home/kingkoded/Projects/ixit/views/templates/notice-alert-tpl.jade",
+		"/home/kingkoded/Projects/ixit/views/templates/prompt-alert-tpl.jade",
+		"/home/kingkoded/Projects/dk33p/lib/event_register.js",
+		"/home/kingkoded/Projects/ixit/public/css/elements.css",
+		"/home/kingkoded/Projects/ixit/server.js",
+		"/home/kingkoded/Projects/ixit/public/js/modules/services/service.js",
+		"/home/kingkoded/Projects/ixit/controllers/site.js",
+		"/home/kingkoded/Projects/dk33p/test/cabinet.spec.js",
+		"/home/kingkoded/Projects/ixit/views/templates/dashboard/cabinet.jade",
+		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
+		"/home/kingkoded/Projects/ixit/views/dashboard/all.jade",
+		"/home/kingkoded/Projects/ixit/views/layouts/default.jade",
+		"/home/kingkoded/Projects/ixit/public/css/animate.min.css",
+		"/home/kingkoded/Projects/ixit/config/development.json",
+		"/home/kingkoded/Projects/dk33p/node_modules/common-errors/tests/argument-null.js",
+		"/home/kingkoded/Projects/ixit/views/layouts/email-layout.jade",
+		"/home/kingkoded/Projects/dk33p/env",
+		"/home/kingkoded/Projects/dk33p/node_modules/mongoose/lib/promise.js",
+		"/home/kingkoded/Projects/ixit/Procfile",
+		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/phantom-runner.js",
+		"/home/kingkoded/Projects/dk33p/package.json",
+		"/home/kingkoded/Projects/ixit/public/js/dashboard.js",
+		"/home/kingkoded/Projects/ixit/views/dashboard.jade",
+		"/home/kingkoded/Projects/ixit/controllers/dashboard.js",
+		"/home/kingkoded/Projects/dk33p/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/server_capabilities.js",
+		"/home/kingkoded/Projects/ixit/views/includes/dashboard-top-nav.jade",
+		"/home/kingkoded/Projects/dk33p/models/vault.js",
+		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
+		"/home/kingkoded/Projects/dk33p/lib/file-manager.js",
+		"/home/kingkoded/Projects/dk33p/models/media.js",
+		"/home/kingkoded/Projects/ixit/public/js/app.js",
+		"/home/kingkoded/Projects/ixit/controllers/users.js",
 		"/home/kingkoded/Projects/ixit/controllers/routes.js",
+		"/home/kingkoded/Projects/ixit/node_modules/connect-ensure-login/lib/ensureLoggedOut.js",
+		"/home/kingkoded/Projects/ixit/node_modules/less/test/browser/runner-browser-options.js",
 		"/home/kingkoded/Projects/dk33p/lib/utility.js",
 		"/home/kingkoded/Projects/ixit/lib/auth/passport.js",
 		"/home/kingkoded/Projects/ixit/node_modules/connect-ensure-login/lib/ensureLoggedIn.js",
-		"/home/kingkoded/Projects/ixit/node_modules/connect-ensure-login/lib/ensureLoggedOut.js",
-		"/home/kingkoded/Projects/dk33p/package.json",
 		"/home/kingkoded/Projects/ixit/node_modules/redis/examples/unix_socket.js",
-		"/home/kingkoded/Projects/ixit/public/js/modules/services/service.js",
 		"/home/kingkoded/Projects/ixit/public/js/modules/controllers/userController.js",
 		"/home/kingkoded/Projects/dk33p/models/media/media.js",
-		"/home/kingkoded/Projects/ixit/views/includes/dashboard-top-nav.jade",
 		"/home/kingkoded/Projects/dk33p/controllers/v4ult.js",
 		"/home/kingkoded/Projects/dk33p/public/index.html",
-		"/home/kingkoded/Projects/ixit/controllers/users.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/update-notifier/node_modules/configstore/node_modules/js-yaml/examples/sample_document.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/update-notifier/node_modules/configstore/node_modules/js-yaml/lib/js-yaml/schema/default_full.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-aws/node_modules/aws-sdk/node_modules/xml2js/node_modules/sax/test/unclosed-root.js",
 		"/home/kingkoded/Projects/dk33p/v4nish/4OxO8dPee6u5Opqjm86R-467401-anonymous_change_w1jpeg",
 		"/home/kingkoded/Projects/dk33p/lib/uploader.js",
-		"/home/kingkoded/Projects/ixit/controllers/k33per.js",
-		"/home/kingkoded/Projects/dk33p/models/vault.js",
-		"/home/kingkoded/Projects/dk33p/models/media.js",
-		"/home/kingkoded/Projects/dk33p/lib/file-manager.js",
-		"/home/kingkoded/Projects/ixit/server.js",
-		"/home/kingkoded/Projects/ixit/controllers/site.js",
-		"/home/kingkoded/Projects/ixit/views/includes/dashboard-side-nav.jade",
-		"/home/kingkoded/Projects/ixit/public/js/dashboard.js",
 		"/home/kingkoded/Projects/dk33p/server.js",
 		"/home/kingkoded/Projects/ixit/node_modules/less/test/less/errors/divide-mixed-units.less",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-contrib-jshint/node_modules/jshint/node_modules/htmlparser2/test/Events/16-double_attribs.json",
@@ -704,7 +696,6 @@
 		"/home/kingkoded/Projects/ixit/public/css/layout.css",
 		"/home/kingkoded/Projects/ixit/node_modules/less/test/css/debug/linenumbers-all.css",
 		"/home/kingkoded/Projects/dk33p/log.log",
-		"/home/kingkoded/Projects/dk33p/lib/event_register.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-contrib-less/node_modules/less/test/css/variables-in-at-rules.css",
 		"/home/kingkoded/Projects/dk33p/lib/issuedownload.js",
 		"/home/kingkoded/Projects/dk33p/lib/middlewares/cors.js",
@@ -713,15 +704,10 @@
 		"/home/kingkoded/Projects/dk33p/lib/db.js",
 		"/home/kingkoded/Projects/dk33p/gruntfile.js",
 		"/home/kingkoded/Projects/dk33p/controllers/routes.js",
-		"/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 		"/home/kingkoded/Projects/ixit/views/includes/navigation.jade",
 		"/home/kingkoded/Projects/ixit/node_modules/moment/min/moment-with-langs.js",
 		"/home/kingkoded/Projects/dk33p/config/development.json",
-		"/home/kingkoded/Projects/ixit/config/development.json",
-		"/home/kingkoded/Projects/dk33p/test/cabinet.spec.js",
-		"/home/kingkoded/Projects/ixit/views/templates/dashboard/cabinet.jade",
 		"/home/kingkoded/Projects/dk33p/lib/passport.js",
-		"/home/kingkoded/Projects/dk33p/lib/errors.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/common-errors/lib/io/file-load.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/.bin/forever",
 		"/home/kingkoded/Projects/dk33p/node_modules/bcrypt/src/node_blf.h",
@@ -734,10 +720,7 @@
 		"/home/kingkoded/Projects/dk33p/node_modules/express/lib/router/index.js",
 		"/home/kingkoded/Projects/dk33p/models/file-utils.js",
 		"/home/kingkoded/Projects/ixit/public/js/modules/directives.js",
-		"/home/kingkoded/Projects/ixit/public/js/app.js",
-		"/home/kingkoded/Projects/dk33p/config/errors.json",
 		"/home/kingkoded/Projects/ixit/config/errors.json",
-		"/home/kingkoded/Projects/ixit/lib/errors.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-aws/node_modules/aws-sdk/dist-tools/bundle-helpers.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/formidable/test/integration/test-octet-stream.js",
 		"/home/kingkoded/Projects/dk33p/config/test.json",
@@ -749,7 +732,6 @@
 		"/home/kingkoded/Projects/ixit/node_modules/moment/test/moment/string_prototype.js",
 		"/home/kingkoded/Downloads/ng-flow-master/dist/ng-flow-standalone.js",
 		"/home/kingkoded/Projects/ixit/public/js/ng-flow-standalone.min.js",
-		"/home/kingkoded/Projects/ixit/views/templates/notice-alert-tpl.jade",
 		"/home/kingkoded/Projects/ixit/public/css/n.css",
 		"/home/kingkoded/Projects/ixit/node_modules/common-errors/lib/not-supported.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/forever/test/fixtures/log-on-interval.js",
@@ -757,7 +739,6 @@
 		"/home/kingkoded/Downloads/ng-flow-master/samples/basic/index.html",
 		"/home/kingkoded/Downloads/ng-flow-master/samples/basic/app.js",
 		"/home/kingkoded/.cache/.fr-gUnrF6/ng-flow-master/samples/basic/app.js",
-		"/home/kingkoded/Projects/ixit/views/layouts/default.jade",
 		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/object/forOwn.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/forever/node_modules/utile/test/format-test.js",
 		"/home/kingkoded/Projects/dk33p/node_modules/jade/node_modules/monocle/node_modules/readdirp/examples/callback-api.js",
@@ -781,17 +762,7 @@
 		"/home/kingkoded/Downloads/plunk-7FD5Wf/index.html",
 		"/home/kingkoded/Projects/ixit/lib/hash.js",
 		"/home/kingkoded/Projects/dk33p/models/user.js",
-		"/home/kingkoded/Downloads/plunk-7FD5Wf/contacts.html",
-		"/home/kingkoded/Downloads/plunk-7FD5Wf/contacts.list.html",
-		"/home/kingkoded/Downloads/plunk-7FD5Wf/route1.html",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/mout/object/hasOwn.js",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-timer/node_modules/duration/node_modules/es5-ext/lib/Object/to-plain-object.js",
-		"/home/kingkoded/Projects/ixit/node_modules/nodemailer/node_modules/mailcomposer/lib/topunycode.js",
-		"/home/kingkoded/Projects/ixit/public/js/angular-sanitize.min.js",
-		"/home/kingkoded/Projects/ixit/node_modules/less/node_modules/source-map/build/assert-shim.js",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/handlebars/node_modules/uglify-js/node_modules/source-map/build/suffix-browser.js",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-bower-task/node_modules/bower/node_modules/handlebars/handlebars-source.gemspec",
-		"/home/kingkoded/Projects/dk33p/node_modules/grunt-clean/node_modules/grunt/docs/api_log.md"
+		"/home/kingkoded/Downloads/plunk-7FD5Wf/contacts.html"
 	],
 	"find":
 	{
@@ -979,24 +950,57 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "public/js/modules/controllers/dashboardController.js",
+					"file": "public/js/modules/directives.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5628,
+						"buffer_size": 11215,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4927,
-								4927
+								11038,
+								11038
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5022.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/js/modules/services/service.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9781,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								218,
+								218
 							]
 						],
 						"settings":
@@ -1010,47 +1014,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2160.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/kingkoded/Projects/dk33p/models/vault.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7978,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7391,
-								7391
-							],
-							[
-								7456,
-								7456
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3187.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1059,15 +1026,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15030,
+						"buffer_size": 14894,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10745,
-								10745
+								8094,
+								8094
 							]
 						],
 						"settings":
@@ -1080,10 +1047,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4815.0,
+						"translation.y": 6210.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1092,15 +1059,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7019,
+						"buffer_size": 7057,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5077,
-								5077
+								4626,
+								4626
 							]
 						],
 						"settings":
@@ -1113,31 +1080,32 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1715.0,
+						"translation.y": 2540.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/home/kingkoded/Projects/dk33p/lib/file-manager.js",
+					"file": "lib/errors.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5494,
+						"buffer_size": 1334,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								975,
-								975
+								939,
+								939
 							]
 						],
 						"settings":
 						{
+							"history_list_is_closing": true,
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
@@ -1146,43 +1114,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/kingkoded/Projects/dk33p/models/media.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12326,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7121,
-								7121
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3795.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1192,53 +1127,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 6,
-					"file": "public/js/app.js",
+					"buffer": 5,
+					"file": "/home/kingkoded/Projects/dk33p/controllers/cabinet.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4509,
+						"buffer_size": 4495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2043,
-								2043
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 687.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "controllers/users.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8703,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5950,
-								5950
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1254,24 +1156,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "controllers/site.js",
+					"buffer": 6,
+					"file": "/home/kingkoded/Projects/dk33p/server.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1083,
+						"buffer_size": 6743,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								301,
-								301
+								4539,
+								4539
 							]
 						],
 						"settings":
@@ -1280,6 +1182,72 @@
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2475.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "public/js/modules/controllers/dashboardController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2974,
+								2974
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "config/errors.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -1288,137 +1256,6 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "controllers/routes.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2141,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								949,
-								949
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 585.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "controllers/dashboard.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2232,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 180.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "node_modules/connect-ensure-login/lib/ensureLoggedOut.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1144,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1144,
-								1144
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 180.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "node_modules/connect-ensure-login/lib/ensureLoggedIn.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 1773,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 315.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1452,7 +1289,7 @@
 		"cols":
 		[
 			0.0,
-			0.471692476002,
+			0.593234807169,
 			1.0
 		],
 		"rows":
@@ -1486,6 +1323,62 @@
 		"selected_items":
 		[
 			[
+				"error",
+				"dk33p/lib/errors.js"
+			],
+			[
+				"dash",
+				"ixit/public/js/modules/controllers/dashboardController.js"
+			],
+			[
+				"err",
+				"ixit/lib/errors.js"
+			],
+			[
+				"server",
+				"dk33p/server.js"
+			],
+			[
+				"cab",
+				"dk33p/controllers/cabinet.js"
+			],
+			[
+				"k33p",
+				"ixit/controllers/k33per.js"
+			],
+			[
+				"default",
+				"ixit/views/layouts/default.jade"
+			],
+			[
+				"animat",
+				"ixit/public/css/animate.min.css"
+			],
+			[
+				"elem",
+				"ixit/public/css/elements.css"
+			],
+			[
+				"prompt",
+				"ixit/views/templates/prompt-alert-tpl.jade"
+			],
+			[
+				"service",
+				"ixit/public/js/modules/services/service.js"
+			],
+			[
+				"dashbo",
+				"ixit/public/js/modules/controllers/dashboardController.js"
+			],
+			[
+				"direct",
+				"ixit/public/js/modules/directives.js"
+			],
+			[
+				"all",
+				"ixit/views/dashboard/all.jade"
+			],
+			[
 				"dashboard",
 				"ixit/controllers/dashboard.js"
 			],
@@ -1508,10 +1401,6 @@
 			[
 				"rout",
 				"ixit/controllers/routes.js"
-			],
-			[
-				"k33p",
-				"ixit/controllers/k33per.js"
 			],
 			[
 				"userc",
@@ -1548,10 +1437,6 @@
 			[
 				"medi",
 				"dk33p/models/media.js"
-			],
-			[
-				"service",
-				"ixit/public/js/modules/services/service.js"
 			],
 			[
 				"flow",
@@ -1618,18 +1503,6 @@
 				"ixit/public/js/app.js"
 			],
 			[
-				"default",
-				"ixit/views/layouts/default.jade"
-			],
-			[
-				"cab",
-				"dk33p/controllers/cabinet.js"
-			],
-			[
-				"direct",
-				"ixit/public/js/modules/directives.js"
-			],
-			[
 				"directive",
 				"ixit/public/js/modules/directives.js"
 			],
@@ -1682,10 +1555,6 @@
 				"ixit/public/js/app.js"
 			],
 			[
-				"dashbo",
-				"ixit/controllers/dashboard.js"
-			],
-			[
 				"pas",
 				"ixit/lib/auth/passport.js"
 			],
@@ -1696,14 +1565,6 @@
 			[
 				"ser",
 				"ixit/public/js/modules/services/service.js"
-			],
-			[
-				"dash",
-				"ixit/public/js/modules/controllers/dashboardController.js"
-			],
-			[
-				"server",
-				"ixit/server.js"
 			],
 			[
 				"deve",
@@ -1803,10 +1664,6 @@
 			],
 			[
 				"element",
-				"IXit/public/css/elements.css"
-			],
-			[
-				"elem",
 				"IXit/public/css/elements.css"
 			],
 			[

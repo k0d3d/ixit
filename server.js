@@ -174,6 +174,7 @@ function afterResourceFilesLoad(redis_client) {
 
       // log it
       // send emails if you want
+      console.log('Error Stack....');
       console.error(err.stack);
 
       // error page
@@ -181,7 +182,7 @@ function afterResourceFilesLoad(redis_client) {
       //res.json(500, err.message);
       var t = '/api/internal/';
       if (req.url.indexOf(t) > -1) {
-        res.json(500, err.message);        
+        res.json(500, err);        
       } else {
         res.status(500).render('500', {
           url: req.originalUrl,

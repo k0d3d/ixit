@@ -277,7 +277,7 @@ K33per.prototype.deleteUserFile = function(userId, fileId, callback){
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
-  }).on('error', function(err){
+  }).on('fail', function(err){
     callback(err);
   });
 };
@@ -287,23 +287,20 @@ K33per.prototype.deleteUserFolder = function deleteFolder (userId, folderId, cb)
   // body...
   rest.del(config.api_url+'/users/'+userId+'/folder/' + folderId, commons.restParams())
   .on('success', function(data){
-    console.log(data instanceof Error);
     cb(data);
   })
-  .on('fail', function(data, response){
-    console.log('message');
-    console.log(data);
-    cb(errors.httpError(response.statusCode));
+  .on('fail', function(err){
+    cb(errors.nounce(err.error));
   });
 };
 
-K33per.prototype.removeUserQueue = function(mediaNumber, owner, callback){
+K33per.prototype.removeUserQueue = function(mediaNumber, owner, cb){
   rest.del(config.api_url+'/users/'+owner+'/queue/'+mediaNumber, {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result){
-    callback(result);
-  }).on('error', function(err){
-    callback(err);
+    cb(result);
+  }).on('fail', function(err){
+    cb(errors.nounce(err.error));
   });
 };
 
@@ -316,8 +313,8 @@ K33per.prototype.updateTags = function(file_id, owner, tags, cb){
   .on('success', function(result){
     cb(result);
   })
-  .on('error', function(err){
-    cb(err);
+  .on('fail', function(err){
+    cb(errors.nounce(err.error));
   });
 };
 
@@ -329,8 +326,8 @@ K33per.prototype.search = function(query, cb){
   .on('success', function(result){
     cb(result);
   })
-  .on('error', function(err){
-    cb(err);
+  .on('fail', function(err){
+    cb(errors.nounce(err.error));
   });
 };
 
@@ -516,7 +513,6 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
-      console.log(r);
       if( r instanceof Error){
         next(r);
       }else{

@@ -311,10 +311,17 @@ angular.module('services', [])
      */
     s.prompts = null;
     s.notes = null;
-
+    /*
+    *n should be an object with:
+    *type: success, info, danger
+    *heading: String
+    *message: String
+     */
     s.set_prompt = function (n) {
       this.prompts = n;
+      this.prompts.heading = n.heading || 'Are you sure';
       this.prompts.class= __state[n.type].class;
+      this.prompts.icon = n.icon || __state[n.type].icon;
 
       this.broadcastPrompt();
     };
