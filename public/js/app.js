@@ -19,8 +19,7 @@ app.config([
   '$urlRouterProvider', 
   '$httpProvider', 
   'flowFactoryProvider', 
-  '$cookiesProvider',
-  function ($stateProvider, $urlRouterProvider, $httpProvider, flowFactoryProvider, $cookies) {
+  function ($stateProvider, $urlRouterProvider, $httpProvider, flowFactoryProvider) {
   flowFactoryProvider.defaults = {
       target:'http://localhost:3001/upload',
       chunkSize:1*1024*1024,
@@ -42,6 +41,10 @@ app.config([
     // ...
     // console.log('progress', arguments);
   });
+  // flowFactoryProvider.on('fileSuccess', function (file) {
+  //   // ...
+  //   console.log('progress', file);
+  // });
     // Can be used with different implementations of Flow.js
     // flowFactoryProvider.factory = fustyFlowFactory;  
   $urlRouterProvider.otherwise('/cabinet/files/all');
@@ -144,7 +147,6 @@ app.controller('MainController',
 
   $scope.$on('reloadTab', function () {
     var index = _.findIndex($scope.cabinetTabs, {id: T.tab.id});
-    console.log(index, T.tab);
     if (index < 0) {
       $scope.cabinetTabs.push(T.tab);
     } else {
@@ -167,7 +169,6 @@ app.controller('MainController',
   });
 
   $scope.$on('folder_change', function () {
-    console.log('folder chamhged');
     $scope.currentFolder = Keeper.currentFolder; 
   });
 
