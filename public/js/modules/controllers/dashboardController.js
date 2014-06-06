@@ -150,9 +150,14 @@ angular.module('dashboard',[])
   //Current Folder
   $scope.current_folder = Keeper.tab;
 }])
-.controller('queueController', ['$scope', '$http', 'Keeper', 'Sharer', function queueController($scope, $http, Keeper, Sharer){
+.controller('queueController', [
+  '$scope', 
+  '$http', 
+  'Keeper', 
+  'Sharer', 
+  function queueController($scope, $http, Keeper, Sharer){
   function init(){
-    $scope.filequeue;
+    // $scope.filequeue;
     var param = {user: $scope.cuser};
     Keeper.thisUserQueue(param, function(r){
       if(r !== false && !_.isEmpty(r)){
@@ -176,32 +181,37 @@ angular.module('dashboard',[])
       $scope.uploadStateClass = 'fa-pause';
       $scope.$flow.resume();
     }
-
   };
 
 
-    //Cancels a given file on the 
-    $scope.clear = function(e, mid, uid){
-      e.preventDefault();
-      if(!_.isUndefined(Sharer.resumable)){
-        var fileObj = Sharer.resumable.getFromUniqueIdentifier(uid);
-        fileObj.cancel();
-      }
-      Keeper.removeFromQueue(mid, function(){
-        Sharer.removeFromQueue(uid);
-      });          
-    };
+  //Cancels a given file on the 
+  $scope.clear = function(e, mid, uid){
+    e.preventDefault();
+    if(!_.isUndefined(Sharer.resumable)){
+      var fileObj = Sharer.resumable.getFromUniqueIdentifier(uid);
+      fileObj.cancel();
+    }
+    Keeper.removeFromQueue(mid, function(){
+      Sharer.removeFromQueue(uid);
+    });          
+  };
 
-    //Cancels all uploads on the queue
-    $scope.clearAll = function(){
-      $scope.$flow.cancel();
-      Sharer.cancel();
-    };
+  //Cancels all uploads on the queue
+  $scope.clearAll = function(){
+    $scope.$flow.cancel();
+    Sharer.cancel();
+  };
 
-    $scope.$on('onQueue', function(){
-      $scope.filequeue = Sharer.filequeue;
-    });
-  }])
+  $scope.$on('onQueue', function(){
+    $scope.filequeue = Sharer.filequeue;
+  });
+
+  $scope.$on('flow::fileSuccess', function () {
+    var flowFile = arguments[2],
+        pos = _.findIndex($scope.$flow.files, {'uniqueIdentifier': flowFile.uniqueIdentifier});
+    $scope.$flow.files.splice(pos, 1);
+  });
+}])
 .filter('formatFileSize', function(){
   return function(bytes){
     if (typeof bytes !== 'number') {

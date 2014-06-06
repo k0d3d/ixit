@@ -793,6 +793,8 @@
           if (this.isComplete()) {
             this.currentSpeed = 0;
             this.averageSpeed = 0;
+            // console.log(this);
+            // var self = this
             this.flowObj.fire('fileSuccess', this, message);
           }
           break;
