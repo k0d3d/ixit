@@ -41,10 +41,10 @@ app.config([
     // ...
     // console.log('progress', arguments);
   });
-  // flowFactoryProvider.on('fileSuccess', function (file) {
-  //   // ...
-  //   console.log('progress', file);
-  // });
+  flowFactoryProvider.on('error', function () {
+    // ...
+    console.log(arguments);
+  });
     // Can be used with different implementations of Flow.js
     // flowFactoryProvider.factory = fustyFlowFactory;  
   $urlRouterProvider.otherwise('/cabinet/files/all');

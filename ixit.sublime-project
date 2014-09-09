@@ -8,6 +8,26 @@
 		{
 			"follow_symlinks": true,
 			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/home/kingkoded/Projects/ixit_mobile"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/var/www/html/codefunk/wp-content/themes"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/var/www/html/codefunk/wp-content/plugins/dw-question-answer"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/var/www/html/codefunk/wp-content/plugins/ajaxfrontendpost"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/home/kingkoded/Projects/node-gypsi"
 		}
 	]
 }

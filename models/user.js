@@ -5,7 +5,7 @@
 
 var UserModel = require('./user/user.js').UserModel,
     VerificationModel = require('./user/user.js').UserVerification,
-    Q = require('q'),    
+    Q = require('q'),
     utils = require('../lib/commons.js'),
     _ = require('underscore'),
     sendMessage = require('../lib/email/mailer.js'),
@@ -24,7 +24,7 @@ var userFunctions = {
 
     /**
      * Validates a users / email existence
-     * @param  {Object} data email or username as a property to be checked for 
+     * @param  {Object} data email or username as a property to be checked for
      * @return {Object}      Promiuse fufilled with a boolean.
      */
     validateUser: function validateUser(data) {
@@ -32,7 +32,7 @@ var userFunctions = {
 
         var d = Q.defer();
 
-        //Find username 
+        //Find username
         UserModel.count({
             $or: [{
                 email: data.email
@@ -69,7 +69,7 @@ var userFunctions = {
                 data.token = i.token;
                 return d.resolve(data);
             }
-        });            
+        });
 
         return d.promise;
     },
@@ -79,50 +79,42 @@ var userFunctions = {
 
         var d = Q.defer();
 
-        try {
-
-            console.log(data);
-            //Check if userid exists
-            //Find username 
-            UserModel.findOne({
-                $or: [{
-                    email: data.email
-                }, {
-                    username: data.username
-                }, {
-                    _id: data.userId
-                }]
-            }).exec(function(err, i) {
+        //Check if userid exists
+        //Find username
+        UserModel.findOne({
+            $or: [{
+                email: data.email
+            }, {
+                username: data.username
+            }, {
+                _id: data.userId
+            }]
+        }).exec(function(err, i) {
 
 
 
-                if (err) {
-                    return d.reject(err);
-                }
+            if (err) {
+                return d.reject(err);
+            }
 
-                if (i === null) {
+            if (i === null) {
 
-                    console.log('User not found');
-                    return d.reject(new Error('User not found'));
+                // console.log('User not found');
+                return d.reject(new Error('User not found'));
 
-                }
+            }
 
-                if (_.isEmpty(i)) {
+            if (_.isEmpty(i)) {
 
-                    return d.reject(new Error('User not found'));
-                }
+                return d.reject(new Error('User not found'));
+            }
 
-                //I wanna update the user object with the
-                //existing results
-                data = _.extend(i.toJSON(), data);
-                console.log('user found');
-                return d.resolve(data);
-            });
-        }
-        catch (e) {
-            console.log(e);
-            return d.reject(e);
-        }
+            //I wanna update the user object with the
+            //existing results
+            data = _.extend(i.toJSON(), data);
+            // console.log('user found');
+            return d.resolve(data);
+        });
 
 
         return d.promise;
@@ -193,8 +185,8 @@ var userFunctions = {
         var sendTemplateEmail = sendMessage.sendHTMLMail;
 
         console.log('in before send of email');
-        
-        var config = require("config");        
+
+        var config = require("config");
 
         var prefix = config.app.http_app_domain; // need to put in http:// based upon where we are (local, dev, test, prod) - can be config
 
@@ -211,24 +203,24 @@ var userFunctions = {
         var sendTemplateEmail = sendMessage.sendTemplateEmail;
 
         console.log('in before send of email to admin confirming verification successful');
-        
+
         var _conf = require("config");
-        
+
         console.log(JSON.stringify(_conf));
-        
+
         var config = _conf.users;
 
         console.log(config);
         console.log(data);
-        
+
         var userToFind = {};
         userToFind.userId = data.userId;
-        
+
         this.findUser(userToFind).then(function (userInfo) {
 
             return sendTemplateEmail(_conf.general.systemEmail, config.fromDefaultEmailAddress,
             "Successful BNC Email Verification", "views/email-templates/successful-email-verification-notice.jade", userInfo);
-        
+
         });
 
     },
@@ -245,11 +237,11 @@ var userFunctions = {
       .exec(function (err, activationDoc) {
         if (err) {
             return activate.reject(err);
-        } 
+        }
 
         if (activationDoc) {
             // find out if the difference between
-            // the date created and today is up to 
+            // the date created and today is up to
             // 24hours or 3600 seconds
             var today = moment();
             var created = moment(activationDoc.created);
@@ -262,7 +254,7 @@ var userFunctions = {
             } else {
                 return activate.reject(new Error('expired activation'));
             }
-            
+
         } else {
                 return activate.reject(new Error('invalid or expired activation'));
         }
@@ -282,7 +274,7 @@ var userFunctions = {
             console.log(err, i);
             if (err) {
                 return perform.reject(err);
-            } 
+            }
             if (i > 0) {
                 return perform.resolve(activationDoc);
             }
@@ -302,7 +294,7 @@ var userFunctions = {
         }, function (err, i) {
             if (err) {
                 return del.reject(err);
-            } 
+            }
             if (i > 0) {
                 return del.resolve(activationDoc);
             }
@@ -319,11 +311,11 @@ var userFunctions = {
         var sendTemplateEmail = sendMessage.sendTemplateEmail;
 
         console.log('in before send of email');
-        
+
         var _conf = require("config");
-        
+
         //console.log(JSON.stringify(_conf));
-        
+
         var config = _conf.users;
 
         //console.log(config);
@@ -333,7 +325,7 @@ var userFunctions = {
         return sendTemplateEmail(data.email, config.fromDefaultEmailAddress,
         config.userRecoveryPasswordSubject, "views/email-templates/user-recovery-email.jade", {
             verificationLink: prefix + "/new-password?reg_key=" + data.token
-        });        
+        });
     },
     updateUserAccountPassword : function updateUserAccountPassword (doc) {
         console.log('Updating account password');
@@ -347,13 +339,13 @@ var userFunctions = {
         }, function (err, done) {
             if (err) {
                 return updater.reject(err);
-            } 
+            }
             if (done > 0) {
                 return updater.resolve(doc);
             }
             if (done === 0) {
                 return updater.reject(new Error('error updating password'));
-            };            
+            };
         })
 
         return updater.promise;
@@ -376,7 +368,7 @@ var userFunctions = {
                 if (!i) {
                     return finder.resolve(false);
                 }
-            });     
+            });
         return finder.promise;
     },
     updateLoginAttempt : function updateLoginAttempt (doc) {
@@ -402,9 +394,9 @@ var userFunctions = {
                 }
                 if (i === 0) {
                     return logger.reject(new Error('updating login count failed'));
-                }            
+                }
         })
-        
+
         return logger.promise;
     },
     logLoginAttempt : function logLoginAttempt (doc) {
@@ -416,7 +408,7 @@ var userFunctions = {
         l.email = doc.userId;
         l.count = 1;
         l.firstAttempt = Date.now(),
-        l.lastAttempt = Date.now()        
+        l.lastAttempt = Date.now()
         l.save(function (err, i) {
             if (err) {
                 return logger.reject(err);
@@ -428,7 +420,7 @@ var userFunctions = {
     },
     saveFailedLoginAttempt : function saveFailedLoginAttempt (doc) {
         console.log('on failed');
-        var saver = Q.defer(), 
+        var saver = Q.defer(),
             config = configuration.users,
             self = this;
 
@@ -440,14 +432,14 @@ var userFunctions = {
         //find or update a user's failed login
         //on the logincount model. always afix the time.
         //if the first of 10 failed login is within config.failedAuthWindow
-        //i.e. config.failedAuthWindow = 10mins. and first failure was 
+        //i.e. config.failedAuthWindow = 10mins. and first failure was
         //5mins ago. update recentfailed, if not update firstfail.
-        //then update the count. 
+        //then update the count.
         //when count gets to 10, within failedAuthWindow send email to errors@...
         //if updating count outside failedAuthWindow, reset firstfail to now()
         //and most recent fail to now()
         //from the same IP address
-        
+
         self.findFailedLogin(doc)
         .then(function (foundLogin) {
 
@@ -460,7 +452,7 @@ var userFunctions = {
             //If a previous login attempt is found, most
             //likely a failed login event,
             //"foundLogin", is doc containing count, firstAttempt, lastAttempt
-            //lets get the count, and the time 
+            //lets get the count, and the time
             if (foundLogin) {
                 //First we check if firstAttempt is over failedAuthWindow.
                 //i.e. now is > firstAttempt + failedAuthWindow
@@ -470,8 +462,8 @@ var userFunctions = {
 
                 if (tooLate)  {
 
-                    //Well if its too late, lets restart the 
-                    //clock and count. 
+                    //Well if its too late, lets restart the
+                    //clock and count.
                     //treat is as a first attempt
                     rec.firstAttempt = Date.now();
                     rec.lastAttempt = Date.now();
@@ -486,21 +478,21 @@ var userFunctions = {
                     rec.count = foundLogin.count + 1;
 
                     //if out count is so far greater then 10
-                    //lets send an email and inform the user 
+                    //lets send an email and inform the user
                     //to get recover his/her password
                     if (rec.count >= 5) {
                         self.sendEmailOnFailedAuth(foundLogin)
                         .then(function () {
-                            return self.updateLoginAttempt(rec);                            
+                            return self.updateLoginAttempt(rec);
                         });
                     } else {
-                        return self.updateLoginAttempt(rec);                        
+                        return self.updateLoginAttempt(rec);
                     }
 
                 }
 
-                
-                
+
+
             } else {
             //If no previous attempt is found.
             //lets create a login attempt
@@ -511,11 +503,11 @@ var userFunctions = {
         .then(function (doc) {
             console.log('Saver here');
             console.log(doc);
-            return saver.resolve(doc);            
+            return saver.resolve(doc);
         }, function (err) {
             return saver.reject(err);
         });
-        
+
 
         return saver.promise;
     },
@@ -576,12 +568,12 @@ var userFunctions = {
         // we want to send user who has registered
         var sendTemplateEmail = sendMessage.sendTemplateEmail;
 
-        
-        
+
+
         var _conf = require("config");
-        
+
         //console.log(JSON.stringify(_conf));
-        
+
         var config = _conf.users;
 
         //console.log(config);
@@ -684,7 +676,7 @@ User.prototype.create = function(options) {
                     userInfo.sentVerification = false;
                 }
                 d.resolve(userInfo);
-                
+
             }).
             catch (function(err) {
                 console.log(err);
@@ -749,17 +741,17 @@ User.prototype.saveUserExtendedProfile = function(options) {
     return d.promise;
 };
 
-User.prototype.findUser = function(options) {
-    var d = Q.defer();
+// User.prototype.findUser = function(options) {
+//     var d = Q.defer();
 
-    userFunctions.findUserWithPersonSVC(options).then(function(r) {
-        return d.resolve(r);
-    }, function(err) {
-        return d.reject(err);
-    });
+//     userFunctions.findUserWithPersonSVC(options).then(function(r) {
+//         return d.resolve(r);
+//     }, function(err) {
+//         return d.reject(err);
+//     });
 
-    return d.promise;
-};
+//     return d.promise;
+// };
 User.prototype.findUserObject = function(options) {
     var d = Q.defer();
 
@@ -772,16 +764,16 @@ User.prototype.findUserObject = function(options) {
     return d.promise;
 };
 /**
- * this method checks if a supplied username / email address 
+ * this method checks if a supplied username / email address
  * matches the password on file (db). It is used primarily to authenticate
  * user accounts.
  * If authentication passes, an userLoggedIn event is triggered which updates the
  * "lastLoggedIn" field on the data base.
- * 
+ *
  * @param  {String} usernameOrEmail A username or email
  * @param  {String} password        the password in plain text
  * @param  {String} twoFactorCode   2 factor authentication supplied in plain text
- * @param  {Object} req             the request object 
+ * @param  {Object} req             the request object
  * @return {Object}                 Promise Object
  */
 User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
@@ -816,25 +808,25 @@ User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
                 // .then(function () {
                 //     console.log('Sending back user info');
 
-                //     //trigger a logged-in event fr 
+                //     //trigger a logged-in event fr
                 //     //this user
                 //     try {
                 //         userFunctions.userAuthEvent(user);
                 //     } catch (e) {
                 //         console.log(e);
                 //     }
-                //     //return back the userInfo 
-                //     //which should contain the user 
+                //     //return back the userInfo
+                //     //which should contain the user
                 //     //account data
                 //     d.resolve(user);
                 // }, function (err) {
-                //     //Errors with recording and 
-                //     //auditing 
+                //     //Errors with recording and
+                //     //auditing
                 //     d.reject(err);
                 // });
 
             } else {
-                
+
                 d.reject(r);
             }
 
@@ -848,12 +840,12 @@ User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
             //     userId: userInfo.email,
             //     category: 'auth',
             //     error: err.message,
-            //     ipAddress: userInfo.ipAddress                
+            //     ipAddress: userInfo.ipAddress
             // };
             // userFunctions.recordAttemptnAudit(i)
             // .then(function () {
             //     //Errors with validatePassword.
-            //     //reject promise. 
+            //     //reject promise.
             //     d.reject(err);
             // }, function (err) {
             //     d.reject(err);
@@ -901,16 +893,16 @@ User.prototype.activateUserEmail = function (activationToken) {
     .then(userFunctions.performActivationOnUser)
     .then(userFunctions.deleteActivationKey)
     .then(function (activationDoc) {
-        
+
         // send email to BNC administrator
-        
+
         userFunctions.sendEmailAfterUserActivated(activationDoc).done(function () {
-            
-            
+
+
             activate.resolve(activationDoc);
-            
+
         });
-        
+
     }, function (err) {
         activate.reject(err);
     });
@@ -1009,8 +1001,14 @@ User.prototype.getAccessLogs = function (doc) {
 
 
     return access.promise;
-}
+};
 
+
+User.prototype.findUser = function(id) {
+    return userFunctions.findUser({
+        userId: id
+    });
+};
 //http://underscorejs.org/#bindAll
 _.bindAll(userFunctions, 'saveFailedLoginAttempt');
 
