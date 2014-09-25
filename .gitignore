@@ -2,7 +2,6 @@
 .nodemonignore
 .sass-cache/
 node_modules/
-public/lib 
 app/users
 dump.rdb
 ixit.sublime-workspace

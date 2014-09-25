@@ -38,19 +38,77 @@ module.exports = function (grunt) {
         dest : 'dist/<%= pkg.name %>.js'
       }
     },
-    uglify : {     
+    uglify : {
+      modules:{
+        options:{
+          mangle: false
+        },
+        files:{
+          'public/js/public.js': [
+            'public/js/public-app.js',
+            'public/js/modules/controllers/homeController.js',
+            'public/js/modules/controllers/userController.js',
+            'public/js/modules/services/service.js',
+            'public/js/modules/directives.js',
+            'public/js/modules/filters.js',
+            'public/js/modules/lang.js'
+          ],
+          'public/js/dashboard.js': [
+            'public/js/app.js',
+            'public/js/main.js',
+            'public/js/modules/controllers/dashboardController.js',
+            'public/js/modules/controllers/homeController.js',
+            'public/js/modules/controllers/userController.js',
+            'public/js/modules/services/service.js',
+            'public/js/modules/directives.js',
+            'public/js/modules/filters.js',
+            'public/js/modules/lang.js',
+            'public/js/generic.js',
+            'public/js/theme.js'
+          ]
+        }
+      },
       build:{
         options:{
           mangle: false
         },
         files:{
-          'public/app/js/app.js': [
-            'public/app/bower_components/bootstrap/js/*.js',
-            //'public/app/bower_components/jquery/src/*.js',
-            'public/app/js/*.js'
+          'public/js/components.js': [
+            'public/bower_components/jquery/dist/jquery.min.js',
+            'public/bower_components/angular/**/*.js',
+            'public/bower_components/flow.js/**/*.js',
+            'public/bower_components/**/*.js',
+            '!public/bower_components/flow.js'
           ],
-          'public/app/js/theme.js': [
-            'public/app/assets/**/*.js'
+          'public/js/vendor.js': [
+            'public/js/ng-flow.js',
+            'public/js/jquery.tagsinput.min.js',
+            'public/js/jquery.dataTables.min.js',
+            'public/js/bootstrap-hover-dropdown.min.js',
+            'public/js/tab.js',
+            'public/cors/*.js',
+          ],
+          'public/js/public.js': [
+            'public/js/modules/public-app.js',
+            'public/js/modules/controllers/homeController.js',
+            'public/js/modules/controllers/userController.js',
+            'public/js/modules/services/service.js',
+            'public/js/modules/directives.js',
+            'public/js/modules/filters.js',
+            'public/js/modules/lang.js'
+          ],
+          'public/js/dashboard.js': [
+            'public/js/modules/app.js',
+            'public/js/main.js',
+            'public/js/modules/controllers/dashboardController.js',
+            'public/js/modules/controllers/homeController.js',
+            'public/js/modules/controllers/userController.js',
+            'public/js/modules/services/service.js',
+            'public/js/modules/directives.js',
+            'public/js/modules/filters.js',
+            'public/js/modules/lang.js',
+            'public/js/generic.js',
+            'public/js/theme.js'
           ]
         }
       }
@@ -75,39 +133,78 @@ module.exports = function (grunt) {
         src : 'gruntfile.js'
       },
       lib_test : {
-        src : ['api/**/*.js', 'models/**/*.js', 'lib/**/*.js', 'test/**/*.js', 'Gruntfile.js', 'bncauth.js']
+        src : ['models/**/*.js', 'lib/**/*.js', 'controllers/**/*.js', 'public/**/*.js', 'test/**/*.js']
+      },
+      build: {
+        src: 'build/js/**/*.js'
       }
     },
     watch : {
+      lib_test : {
+        files : '<%= jshint.lib_test.src %>',
+        tasks : ['jshint:lib_test']
+      },
       gruntfile : {
         files : '<%= jshint.gruntfile.src %>',
         tasks : ['jshint:gruntfile']
       },
-      lib_test : {
-        files : '<%= jshint.lib_test.src %>',
-        tasks : ['jshint:lib_test', 'nodeunit']
+      js: {
+        files: 'build/js/**/*.js',
+        task: ['clean:modules', 'copy:modulesjs', 'uglify:modules', 'clean:scripts'],
+        options: {
+          spawn: false,
+          event: ['changed']
+        }
+      },
+      css: {
+        files: 'build/css/**/*.css',
+        task: ['clean:stylesheets', 'copy:modulescss', 'cssmin:modules', 'clean:stylesheets'],
+        options: {
+          spawn: false,
+          event: ['changed']
+        }
+      }
+    },
+    'node-inspector': {
+      dev: {
+        options: {
+          'web-port': 5877,
+          'web-host': 'localhost',
+          'debug-port': 5855,
+          'stack-trace-limit': 4,
+          'hidden': ['node_modules']
+        }
       }
     },
     clean:{
+      'public':{
+        src:[
+          'public'
+        ]
+      },
       build:{
-        src:['public/app']
+        src:[
+          '<%= clean.stylesheets.src %>',
+          '<%= clean.scripts.src %>',
+          'public/bower_components',
+        ]
       },
       stylesheets:{
         src: [
-          'public/app/assets/**/*',      
-          'public/app/css/**/*', 
-          '!public/app/css/app.css',
-          '!public/app/css/theme.css',
-          //'!public/app/less/**/*',
+          'public/css/**/*',
+          '!public/css/components.css',
+          '!public/css/public.css',
+          '!public/css/dashboard.css',
 
         ]
       },
       scripts: {
         src: [
-          'public/app/js/**/*',         
-          '!public/app/js/app.js',          
-          '!public/app/js/theme.js',          
-          '!public/app/js'
+          'public/js/**/*',
+          '!public/js/public.js',
+          '!public/js/dashboard.js',
+          '!public/js/components.js',
+          '!public/js/vendor.js'
         ]
       },
       components: {
@@ -118,96 +215,174 @@ module.exports = function (grunt) {
       }
     },
     copy: {
-      build: {
-        cwd: 'for-client-build',
+      modulescss: {
+        cwd: 'build',
         src: [
-          // 'bower_components/bootstrap/js/affix.js', 
-          // 'bower_components/bootstrap/js/alert.js', 
-          // 'bower_components/bootstrap/js/button.js', 
-          // 'bower_components/bootstrap/js/carousel.js', 
-          // 'bower_components/bootstrap/js/collapse.js', 
-          // 'bower_components/bootstrap/js/dropdown.js', 
-          // 'bower_components/bootstrap/js/modal.js', 
-          // 'bower_components/bootstrap/js/popover.js', 
-          // 'bower_components/bootstrap/js/scrollspy.js', 
-          // 'bower_components/bootstrap/js/tab.js', 
-          // 'bower_components/bootstrap/js/tooltip.js', 
-          // 'bower_components/bootstrap/js/transition.js', 
-          //'bower_components/jquery/src/*.js', 
-          //'bower_components/bootstrap/less/*.less',
-        
-          'less/**/*.less', 
-          'img/**/*',
-          'assets/img/**/*',
-          'assets/fonts/**/*',
+          'css/page.css',
+          'css/modules.css',
+          //dashboard css
+          'css/layout.css',
+          'css/elements.css',
+          'css/icons.css',
+          'css/bootstrap-overrides.css',
+          'css/compiled/gallery.css',
+          'css/compiled/tables.css',
+          'css/lib/jquery.dataTables.css'
+        ],
+        dest: 'public',
+        expand: true
+      },
+      modulesjs: {
+        cwd: 'build',
+        src: [
+          '/js/modules/public-app.js',
+          '/js/modules/controllers/homeController.js',
+          '/js/modules/controllers/userController.js',
+          '/js/modules/services/service.js',
+          '/js/modules/directives.js',
+          '/js/modules/filters.js',
+          '/js/modules/lang.js',
+          '/js/tab.js',
+          '/js/jquery.tagsinput.min.js',
+          '/js/jquery.dataTables.min.js',
+          '/js/bootstrap-hover-dropdown.min.js',
+          '/js/modules/app.js',
+          '/js/main.js',
+          '/js/modules/controllers/dashboardController.js',
+          '/js/modules/controllers/homeController.js',
+          '/js/modules/controllers/userController.js',
+          '/js/modules/services/service.js',
+          '/js/modules/directives.js',
+          '/js/modules/filters.js',
+          '/js/modules/lang.js',
+          '/js/generic.js',
+          '/js/theme.js',
+        ],
+        dest: 'public',
+        expand: true
+      },
+      build: {
+        cwd: 'build',
+        src: [
+          //misc files
           'favicon.ico',
-          'assets/plugins/uniform/images/sprite.png',
-          'css/jquery.dataTables.css',
-          'css/custom.css',
-          'css/images/**/*',
-          'css/theme.css',
-          'css/.css',
-          // Template CSS
-          'assets/plugins/uniform/css/uniform.default.css',
-          "assets/css/style-metronic.css",
-          "assets/css/style.css",
-          "assets/css/style-responsive.css",
-          "assets/css/plugins.css",
-          "assets/css/pages/tasks.css",
-          "assets/css/themes/default.css",
-          "assets/css/custom.css", 
-          'assets/css/pages/login-soft.css',
-          "assets/css/fonts/font.css",
-          'assets/plugins/gritter/css/jquery.gritter.css',
-          'assets/css/admin-portal.css',
-          'assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css',
-          //Template JS
-          "assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js",
-          'assets/plugins/jquery-migrate-1.2.1.min.js',
-          "assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js",
-          "assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js",
-          "assets/plugins/jquery.blockui.min.js",
-          "assets/plugins/jquery.cookie.min.js",
-          "assets/plugins/uniform/jquery.uniform.min.js",
-          "assets/plugins/flot/jquery.flot.js" ,
-          "assets/plugins/flot/jquery.flot.resize.js",
-          "assets/plugins/jquery.pulsate.min.js",
-          "assets/plugins/bootstrap-daterangepicker/moment.min.js",
-          "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
-          "assets/plugins/gritter/js/jquery.gritter.js",
-          "assets/scripts/app.js",
-          "assets/scripts/index.js",
-          "assets/scripts/tasks.js",
-          'assets/scripts/login-soft.js',
-          'assets/scripts/app.js',
-          'assets/plugins/backstretch/jquery.backstretch.min.js',
-          'js/jquery.validate.min.js',
-          'js/zxcvbn.js',
-          'js/zxcvbn-async.js',
-          'js/pwstrength.js',
-          'js/main.js',
-          'js/ICanHaz.min.js',
+          'ZeroClipboard.swf',
+          'robots.txt',
+          'humans.txt',
+          //copy imgs
+          'img/**/*',
+          //copy css
+          'css/page.css',
+          'css/modules.css',
+          //dashboard css
+          'css/layout.css',
+          'css/elements.css',
+          'css/icons.css',
+          'css/bootstrap-overrides.css',
+          'css/compiled/gallery.css',
+          'css/compiled/tables.css',
+          '/css/lib/jquery.dataTables.css',
+          //bower css components
+          'bower_components/bootstrap/dist/css/bootstrap.min.css',
+          'bower_components/fontawesome/css/font-awesome.min.css',
+          'bower_components/animate.css/animate.min.css',
+          //bower js components
+          'bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/angular/angular.min.js',
+          'bower_components/angular-sanitize/angular-sanitize.min.js',
+          'bower_components/angular-cookies/angular-cookies.min.js',
+          'bower_components/ui-router/release/angular-ui-router.min.js',
+          'bower_components/jqueryui/jquery-ui.min.js',
+          'bower_components/lodash/dist/lodash.min.js',
+          'bower_components/flow.js/dist/flow.min.js',
+          'bower_components/moment/moment.min.js',
+          //other js files
+          'js/cors/jquery.postmessage-transport.js',
+          'js/cors/jquery.xdr-transport.js',
+          'js/jquery.slimscroll.min.js',
+          //font files
+          'fonts/**/*',
+          //ixit angular modules
+          'js/ng-flow.js',
+          'js/modules/public-app.js',
+          'js/modules/controllers/homeController.js',
+          'js/modules/controllers/userController.js',
+          'js/modules/services/service.js',
+          'js/modules/directives.js',
+          'js/modules/filters.js',
+          'js/modules/lang.js',
+          'js/tab.js',
+          'js/jquery.tagsinput.min.js',
           'js/jquery.dataTables.min.js',
-          'js/table-managed.js'
+          'js/bootstrap-hover-dropdown.min.js',
+          'js/modules/app.js',
+          'js/main.js',
+          'js/modules/controllers/dashboardController.js',
+          'js/modules/controllers/homeController.js',
+          'js/modules/controllers/userController.js',
+          'js/modules/services/service.js',
+          'js/modules/directives.js',
+          'js/modules/filters.js',
+          'js/modules/lang.js',
+          'js/generic.js',
+          'js/theme.js',
           ],
-        dest: 'public/app/',
+        dest: 'public',
         expand: true
       }
     },
     cssmin:{
+      modules: {
+        files: {
+          'public/css/public.css': [
+            'public/css/page.css',
+            'public/css/modules.css'
+          ],
+          //ixit dashboard css
+          'public/css/dashboard.css': [
+            'public/css/layout.css',
+            'public/css/elements.css',
+            'public/css/icons.css',
+            'public/css/bootstrap-overrides.css',
+            'public/css/lib/jquery.dataTables.css',
+            'public/css/compiled/gallery.css',
+            'public/css/compiled/tables.css'
+          ],
+        }
+      },
       build:{
         files:{
-          'public/app/css/app.css': ['public/app/css/**/*.css'],
-          'public/app/css/theme.css': ['public/app/assets/**/*.css']
+          //component css
+          'public/css/components.css': [
+            'public/bower_components/bootstrap/dist/css/bootstrap.min.css',
+            'public/bower_components/fontawesome/css/font-awesome.min.css',
+            'public/bower_components/animate.css/animate.min.css',
+          ],
+          //public
+          'public/css/public.css': [
+            'public/css/page.css',
+            'public/css/modules.css'
+          ],
+          //ixit dashboard css
+          'public/css/dashboard.css': [
+            'public/css/layout.css',
+            'public/css/elements.css',
+            'public/css/icons.css',
+            'public/css/bootstrap-overrides.css',
+            'public/css/lib/jquery.dataTables.css',
+            'public/css/compiled/gallery.css',
+            'public/css/compiled/tables.css'
+          ],
         }
       }
     },
     autoprefixer:{
       build:{
         expand: true,
-        cwd:'public/app/css',
+        cwd:'public/css',
         src: ['**/*.css'],
-        dest: 'public/app/css'
+        dest: 'public/css'
       }
     },
     less: {
@@ -266,7 +441,35 @@ module.exports = function (grunt) {
           }
         ]
       }
-    }    
+    },
+    concurrent: {
+      dev: {
+        tasks: ['nodemon', 'node-inspector', 'watch:js', 'watch:css'],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
+    },
+    nodemon: {
+      dev: {
+        script: 'server.js',
+        options: {
+          nodeArgs: ['--debug'],
+          env: {
+            PORT: '3000'
+          },
+          ignore: ['node_modules/**'],
+          ext: 'js,coffee',
+          // omit this property if you aren't serving HTML files and
+          // don't want to open a browser tab on start
+          callback: function (nodemon) {
+            nodemon.on('log', function (event) {
+              console.log(event.colour);
+            });
+          }
+        }
+      }
+    }
   });
 
   // These plugins provide necessary tasks
@@ -282,6 +485,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-node-inspector');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   // Default task
   grunt.registerTask('default', ['jshint', 'build']);
@@ -289,25 +496,25 @@ module.exports = function (grunt) {
   // Nightly Build - we will be elaborating on this task
   grunt.registerTask('nightly-build', ['jshint', 'docco']);
   grunt.registerTask(
-    'build', 
-    'Compiles all of the assets and copies the files to the build directory.', 
-    [ 'clean:build', 'copy', 'stylesheets', 'scripts', 'clean:components', 'clean:stylesheets', 'clean:scripts']
+    'build',
+    'Compiles all of the assets and copies the files to the build directory.',
+    ['clean:public', 'copy:build', 'cssmin:build', 'uglify:build', 'clean:build']
   );
   grunt.registerTask(
-    'stylesheets', 
-    'Compiles the stylesheets.', 
+    'stylesheets',
+    'Compiles the stylesheets.',
     [ 'less', 'autoprefixer', 'cssmin']
   );
   grunt.registerTask(
-    'scripts', 
-    'Compiles the JavaScript files.', 
+    'scripts',
+    'Compiles the JavaScript files.',
     [ 'uglify']
-  );   
+  );
   grunt.registerTask(
-    'copynclean', 
-    'Copies files needed for app', 
+    'copynclean',
+    'Copies files needed for app',
     ['clean:build', 'copy']
-  );    
+  );
 
 
 };

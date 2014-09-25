@@ -1,24 +1,25 @@
 {
-    "name": "mean",
-    "version": "1.0.0",
-    "dependencies": {
-        "bootstrap": "2.3.2",
-        "angular": "~1.0.6",
-        "angular-resource": "~1.0.6",
-        "angular-cookies": "~1.0.6",
-        "angular-bootstrap": "~0.4.0",
-        "angular-ui-utils": "0.0.4",
-        "json3": "~3.2.4",
-        "jquery": "~1.9.1"
-    },
-    "exportsOverride": {
-    	"bootstrap": {
-    		"css": "docs/assets/css/bootstrap*.css",
-    		"js": "docs/assets/js/bootstrap.js",
-    		"img": "docs/assets/img/glyphicons-halflings*.png"
-    	},
-        "angular-ui-utils": {
-            "modules": "modules/route/route.js"
-        }
-    }
+  "name": "ixit",
+  "version": "0.0.0",
+  "homepage": "https://github.com/k0d3d/ixit",
+  "authors": [
+    "Mykel Koded <michael.rhema@gmail.com>"
+  ],
+  "description": "IXIT Document Client",
+  "main": "server.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "file",
+    "sharing"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
