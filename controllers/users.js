@@ -98,7 +98,7 @@ Users.prototype.constructor = Users;
  */
  Users.prototype.user = function(req, res, next, id) {
   var oid = hashr.unhashOid(id);
-  User
+  UserModel
   .findOne({
     _id: oid
   })
@@ -107,7 +107,7 @@ Users.prototype.constructor = Users;
     if (!user) return next(new Error('Failed to load User ' + id));
     req.profile = user;
     next();
-  }); 
+  });
 };
 
 /**
@@ -190,7 +190,7 @@ Users.prototype.constructor = Users;
 
 /**
  * Registers a new user, checks if the user's email
- * is blacklisted, greylisted, whitelisted. 
+ * is blacklisted, greylisted, whitelisted.
  * @param  {[type]}   options [description]
  * @param  {Function} cb      [description]
  * @return {[type]}           [description]
@@ -206,14 +206,14 @@ Users.prototype.register = function (options, cb) {
   // createUser.catch(function (err) {
   //   console.log(err);
   //   cb(err);
-  // }); 
+  // });
 };
 
 //module.exports.users = users;
 
 module.exports.routes = function(app){
   var users = new Users();
-    
+
     //logs out a currently logged in user
     app.post('/logout', users.signout);
 
@@ -227,11 +227,11 @@ module.exports.routes = function(app){
         }
 
         return res.json(200, r);
-          
-      });             
+
+      });
     });
 
-    
+
     //User Login
     app.post('/api/internal/users/session', function(req, res, next){
       passport.authenticate('local', function(err, user){
@@ -265,7 +265,7 @@ module.exports.routes = function(app){
     //       next(r);
     //     }else{
     //       res.json(200, r);
-    //     }            
+    //     }
     //   });
     // });
 

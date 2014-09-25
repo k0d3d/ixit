@@ -5,16 +5,12 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/20
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title #{title}
     meta(name='description', content='Upload your files to I-X.it. Share files to anyone from your cabinet. Audio, Photos and Office Documents supported with Unlimited Storage.')
-      
+
     block styles
       link(href='http://fonts.googleapis.com/css?family=Economica', rel='stylesheet', type='text/css')
-      link(href='/css/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href='/css/lib/font-awesome.css', rel='stylesheet', type='text/css')
-      link(href='/css/animate.min.css', rel='stylesheet', type='text/css')
-      link(href='/css/page.css', rel='stylesheet', type='text/css')
-      link(href='/css/modules.css', rel='stylesheet', type='text/css')
+      link(href='/css/components.css', rel='stylesheet', type='text/css')
+      link(href='/css/public.css', rel='stylesheet', type='text/css')
 
-    script(src='/js/jquery-1.10.2.min.js')
 
     script(type='text/javascript').
       var _gaq = _gaq || [];
@@ -34,29 +30,8 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/20
         .row
           .offset4.span4
     block scripts
-      script(src='/js/bootstrap.min.js')
-      script(src='/js/angular.min.js')
-      script(src='/js/angular-sanitize.min.js')
-      script(src='/js/angular-cookies.min.js')
-      script(src='/js/angular-ui-router.min.js')   
-      script(src='/js/vendor/jquery.ui.widget.js')      
-      //- script(src='/js/fileupload/jquery.fileupload.js')
-      //- script(src='/js/fileupload/jquery.fileupload-process.js')
-      //- script(src='/js/fileupload/jquery.fileupload-audio.js')
-      //- script(src='/js/fileupload/jquery.fileupload-image.js')
-      //- script(src='/js/fileupload/jquery.fileupload-validate.js')
-      //- script(src='/js/fileupload/jquery.fileupload-video.js')
-      script(src='/js/ng-flow-standalone.min.js')
-      script(src='/js/cors/jquery.postmessage-transport.js')
-      script(src='/js/cors/jquery.xdr-transport.js')
-      script(src='/js/moment.min.js')
-      script(src='/js/jquery.slimscroll.min.js')
-      script(src='/js/public-app.js')      
-      script(src='/js/modules/controllers/homeController.js')
-      script(src='/js/modules/controllers/userController.js')
-      script(src='/js/modules/services/service.js')
-      script(src='/js/modules/directives.js')
-      script(src='/js/modules/filters.js')
-      script(src='/js/modules/lang.js')
+      script(src='/js/components.js')
+      script(src='/js/vendor.js')
+      script(src='/js/public.js')
     block templates
 

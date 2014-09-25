@@ -24,8 +24,11 @@ module.exports = function (app, passport, redis_client) {
   var dashboard = require('../controllers/dashboard');
   dashboard.routes(app, isLoggedIn, passport);
 
-  var keeper = require('../controllers/k33per.js');
+  var keeper = require('../controllers/k33per');
   keeper.routes(app, redis_client, isLoggedIn);
+
+  var external = require('../controllers/external');
+  external.routes(app, redis_client, isLoggedIn);
 
   /**
    * Views and template routes
@@ -57,9 +60,9 @@ module.exports = function (app, passport, redis_client) {
         });
         res.render('public/download', od);
       }
-      
+
     });
-  });  
+  });
 
 
   app.get('/img/filetype/:filename', function(req, res, next){

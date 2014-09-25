@@ -15,8 +15,21 @@
         "user_agent": "IXIT Client",
         "http_app_domain": "http://localhost"
     },
-    "express": {    
-        "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509"
+    "express": {
+        "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509",
+        "cors" : {
+          "options" : {
+            "origin": "http://localhost:8100",
+            "methods": [
+              "GET",
+              "POST",
+              "PUT",
+              "DELETE"
+            ],
+            "credentials": true,
+            "maxAge": 3600
+          }
+        }
     },
     "api_url": "http://127.0.0.1:3001",
     "appID": "08E54688615982ADB5D8E3FEB8DCE2C'",
