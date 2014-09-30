@@ -1,38 +1,19 @@
-script#tmplfile(type='text/html').
-    <div class="itemThumb">
-        <img src="img/no-img50x50.png" class="img-polaroid"/>
-    </div>
-    <div style="min-height: 40px; border-bottom: 1px solid #C4C4C4;">
-        <div class="itemName b-left">
-            <em id="txt{{id}}">{{name}}</em>
-        </div>
-        <div id="extended-info">
-            <span><a href="#" rel="tooltip" title="File Size"><em class="extended-info tf-size">{{size}}</em></a></span>        
-            <span><a href="#" rel="tooltip" title="Upload Speed"><em class="extended-info b-mid tf-speed">--</em><em class="tf-tag">speed</em></a></span>
-            <span><a href="#" rel="tooltip" title="Time Remaining"><em class="extended-info b-right tf-time">--</em><em class="tf-tag">time</em></a></span>
-        </div>
-    </div>
-    <div style="float: left; position: relative; display: block; margin-left: 2px;">
-        <div class="nexus">
-            <div class="progressHolder progress progress-striped progress-success">
-                <div class="bar"></div>
-            </div> 
-        </div>    
-        <div id="contentid{{id}}" class="ixtem"  data-istargetid="ix-list-li-{{id}}">
-            <div class="optionmenu upper">
-                <div class="btn-group">
-                    <button class="btn btn-primary btn-xs" data-toggle="dropdown">
-                        <i class="icon-share icon-white"></i> Share
-                    </button>
-                     <button class="btn dropdown-toggle btn-primary btn-xs" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button> 
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a href="https://www.facebook.com/dialog/feed?app_id=387980037923645&link=http://i-x.it/{{ixid}}&picture=http://fbrell.com/f8.jpg&name={{filename}}&caption={{I just uploaded this file to I-X.it.}}&description=www.I-X.it Unlimited File Sharing and Hosting. Free!&redirect_uri=http://i-x.it" target="_blank" class="send-fb-btn" ><i class="sharebtn send-fb"></i>Share on Facebook</a></li>
-                        <li><a href="https://twitter.com/share?url=http://i-x.it/{{ixid}}&via=ixitbot&text=Download this file {{filename}} from I-X.it" class="twitter-share-button"  target="_blank"><i class="sharebtn send-tweet" href="#"></i>Tweet it!</a></li>
-                        <li><a class="send-email-btn" data-toggle="modal" data-target="#emailModal" target="_blank"><i class="sharebtn send-email" href="#"></i>Email it</a></li>
-                    </ul>                    
-                </div>
-            </div>
-        </div>          
-    </div>  
+
+.row(style="border-bottom: 1px solid #C4C4C4; margin: 0")
+  .col-md-2
+    .itemThumb
+      img.img-polaroid(src='img/no-img50x50.png')
+  .col-md-8
+    div.row
+      .itemName.b-left
+        em#txt {{file.name}}
+    .row
+      .col-md-12(style="padding: 0")
+        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px")
+            button.btn.btn-default(type='button', rel='tooltip', title='File Size',  disabled="disabled") {{_formatFileSize(file.size)}}
+            button.btn.btn-default(type='button', rel="tooltip", title='Upload Speed',  disabled="disabled") -
+            button.btn.btn-default(type='button', rel='tooltip', title='Time Remaining',  disabled="disabled") -
+  .col-md-2
+    .c-p
+      orbicular(progression='file.doneSize', total='file.size', style="font-size: 56px !important")
+        i.fa.fa-play(style="color: black; font-size: 14px")

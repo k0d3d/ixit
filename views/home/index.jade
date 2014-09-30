@@ -7,30 +7,30 @@
         .row
           .col-md-offset-4.col-md-4
             .logo
-              a(href='/') 
+              a(href='/')
                 img#imgLogo(src='/img/logo.png')
               span.logo-sub shrink, shorten, share everything
         .row
           .col-md-offset-2.col-md-8
             #dropbox
-              #inputpanel
+              #inputpanel.drag-notice-element
                 .subpanel
-                  input#browsefield.browsefiles.point(type='file', multiple='multiple', data-upload-handler='data-upload-handler', data-upload-drop-zone='.ix-accordion-list', data-upload-files-container='.ix-accordion-list')
-                  button#sayBrowse.btn.btn-inverse.btn-small(type='button', data-ng-click='clickBrowse()') Browse
+                  //- input#browsefield.browsefiles.point(type='file', multiple='multiple', data-upload-handler='data-upload-handler', data-upload-drop-zone='.ix-accordion-list', data-upload-files-container='.ix-accordion-list')
+                  button#sayBrowse.btn.btn-inverse.btn-small(flow-btn, type='button', data-ng-click='clickBrowse()') Browse
                 .typebox
                   textarea#inputbox.typearea(placeholder='Type or paste in a link')
                   button.chromeless(type='button')
                     i.icon-chevron-down
                 .subpanel.shrink
                   button#shrinkbtn.btn.btn-danger.btn-small(type='button') Start!
-              .accordion-pane.point.empty
+              .accordion-pane.point.drag-notice-element(ng-class="{'empty': $flow.files.length < 1,'stuffed': $flow.files.length > 0 }")
                 #jp-container.jp-container
-                  #dragndropnotice.noticebox
+                  #dragndropnotice.noticebox(ng-hide="$flow.files.length > 0")
                     h3 Drag and Drop!
                     p
                       files or links in here to upload and shrink.
-                  ul.ix-accordion-list(data-scroll-bar='data-scroll-bar', data-max-container-height='383')
+                  ul.ix-accordion-list(data-scroll-bar='data-scroll-bar', data-max-container-height='383', ng-show="$flow.files.length > 0")
+                    li(upload-list-item, ng-repeat="file in $flow.files")
                   .filescount
         .row
           .col-nd-offset-4.col-md-4
-include ../templates/li_upload_item

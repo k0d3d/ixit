@@ -39,22 +39,24 @@ module.exports = function (grunt) {
       }
     },
     uglify : {
-      modules:{
+
+      mods:{
         options:{
           mangle: false
         },
         files:{
           'public/js/public.js': [
-            'public/js/public-app.js',
+            'public/js/modules/public-app.js',
             'public/js/modules/controllers/homeController.js',
             'public/js/modules/controllers/userController.js',
             'public/js/modules/services/service.js',
             'public/js/modules/directives.js',
             'public/js/modules/filters.js',
-            'public/js/modules/lang.js'
+            'public/js/modules/lang.js',
+            'public/js/public-main.js'
           ],
           'public/js/dashboard.js': [
-            'public/js/app.js',
+            'public/js/modules/app.js',
             'public/js/main.js',
             'public/js/modules/controllers/dashboardController.js',
             'public/js/modules/controllers/homeController.js',
@@ -95,7 +97,8 @@ module.exports = function (grunt) {
             'public/js/modules/services/service.js',
             'public/js/modules/directives.js',
             'public/js/modules/filters.js',
-            'public/js/modules/lang.js'
+            'public/js/modules/lang.js',
+            'public/js/public-main.js'
           ],
           'public/js/dashboard.js': [
             'public/js/modules/app.js',
@@ -140,25 +143,17 @@ module.exports = function (grunt) {
       }
     },
     watch : {
-      lib_test : {
-        files : '<%= jshint.lib_test.src %>',
-        tasks : ['jshint:lib_test']
-      },
-      gruntfile : {
-        files : '<%= jshint.gruntfile.src %>',
-        tasks : ['jshint:gruntfile']
-      },
       js: {
-        files: 'build/js/**/*.js',
-        task: ['clean:modules', 'copy:modulesjs', 'uglify:modules', 'clean:scripts'],
+        files: ['build/js/**/*.js'],
+        tasks: ['copy:minibuild', 'uglify:mods', 'clean:scripts'],
         options: {
           spawn: false,
-          event: ['changed']
+          event: ['changed', 'added']
         }
       },
       css: {
-        files: 'build/css/**/*.css',
-        task: ['clean:stylesheets', 'copy:modulescss', 'cssmin:modules', 'clean:stylesheets'],
+        files: ['build/css/**/*.css'],
+        tasks: ['copy:minibuild', 'cssmin:modules', 'clean:stylesheets'],
         options: {
           spawn: false,
           event: ['changed']
@@ -215,9 +210,10 @@ module.exports = function (grunt) {
       }
     },
     copy: {
-      modulescss: {
+      minibuild: {
         cwd: 'build',
         src: [
+          //copy css
           'css/page.css',
           'css/modules.css',
           //dashboard css
@@ -227,37 +223,54 @@ module.exports = function (grunt) {
           'css/bootstrap-overrides.css',
           'css/compiled/gallery.css',
           'css/compiled/tables.css',
-          'css/lib/jquery.dataTables.css'
-        ],
-        dest: 'public',
-        expand: true
-      },
-      modulesjs: {
-        cwd: 'build',
-        src: [
-          '/js/modules/public-app.js',
-          '/js/modules/controllers/homeController.js',
-          '/js/modules/controllers/userController.js',
-          '/js/modules/services/service.js',
-          '/js/modules/directives.js',
-          '/js/modules/filters.js',
-          '/js/modules/lang.js',
-          '/js/tab.js',
-          '/js/jquery.tagsinput.min.js',
-          '/js/jquery.dataTables.min.js',
-          '/js/bootstrap-hover-dropdown.min.js',
-          '/js/modules/app.js',
-          '/js/main.js',
-          '/js/modules/controllers/dashboardController.js',
-          '/js/modules/controllers/homeController.js',
-          '/js/modules/controllers/userController.js',
-          '/js/modules/services/service.js',
-          '/js/modules/directives.js',
-          '/js/modules/filters.js',
-          '/js/modules/lang.js',
-          '/js/generic.js',
-          '/js/theme.js',
-        ],
+          '/css/lib/jquery.dataTables.css',
+          //bower css components
+          'bower_components/bootstrap/dist/css/bootstrap.min.css',
+          'bower_components/fontawesome/css/font-awesome.min.css',
+          'bower_components/animate.css/animate.min.css',
+          'bower_components/orbicular/_orbicular.scss',
+          //bower js components
+          'bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/angular/angular.min.js',
+          'bower_components/angular-sanitize/angular-sanitize.min.js',
+          'bower_components/angular-cookies/angular-cookies.min.js',
+          'bower_components/ui-router/release/angular-ui-router.min.js',
+          'bower_components/jqueryui/jquery-ui.min.js',
+          'bower_components/lodash/dist/lodash.min.js',
+          'bower_components/flow.js/dist/flow.min.js',
+          'bower_components/moment/moment.min.js',
+          'bower_components/orbicular/orbicular.js',
+          //other js files
+          'js/cors/jquery.postmessage-transport.js',
+          'js/cors/jquery.xdr-transport.js',
+          'js/jquery.slimscroll.min.js',
+          //ixit angular modules
+          'js/ng-flow.js',
+          'js/modules/public-app.js',
+          'js/modules/controllers/homeController.js',
+          'js/modules/controllers/userController.js',
+          'js/modules/services/service.js',
+          'js/modules/directives.js',
+          'js/modules/filters.js',
+          'js/modules/lang.js',
+          'js/tab.js',
+          'js/jquery.tagsinput.min.js',
+          'js/jquery.dataTables.min.js',
+          'js/bootstrap-hover-dropdown.min.js',
+          'js/modules/app.js',
+          'js/main.js',
+          'js/public-main.js',
+          'js/modules/controllers/dashboardController.js',
+          'js/modules/controllers/homeController.js',
+          'js/modules/controllers/userController.js',
+          'js/modules/services/service.js',
+          'js/modules/directives.js',
+          'js/modules/filters.js',
+          'js/modules/lang.js',
+          'js/generic.js',
+          'js/theme.js',
+          ],
         dest: 'public',
         expand: true
       },
@@ -286,6 +299,7 @@ module.exports = function (grunt) {
           'bower_components/bootstrap/dist/css/bootstrap.min.css',
           'bower_components/fontawesome/css/font-awesome.min.css',
           'bower_components/animate.css/animate.min.css',
+          'bower_components/orbicular/_orbicular.scss',
           //bower js components
           'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'bower_components/jquery/dist/jquery.min.js',
@@ -296,6 +310,7 @@ module.exports = function (grunt) {
           'bower_components/jqueryui/jquery-ui.min.js',
           'bower_components/lodash/dist/lodash.min.js',
           'bower_components/flow.js/dist/flow.min.js',
+          'bower_components/orbicular/orbicular.js',
           'bower_components/moment/moment.min.js',
           //other js files
           'js/cors/jquery.postmessage-transport.js',
@@ -318,6 +333,7 @@ module.exports = function (grunt) {
           'js/bootstrap-hover-dropdown.min.js',
           'js/modules/app.js',
           'js/main.js',
+          'js/public-main.js',
           'js/modules/controllers/dashboardController.js',
           'js/modules/controllers/homeController.js',
           'js/modules/controllers/userController.js',
@@ -494,26 +510,10 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['jshint', 'build']);
 
   // Nightly Build - we will be elaborating on this task
-  grunt.registerTask('nightly-build', ['jshint', 'docco']);
   grunt.registerTask(
     'build',
     'Compiles all of the assets and copies the files to the build directory.',
     ['clean:public', 'copy:build', 'cssmin:build', 'uglify:build', 'clean:build']
-  );
-  grunt.registerTask(
-    'stylesheets',
-    'Compiles the stylesheets.',
-    [ 'less', 'autoprefixer', 'cssmin']
-  );
-  grunt.registerTask(
-    'scripts',
-    'Compiles the JavaScript files.',
-    [ 'uglify']
-  );
-  grunt.registerTask(
-    'copynclean',
-    'Copies files needed for app',
-    ['clean:build', 'copy']
   );
 
 

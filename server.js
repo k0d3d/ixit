@@ -27,6 +27,7 @@ var express = require('express'),
     restler = require('restler'),
     helpers = require('view-helpers'),
     errors = require('./lib/errors'),
+    staticAsset = require('static-asset'),
     crashProtector = require('common-errors').middleware.crashProtector,
     Q = require('q');
 var MongoStore = require('connect-mongo')(session);
@@ -44,7 +45,7 @@ var port = process.env.PORT || 3000;
 
 function afterResourceFilesLoad(redis_client) {
 
-    console.log('configuring application, please wait...');   
+    console.log('configuring application, please wait...');
 
     app.set('showStackError', true);
 
@@ -55,6 +56,7 @@ function afterResourceFilesLoad(redis_client) {
     app.use(errors.init());
 
 
+    app.use(staticAsset(__dirname + '/public') );
 
     // make everything in the public folder publicly accessible - do this high up as possible
     app.use(express.static(__dirname + '/public'));
@@ -92,7 +94,7 @@ function afterResourceFilesLoad(redis_client) {
     app.use(function (req, res, next) {
       res.locals.pkg = pjson;
       next();
-    });      
+    });
 
     // signed cookies
     app.use(cookieParser(config.express.secret));
@@ -182,13 +184,13 @@ function afterResourceFilesLoad(redis_client) {
       //res.json(500, err.message);
       var t = '/api/internal/';
       if (req.url.indexOf(t) > -1) {
-        res.json(500, err);        
+        res.json(500, err);
       } else {
         res.status(500).render('500', {
           url: req.originalUrl,
           error: err.message
-        }); 
-      }   
+        });
+      }
 
     });
 
@@ -197,15 +199,15 @@ function afterResourceFilesLoad(redis_client) {
 
       var t = '/api/internal/';
       if (req.url.indexOf(t) > -1) {
-        res.json(404, {message: 'resource not found'});        
+        res.json(404, {message: 'resource not found'});
       } else {
         res.status(404).render('404', {
           url: req.originalUrl,
           error: 'Not found'
         });
-      }          
+      }
 
-    });       
+    });
 
 
     // development env config
@@ -219,7 +221,7 @@ function afterResourceFilesLoad(redis_client) {
 console.log('Running Environment: %s', process.env.NODE_ENV);
 
 console.log('Creating connection to redis server...');
-var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {}); 
+var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {});
 
 redis_client.on('ready', function (data) {
   console.log('Redis connection is....ok');
@@ -263,10 +265,10 @@ console.log('IXIT Document Client started on port '+port);
 exports = module.exports = app;
 // CATASTROPHIC ERROR
 app.use(function(err, req, res){
-  
+
   console.error(err.stack);
-  
+
   // make this a nicer error later
   res.send(500, 'Ewww! Something got broken on IXIT. Getting some tape and glue');
-  
+
 });

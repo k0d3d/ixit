@@ -1,0 +1,28 @@
+{
+  "name": "orbicular",
+  "main": [
+    "orbicular.js"
+  ],
+  "description": "A CSS based circular progress bar for AngularJS",
+  "dependencies": {
+    "angular": "1.x"
+  },
+  "keywords": [
+    "circular",
+    "progress",
+    "bar",
+    "AngularJS"
+  ],
+  "homepage": "https://github.com/cotag/orbicular",
+  "version": "3.0.2",
+  "_release": "3.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.2",
+    "commit": "f60c513a47edeba6367e6ce8675a4c6389080fd6"
+  },
+  "_source": "git://github.com/cotag/orbicular.git",
+  "_target": "~3.0.2",
+  "_originalSource": "orbicular",
+  "_direct": true
+}
