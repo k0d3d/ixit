@@ -9,11 +9,17 @@
         em#txt {{file.name}}
     .row
       .col-md-12(style="padding: 0")
-        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px")
+
+        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px", ng-show="file.isComplete()")
+            a.btn.btn-link(type='button', rel='tooltip', title='File Size')
+              | /{{file.ixid}}
+            button.btn.btn-default(type='button', rel="tooltip", title='Copy to Clipboard') Copy
+            button.btn.btn-default(type='button', rel='tooltip', title='Share') Share
+        .btn-group.btn-group-xs.pull-right(style="margin-top: 2px", ng-hide="file.isComplete()")
             button.btn.btn-default(type='button', rel='tooltip', title='File Size',  disabled="disabled") {{_formatFileSize(file.size)}}
-            button.btn.btn-default(type='button', rel="tooltip", title='Upload Speed',  disabled="disabled") -
-            button.btn.btn-default(type='button', rel='tooltip', title='Time Remaining',  disabled="disabled") -
+            button.btn.btn-default(type='button', rel="tooltip", title='Upload Speed',  disabled="disabled") {{_formatBitrate(file.averageSpeed)}}
+            button.btn.btn-default(type='button', rel='tooltip', title='Time Remaining',  disabled="disabled") {{file.timeRemaining()}}
   .col-md-2
     .c-p
-      orbicular(progression='file.doneSize', total='file.size', style="font-size: 56px !important")
-        i.fa.fa-play(style="color: black; font-size: 14px")
+      orbicular(progression='file.sizeUploaded()', total='file.size', style="font-size: 56px !important")
+        i.fa(ng-class="{'fa-play': !file.isUploading() && !file.isComplete(), 'fa-pause': file.isUploading(), 'fa-check upload-green': file.isComplete()}", ng-click="pauseOrResume(file)")

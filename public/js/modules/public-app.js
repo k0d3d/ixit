@@ -14,17 +14,18 @@ var app = angular.module('ixitApp',[
     'Orbicular'
   ]);
 
-app.config(function ($stateProvider, $urlRouterProvider, flowFactoryProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, flowFactoryProvider, $httpProvider) {
   flowFactoryProvider.defaults = {
-      target: '/upload',
-      permanentErrors:[404, 500, 501]
+    target: 'http://127.0.0.1:3001/upload',
+    permanentErrors:[404, 500, 501]
   };
   // You can also set default events:
   flowFactoryProvider.on('filesAdded', function (files) {
-    console.log(files);
+
   });
   $urlRouterProvider.otherwise('/home');
   //$locationProvider.html5Mode(true);
+  $httpProvider.interceptors.push('httpInterceptor');
 
 });
 
@@ -53,6 +54,15 @@ app.controller('MainController',
     }
   );
 
+}]);
+
+app.factory('httpInterceptor', ['$rootScope', function ($rootScope) {
+  return {
+    'response' : function (response) {
+      $rootScope.dkeepToken = response.headers()['dkeep-agent-id-token'];
+      return response;
+    }
+  };
 }]);
 
 app.directive('dndevts', ['$document', function($document) {
@@ -84,6 +94,17 @@ app.directive('uploadListItem', [function () {
     },
     templateUrl: 'templates/li_upload_item',
     controller: function ($scope) {
+      $scope.pauseOrResume = function (file) {
+        if (file.isUploading()) {
+          return file.pause();
+        } else {
+          if (file.isComplete()) {
+            return false;
+          } else {
+            return file.resume();
+          }
+        }
+      };
       $scope._formatFileSize = function (bytes) {
         if (typeof bytes !== 'number') {
           return '';
@@ -96,6 +117,21 @@ app.directive('uploadListItem', [function () {
         }
         return (bytes / 1000).toFixed(2) + ' KB';
       };
+    $scope._formatBitrate = function (bits) {
+      if (typeof bits !== 'number') {
+        return '';
+      }
+      if (bits >= 1000000000) {
+        return (bits / 1000000000).toFixed(2) + ' Gbit/s';
+      }
+      if (bits >= 1000000) {
+        return (bits / 1000000).toFixed(2) + ' Mbit/s';
+      }
+      if (bits >= 1000) {
+        return (bits / 1000).toFixed(2) + ' kbit/s';
+      }
+      return bits.toFixed(2) + ' bit/s';
+    };
     }
   };
 }]);

@@ -18,22 +18,24 @@ module.exports = function (app, passport, redis_client) {
   /*
   API Authentication and User routes
    */
-  var users = require('../controllers/users');
+  var users = require('./users');
   users.routes(app);
 
-  var dashboard = require('../controllers/dashboard');
+  var dashboard = require('./dashboard');
   dashboard.routes(app, isLoggedIn, passport);
 
-  var keeper = require('../controllers/k33per');
+  var keeper = require('./k33per');
   keeper.routes(app, redis_client, isLoggedIn);
 
-  var external = require('../controllers/external');
+  var external = require('./external');
   external.routes(app, redis_client, isLoggedIn);
+
+  var tokenRequest = require('../lib/middlewares/dk33pTokenRequest');
 
   /**
    * Views and template routes
    */
-  require('./site.js')(app, isLoggedOut, passport);
+  require('./site.js')(app, isLoggedOut, passport, tokenRequest);
 
 
   app.get('/:hashrid', function(req, res, next){
@@ -73,6 +75,6 @@ module.exports = function (app, passport, redis_client) {
           }else{
               res.sendfile(path.resolve('./public/img/no-img.png'));
           }
-      })
+      });
   });
-}
+};

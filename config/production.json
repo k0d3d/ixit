@@ -31,8 +31,8 @@
           }
         }
     },
-    "api_url": "http://127.0.0.1:3001",
-    "appID": "08E54688615982ADB5D8E3FEB8DCE2C'",
+    "dkeep_api_url": "http://127.0.0.1:3001",
+    "appID": "08E54688615982ADB5D8E3FEB8DCE2C",
     "appSecret": "xynl7HycdsRulJ3IDvzernI8fsywclxod334lRFUIcKjkNJLEH6UFgVk7epXT9O",
     "mail" : {
         "defaultService": "postmark",

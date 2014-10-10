@@ -46,6 +46,7 @@ module.exports = function (grunt) {
         },
         files:{
           'public/js/public.js': [
+            'public/js/ng-flow.js',
             'public/js/modules/public-app.js',
             'public/js/modules/controllers/homeController.js',
             'public/js/modules/controllers/userController.js',
@@ -56,6 +57,7 @@ module.exports = function (grunt) {
             'public/js/public-main.js'
           ],
           'public/js/dashboard.js': [
+            'public/js/ng-flow.js',
             'public/js/modules/app.js',
             'public/js/main.js',
             'public/js/modules/controllers/dashboardController.js',
@@ -83,7 +85,6 @@ module.exports = function (grunt) {
             '!public/bower_components/flow.js'
           ],
           'public/js/vendor.js': [
-            'public/js/ng-flow.js',
             'public/js/jquery.tagsinput.min.js',
             'public/js/jquery.dataTables.min.js',
             'public/js/bootstrap-hover-dropdown.min.js',
@@ -91,6 +92,7 @@ module.exports = function (grunt) {
             'public/cors/*.js',
           ],
           'public/js/public.js': [
+            'public/js/ng-flow.js',
             'public/js/modules/public-app.js',
             'public/js/modules/controllers/homeController.js',
             'public/js/modules/controllers/userController.js',
@@ -101,6 +103,7 @@ module.exports = function (grunt) {
             'public/js/public-main.js'
           ],
           'public/js/dashboard.js': [
+            'public/js/ng-flow.js',
             'public/js/modules/app.js',
             'public/js/main.js',
             'public/js/modules/controllers/dashboardController.js',
@@ -136,7 +139,7 @@ module.exports = function (grunt) {
         src : 'gruntfile.js'
       },
       lib_test : {
-        src : ['models/**/*.js', 'lib/**/*.js', 'controllers/**/*.js', 'public/**/*.js', 'test/**/*.js']
+        src : ['models/**/*.js', 'lib/**/*.js', 'controllers/**/*.js']
       },
       build: {
         src: 'build/js/**/*.js'

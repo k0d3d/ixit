@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
     //redis_client = redis.createClient();
 
 function strip_files_result(m){
-  //if its an array use the map function to loop 
+  //if its an array use the map function to loop
   //over the process
   var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'id', 'folder'];
   try {
@@ -32,13 +32,13 @@ function strip_files_result(m){
       //Just one object
       // var ixid = hashr.hashInt(m.mediaNumber);
       // var n = _.omit(m, ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber']);
-      // return _.extend({ixid: ixid}, n); 
+      // return _.extend({ixid: ixid}, n);
 
       return _.omit(m, omit);
     }
 
   } catch (e) {
-    console.log(e);    
+    console.log(e);
   }
 
 }
@@ -54,12 +54,12 @@ function strip_folder_result(m){
         // return _.extend({id: id}, n);
 
         return _.omit(v, omit);
-      });    
+      });
     }else{
       //Just one object
       // var id = hashr.hashOid(m._id);
       // var n = _.omit(m, ['_id', 'folderId', 'visible', '__v']);
-      // return _.extend({id: id}, n);  
+      // return _.extend({id: id}, n);
 
       return _.omit(m, omit);
     }
@@ -76,14 +76,14 @@ function strip_queue_result(mongooseResult, callback){
     var l = v.owner+'-';
 
     var n = _.omit(v, [
-      '_id', 
-      // 'chunkCount', 
-      // 'progress', 
-      'visible', 
-      'downloadCount', 
-      '__v', 
-      'owner', 
-      'identifier', 
+      '_id',
+      // 'chunkCount',
+      // 'progress',
+      'visible',
+      'downloadCount',
+      '__v',
+      'owner',
+      'identifier',
       'completedDate',
       'id'
       ]);
@@ -111,7 +111,7 @@ K33per.prototype.constructor = K33per;
  * @return {[type]}        [description]
  */
 K33per.prototype.loadHome = function(user, cb){
-  rest.get(config.api_url+'/users/'+user+'/home', commons.restParams())
+  rest.get(config.dkeep_api_url+'/users/'+user+'/home', commons.restParams())
   .on('complete', function(r){
     cb(r._id);
   });
@@ -130,14 +130,14 @@ K33per.prototype.loadFolder = function(user, options, cb){
 
   //Event send d request for the folder content
   register.once('reqFolder', function(data, isDone){
-    rest.get(config.api_url+'/users/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
+    rest.get(config.dkeep_api_url+'/users/'+user+'/folder?id='+options.id+'&parentId='+options.parentId, commons.restParams())
     .on('complete', function(r){
       cab.props = strip_folder_result(r.props);
       isDone(r);
-    });    
+    });
   });
 
-  //Event strips out propeties that shouldnt be sent to the view from the 
+  //Event strips out propeties that shouldnt be sent to the view from the
   //files object
   register.once('stripOnFiles', function(data, isDone){
 
@@ -145,31 +145,31 @@ K33per.prototype.loadFolder = function(user, options, cb){
       cab.files = [];
     } else {
     //Remove unecessary properties and hash the ObjectId;
-    //Keep the stripped result in 
-    //the files property   
+    //Keep the stripped result in
+    //the files property
       cab.files = strip_files_result(data.files);
     }
-    
+
     //Pass in data again so the next event
-    //can use it    
-    isDone(data); 
+    //can use it
+    isDone(data);
   });
 
-  //Event strips out propeties that shouldnt be sent to the view from the 
+  //Event strips out propeties that shouldnt be sent to the view from the
   //files object
   register.once('stripOnFolder', function(data, isDone){
     if (_.isEmpty(data.folders || !data.folders)) {
       cab.folders = [];
     } else {
       //Remove unecessary properties and hash the ObjectId;
-      //Keep the stripped result in 
-      //the folders property   
-      //console.log(r);     
+      //Keep the stripped result in
+      //the folders property
+      //console.log(r);
       cab.folders = strip_folder_result(data.folders);
     }
     //pass it on, nothing to do thou
     isDone(cab);
-      
+
   });
 
   register
@@ -203,15 +203,15 @@ K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb)
 
   //Event send d request for the folder to be created
   register.once('reqNewFolder', function(data, isDone){
-    rest.post(config.api_url+'/users/'+owner+'/folder', commons.restParams({
+    rest.post(config.dkeep_api_url+'/users/'+owner+'/folder', commons.restParams({
       data: data
     }))
     .on('complete', function(r){
       isDone(r);
-    });    
+    });
   });
 
-  //Event strips out propeties that shouldnt be sent to the view from the 
+  //Event strips out propeties that shouldnt be sent to the view from the
   //files object
   register.once('stripOnFolder', function(data, isDone){
     //Remove unecessary properties and hash the ObjectId;
@@ -238,7 +238,7 @@ K33per.prototype.createFolder = function(foldername, parent_id, type, owner, cb)
  * @return {[type]}            [description]
  */
 K33per.prototype.getUsersFiles = function(userId, callback){
-  rest.get(config.api_url+'/users/'+userId+'/files', {
+  rest.get(config.dkeep_api_url+'/users/'+userId+'/files', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
@@ -255,12 +255,12 @@ K33per.prototype.getUsersFiles = function(userId, callback){
 
 K33per.prototype.getUserQueue = function(userId, callback){
   console.log('loading user queue...');
-  rest.get(config.api_url+ '/users/'+userId+'/queue',{
+  rest.get(config.dkeep_api_url+ '/users/'+userId+'/queue',{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(data, response){
     if(_.isEmpty(data)){
       return callback({}, response);
-    }     
+    }
     //Remove unecessary propertied and has the mongooseid;
     console.log(data);
     strip_queue_result(data, function(r){
@@ -273,7 +273,7 @@ K33per.prototype.getUserQueue = function(userId, callback){
 
 K33per.prototype.deleteUserFile = function(userId, fileId, callback){
   fileId = hashr.unhashInt(fileId);
-  rest.del(config.api_url+'/users/'+userId+'/file/'+fileId,{
+  rest.del(config.dkeep_api_url+'/users/'+userId+'/file/'+fileId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
@@ -285,7 +285,7 @@ K33per.prototype.deleteUserFile = function(userId, fileId, callback){
 
 K33per.prototype.deleteUserFolder = function deleteFolder (userId, folderId, cb) {
   // body...
-  rest.del(config.api_url+'/users/'+userId+'/folder/' + folderId, commons.restParams())
+  rest.del(config.dkeep_api_url+'/users/'+userId+'/folder/' + folderId, commons.restParams())
   .on('success', function(data){
     cb(data);
   })
@@ -295,7 +295,7 @@ K33per.prototype.deleteUserFolder = function deleteFolder (userId, folderId, cb)
 };
 
 K33per.prototype.removeUserQueue = function(mediaNumber, owner, cb){
-  rest.del(config.api_url+'/users/'+owner+'/queue/'+mediaNumber, {
+  rest.del(config.dkeep_api_url+'/users/'+owner+'/queue/'+mediaNumber, {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result){
     cb(result);
@@ -306,7 +306,7 @@ K33per.prototype.removeUserQueue = function(mediaNumber, owner, cb){
 
 K33per.prototype.updateTags = function(file_id, owner, tags, cb){
   var fileId = hashr.unhashInt(file_id);
-  rest.put(config.api_url+'/users/'+owner+'/file/'+fileId+'/tags', {
+  rest.put(config.dkeep_api_url+'/users/'+owner+'/file/'+fileId+'/tags', {
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent },
     data: {tags: tags}
   })
@@ -320,7 +320,7 @@ K33per.prototype.updateTags = function(file_id, owner, tags, cb){
 
 
 K33per.prototype.search = function(query, cb){
-  rest.get(config.api_url+'/media/search/'+query,{
+  rest.get(config.dkeep_api_url+'/media/search/'+query,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('success', function(result){
@@ -333,7 +333,7 @@ K33per.prototype.search = function(query, cb){
 
 K33per.prototype.downloadPage = function(mediaId, cb){
   //return cb(true);
-  rest.get(config.api_url+'/users/media/'+mediaId,{
+  rest.get(config.dkeep_api_url+'/users/media/'+mediaId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('complete', function(rz, rs){
@@ -351,7 +351,7 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
     if(err){
       cb(err);
     }else{
-      cb(config.api_url+'/download/'+reply.toString());
+      cb(config.dkeep_api_url+'/download/'+reply.toString());
     }
   });
 };
@@ -364,7 +364,7 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
  * @return {[type]}          [description]
  */
 K33per.prototype.count = function(userId, cb){
-  rest.get(config.api_url+'/users/'+userId+'/media/count', commons.restParams())
+  rest.get(config.dkeep_api_url+'/users/'+userId+'/media/count', commons.restParams())
   .on('complete', function(data){
     cb(data);
   });
@@ -377,7 +377,7 @@ var k33per = new K33per();
 
 module.exports.routes = function(app, redis_client, isLoggedIn){
   //Request all files in a folder belonging to a user
-  //Using the req.query.id to determine what folder is 
+  //Using the req.query.id to determine what folder is
   //'current'
   app.get('/api/internal/users/folder', isLoggedIn(), function(req, res, next){
     var currentFolder;
@@ -396,7 +396,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
           next(d);
         }else{
           //gotten the ObjectId...
-          //lets load the folder files 
+          //lets load the folder files
           k33per.loadFolder(owner, {
             id: d,
             parentId: parent
@@ -406,10 +406,10 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
             }else{
               res.json(200, r);
             }
-          });   
+          });
 
         }
-      });        
+      });
     } else {
       currentFolder = hashr.unhashOid(req.query.id);
 
@@ -480,7 +480,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
         res.json(200, r);
       }
     });
-  }); 
+  });
 
   //Update tags for a file
   app.put('/api/internal/users/files/:fileId/tags', isLoggedIn(), function(req, res, next){
@@ -523,7 +523,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
 
   //Delete a file on the upload queue
   app.del('/api/internal/users/queue/:queueId', isLoggedIn(), function(req, res, next){
-    var owner = hashr.hashOid(req.session.passport.user); 
+    var owner = hashr.hashOid(req.session.passport.user);
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){
       if( r instanceof Error){
@@ -531,5 +531,5 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
       }else{
         res.json(200, r);
       }   });
-  }); 
+  });
 }

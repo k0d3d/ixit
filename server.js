@@ -28,6 +28,7 @@ var express = require('express'),
     helpers = require('view-helpers'),
     errors = require('./lib/errors'),
     staticAsset = require('static-asset'),
+    useragent = require('express-useragent'),
     crashProtector = require('common-errors').middleware.crashProtector,
     Q = require('q');
 var MongoStore = require('connect-mongo')(session);
@@ -99,8 +100,11 @@ function afterResourceFilesLoad(redis_client) {
     // signed cookies
     app.use(cookieParser(config.express.secret));
 
+    app.use(useragent.express());
+
     app.use(bodyParser());
     app.use(methodOverride());
+
 
     // setup session management
     console.log('setting up session management, please wait...');
@@ -232,15 +236,15 @@ redis_client.on('error', function (data) {
 });
 
 console.log("Checking connection to IXIT Document Server...");
-restler.get(config.api_url + '/ping')
+restler.get(config.dkeep_api_url + '/ping')
 .on('success', function (data) {
   // console.log(data);
   if (data === 'ready' ) {
-    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.api_url);
+    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.dkeep_api_url);
   }
 })
 .on('error', function (data) {
-  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.api_url);
+  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.dkeep_api_url);
 });
 
 

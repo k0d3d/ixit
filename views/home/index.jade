@@ -22,7 +22,7 @@
                   button.chromeless(type='button')
                     i.icon-chevron-down
                 .subpanel.shrink
-                  button#shrinkbtn.btn.btn-danger.btn-small(type='button') Start!
+                  button#shrinkbtn.btn.btn-danger.btn-small(type='button', ng-click="$flow.upload()") Start!
               .accordion-pane.point.drag-notice-element(ng-class="{'empty': $flow.files.length < 1,'stuffed': $flow.files.length > 0 }")
                 #jp-container.jp-container
                   #dragndropnotice.noticebox(ng-hide="$flow.files.length > 0")

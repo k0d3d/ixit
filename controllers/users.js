@@ -164,7 +164,7 @@ Users.prototype.constructor = Users;
 //       cb(i);
 //     });
 //   }else{
-//     rest.post(config.api_url+'/clients/',{
+//     rest.post(config.dkeep_api_url+'/clients/',{
 //       data: {user: id},
 //       headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
 //     })

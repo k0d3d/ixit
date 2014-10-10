@@ -35,13 +35,15 @@ angular.module('services', [])
 
       a.currentUser = $cookies.throne;
 
+      a.dkeepToken = '';
+
       a.path = [];
 
       a.addToCrumb = function (ob) {
         a.path.push(ob);
         $rootScope.$broadcast('refresh_breadcrumb');
       };
-  
+
       a.openFolder = function(folderParam){
         return $http.get('/api/internal/users/folder?'+ $.param(folderParam))
         .then(function(list){
@@ -49,7 +51,7 @@ angular.module('services', [])
             a.addToCrumb({
               id : list.data.props.fid,
               name : list.data.props.name
-            });            
+            });
           } else {
             $rootScope.$broadcast('refresh_breadcrumb');
           }
@@ -72,10 +74,10 @@ angular.module('services', [])
           Alert.set_notice({
             message: err,
             type: 'danger',
-          });          
+          });
         });
       };
-      
+
       /**
        * [thisUserFiles request for files belonging to this user]
        * @param  {[type]}   param
@@ -92,7 +94,7 @@ angular.module('services', [])
             callback(false);
         });
       };
-  
+
       /**
        * [thisUserQueue request for this users uncompleted queue]
        * @param  {[type]}   param
@@ -109,7 +111,7 @@ angular.module('services', [])
             callback(false);
           });
       };
-  
+
       /**
        * [deleteThisFile deletes a file belonging to the user]
        * @param  {[type]}   ixid
@@ -122,9 +124,9 @@ angular.module('services', [])
           callback(data);
         })
         .error(function(data, status){
-  
+
         });
-      };  
+      };
       /**
        * [deleteThisFolder deletes a folder belonging to the user]
        * @param  {[type]}   folderId
@@ -137,10 +139,10 @@ angular.module('services', [])
           callback(data);
         })
         .error(function(data, status){
-  
+
         });
       };
-  
+
       /**
        * [removeFromQueue removes an upload from the queue]
        * @param  {[type]}   mid
@@ -156,7 +158,7 @@ angular.module('services', [])
             /* Act on the event */
         });
       };
-  
+
       /**
        * [updateTags updates tags belonging ]
        * @param  {[type]}   tags
@@ -166,25 +168,25 @@ angular.module('services', [])
       a.updateTags = function(tags, file_id, cb){
         $http.put('/api/internal/users/files/'+file_id+'/tags', {tags: tags})
         .success(function(d){
-  
+
         })
         .error(function(d){
-  
+
         });
       };
-  
+
       a.search = function(query, cb){
         $http.get('/api/search/'+query)
         .success(function(d){
           cb(d);
         })
         .error(function(err){
-  
+
         });
       };
-  
+
       a.makeFolder = function(foldername, parent, cb){
-  
+
       };
 
       return a;
@@ -268,16 +270,16 @@ angular.module('services', [])
     return s;
   })
   /**
-   * The alert factory handles all notifications 
-   * and alerts on the UI. 
-   * 
+   * The alert factory handles all notifications
+   * and alerts on the UI.
+   *
    * Prompts are interactive notifications where the users feedback(yes or no)
    * determines the action that will be carried out.
-   * Prompts should / must possess an 'exec' property which 
+   * Prompts should / must possess an 'exec' property which
    * is a function to be called when the user selects 'yes'
    *
-   * Notifications are alerts that inform the user about the 
-   * result or status of actions, request, queries carried out 
+   * Notifications are alerts that inform the user about the
+   * result or status of actions, request, queries carried out
    * on the UI. The are usually timed and dont require any feed back
    *
    * @param  {[type]} $rootScope [description]
@@ -304,9 +306,9 @@ angular.module('services', [])
 
     /**
      * Prompts is an object that holds the properties of an
-     * alert prompt. 
-     * title {String} 
-     * 
+     * alert prompt.
+     * title {String}
+     *
      * @type {[type]}
      */
     s.prompts = null;

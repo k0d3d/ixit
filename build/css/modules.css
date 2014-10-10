@@ -505,6 +505,14 @@ div.ixtem img {
 
 .c-p i {
   margin-left: 5px;
+  color: black;
+  font-size: 14px;
+}
+
+.c-p i:hover {
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 18px;
 }
 
 /*****Update Pane***********/
@@ -877,4 +885,9 @@ dd {
   background: none repeat scroll 0 0 #7E91AA;
   border: 1px solid #888E97;
   color: white;
+}
+
+.upload-green {
+  color: #00DB69 !important;
+  font-size: 20px;
 }
