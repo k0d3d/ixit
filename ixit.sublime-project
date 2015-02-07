@@ -11,11 +11,7 @@
 		},
 		{
 			"follow_symlinks": true,
-			"path": "/home/kingkoded/Projects/ixit_mobile"
-		},
-		{
-			"follow_symlinks": true,
-			"path": "/home/kingkoded/Projects/node-gypsi"
+			"path": "/home/kingkoded/FedProjects/ixit_mobile"
 		}
 	]
 }

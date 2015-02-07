@@ -5,7 +5,7 @@
     "defaultMessage": "The requested file could not be found",
     "defaultExplanation": "The file could not be found",
     "defaultResponse": "Verify the file exists and retry the operation",
-    "code": 601 
+    "code": 601
   },
   {
     "name": "FolderNotFoundError",
@@ -27,6 +27,20 @@
     "defaultExplanation": "The folder contains files or folders",
     "defaultResponse": "Please delete all files or folders within",
     "code": 604
+  },
+  {
+    "name": "RegisterUserExist",
+    "defaultMessage": "Email or Phone Number already registered. Please try again.",
+    "defaultExplanation": "This phone number or email address is already an IXIT user.",
+    "defaultResponse": "Use another account or reques a password reset if the account belongs to you.",
+    "code": 605
+  },
+  {
+    "name": "RegistrationFailed",
+    "defaultMessage": "Something went wrong with the signup",
+    "defaultExplanation": "An internal server error occured when processing this sign up. We'll look into it.",
+    "defaultResponse": "Try again or contact support@i-x.it for help",
+    "code": 606
   }
 
 ]

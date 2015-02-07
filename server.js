@@ -27,6 +27,8 @@ var express = require('express'),
     restler = require('restler'),
     helpers = require('view-helpers'),
     errors = require('./lib/errors'),
+    staticAsset = require('static-asset'),
+    useragent = require('express-useragent'),
     crashProtector = require('common-errors').middleware.crashProtector,
     Q = require('q');
 var MongoStore = require('connect-mongo')(session);
@@ -41,10 +43,21 @@ app.set('version', pjson.version);
 // port
 var port = process.env.PORT || 3000;
 
+function isApiUri (url) {
+  var t = '/api/internal/';
+  var av1 = '/api/v1/';
+  var av2 = '/api/v2/';
+  var oauth = '/oauth/';
+  if (url.indexOf(t) > -1 || url.indexOf(av1) > -1 || url.indexOf(av2) > -1 || url.indexOf(oauth) > -1) {
+    return true;
+  }
+  return false;
+}
+
 
 function afterResourceFilesLoad(redis_client) {
 
-    console.log('configuring application, please wait...');   
+    console.log('configuring application, please wait...');
 
     app.set('showStackError', true);
 
@@ -55,6 +68,7 @@ function afterResourceFilesLoad(redis_client) {
     app.use(errors.init());
 
 
+    app.use(staticAsset(__dirname + '/public') );
 
     // make everything in the public folder publicly accessible - do this high up as possible
     app.use(express.static(__dirname + '/public'));
@@ -68,7 +82,7 @@ function afterResourceFilesLoad(redis_client) {
     }));
 
     // efficient favicon return - will enable when we have a favicon
-    app.use(favicon('public/images/favicon.ico'));
+    app.use(favicon('public/favicon.ico'));
 
 
     app.locals.layout = false;
@@ -82,7 +96,7 @@ function afterResourceFilesLoad(redis_client) {
     //   console.log('Error Loading Passport Config...');
     //   console.trace(e);
     // }
-    require('./lib/auth/passport.js')(passport);
+    require('./lib/auth/passport.js')(passport, redis_client);
 
     // set logging level - dev for now, later change for production
     app.use(logger('dev'));
@@ -92,18 +106,23 @@ function afterResourceFilesLoad(redis_client) {
     app.use(function (req, res, next) {
       res.locals.pkg = pjson;
       next();
-    });      
+    });
 
     // signed cookies
     app.use(cookieParser(config.express.secret));
 
+    app.use(useragent.express());
+
     app.use(bodyParser());
     app.use(methodOverride());
+
 
     // setup session management
     console.log('setting up session management, please wait...');
     app.use(session({
         secret: config.express.secret,
+        saveUninitialized: true,
+        resave: true,
         store: new MongoStore({
             db: config.db.database,
             host: config.db.server,
@@ -114,6 +133,20 @@ function afterResourceFilesLoad(redis_client) {
             collection: "mongoStoreSessions"
         })
     }));
+
+    app.use(function (req, res, next) {
+      // console.log(req.cookies);
+      // check if client sent cookie
+      var cookie = req.cookies['ixid-anon-session'];
+      if (cookie === undefined && !req.xhr)
+      {
+        // no: set a new cookie
+        var randomNumber=Math.random().toString();
+        randomNumber=randomNumber.substring(2,randomNumber.length);
+        res.cookie('ixid-anon-session',require('./lib/commons').randomString(16), { maxAge: 900000});
+      }
+        next();
+    });
 
     //Initialize Passport
     app.use(passport.initialize());
@@ -129,8 +162,8 @@ function afterResourceFilesLoad(redis_client) {
     app.use(helpers(pjson.name));
 
     // set our default view engine
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
+    // app.set('views', __dirname + '/views');
+    // app.set('view engine', 'jade');
 
 
     //pass in the app config params in to locals
@@ -180,32 +213,31 @@ function afterResourceFilesLoad(redis_client) {
       // error page
       //res.status(500).json({ error: err.stack });
       //res.json(500, err.message);
-      var t = '/api/internal/';
-      if (req.url.indexOf(t) > -1) {
-        res.json(500, err);        
+
+      if (isApiUri(req.url) ) {
+        res.json(500, err);
       } else {
         res.status(500).render('500', {
           url: req.originalUrl,
           error: err.message
-        }); 
-      }   
+        });
+      }
 
     });
 
     // assume 404 since no middleware responded
     app.use(function(req, res){
 
-      var t = '/api/internal/';
-      if (req.url.indexOf(t) > -1) {
-        res.json(404, {message: 'resource not found'});        
+      if (isApiUri(req.url)) {
+        res.json(404, {message: 'resource not found'});
       } else {
         res.status(404).render('404', {
           url: req.originalUrl,
           error: 'Not found'
         });
-      }          
+      }
 
-    });       
+    });
 
 
     // development env config
@@ -219,7 +251,7 @@ function afterResourceFilesLoad(redis_client) {
 console.log('Running Environment: %s', process.env.NODE_ENV);
 
 console.log('Creating connection to redis server...');
-var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {}); 
+var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {});
 
 redis_client.on('ready', function (data) {
   console.log('Redis connection is....ok');
@@ -230,15 +262,15 @@ redis_client.on('error', function (data) {
 });
 
 console.log("Checking connection to IXIT Document Server...");
-restler.get(config.api_url + '/ping')
+restler.get(config.dkeep_api_url + '/ping')
 .on('success', function (data) {
   // console.log(data);
   if (data === 'ready' ) {
-    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.api_url);
+    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.dkeep_api_url);
   }
 })
 .on('error', function (data) {
-  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.api_url);
+  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.dkeep_api_url);
 });
 
 
@@ -263,10 +295,10 @@ console.log('IXIT Document Client started on port '+port);
 exports = module.exports = app;
 // CATASTROPHIC ERROR
 app.use(function(err, req, res){
-  
+
   console.error(err.stack);
-  
+
   // make this a nicer error later
   res.send(500, 'Ewww! Something got broken on IXIT. Getting some tape and glue');
-  
+
 });

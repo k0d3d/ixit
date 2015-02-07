@@ -21,8 +21,8 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/20
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-  body(ng-app='ixitApp')
-    div(ng-controller='MainController')
+  body(ng-app='ixitApp', flow-init, flow-prevent-drop, upload-target = '#{dk33p_api_url}')
+    div(ng-controller='MainController', ng-style="style", flow-drop, dndevts)
       block modals
       block body
     #footer
@@ -30,8 +30,8 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/20
         .row
           .offset4.span4
     block scripts
-      script(src='/js/components.js')
-      script(src='/js/vendor.js')
-      script(src='/js/public.js')
+      script(src=assetFingerprint('/js/components.js'))
+      script(src=assetFingerprint('/js/vendor.js'))
+      script(src=assetFingerprint('/js/public.js'))
     block templates
 

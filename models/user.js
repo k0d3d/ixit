@@ -12,6 +12,7 @@ var UserModel = require('./user/user.js').UserModel,
     moment = require('moment'),
     EventRegister = require('../lib/event_register.js').register,
     crypt = require('../lib/commons.js'),
+    errors = require('../lib/errors'),
     configuration = require('config'); // we generally want to load the whole config
 
 
@@ -28,16 +29,15 @@ var userFunctions = {
      * @return {Object}      Promiuse fufilled with a boolean.
      */
     validateUser: function validateUser(data) {
-        console.log(data);
-
         var d = Q.defer();
 
         //Find username
         UserModel.count({
             $or: [{
+                phoneNumber: data.phoneNumber
+            },
+            {
                 email: data.email
-            }, {
-                username: data.username
             }]
         }).exec(function(err, i) {
             console.log(i);
@@ -61,7 +61,7 @@ var userFunctions = {
         vm.token = utils.uid(32);
         vm.verifyType = data.verifyType || 'registration';
         vm.save(function(err, i) {
-            console.log(err, i);
+            // console.log(err, i);
             if (err) {
                 return d.reject(err);
             }
@@ -83,6 +83,9 @@ var userFunctions = {
         //Find username
         UserModel.findOne({
             $or: [{
+                phoneNumber: data.phoneNumber
+            },
+            {
                 email: data.email
             }, {
                 username: data.username
@@ -145,12 +148,12 @@ var userFunctions = {
 
     validatePassword: function validatePassword(plain, hashed) {
         console.log('on validation');
-        console.log(plain, hashed);
+        // console.log(plain, hashed);
         var d = Q.defer();
 
         crypt.validate(plain, hashed)
         .then(function (p) {
-            console.log('Validation done');
+            // console.log('Validation done');
             return d.resolve(true);
 
         }, function (err) {
@@ -655,11 +658,10 @@ User.prototype.create = function(options) {
     var checkIfUserExists = userFunctions.validateUser(userInfo);
 
     checkIfUserExists.then(function(doesNotExist) {
-
+        console.log(doesNotExist);
         if (!doesNotExist) {
-
             // we cannot add
-            d.reject(new Error('User Exists'));
+            d.reject(errors.nounce('RegisterUserExist').toJSON());
 
         }
         else {
@@ -681,7 +683,7 @@ User.prototype.create = function(options) {
             catch (function(err) {
                 console.log(err);
                 // something went wrong with the signup - return error screen
-                d.reject(err);
+                d.reject(errors.nounce('RegistrationFailed').toJSON());
 
             });
         }
@@ -781,17 +783,17 @@ User.prototype.checkAuthCredentials = function(usernameOrEmail, password, req) {
     var d = Q.defer();
 
     var userInfo = {
+        phoneNumber: usernameOrEmail,
         email: usernameOrEmail,
         username: usernameOrEmail,
         plain_password: password,
         ipAddress: req.connection.remoteAddress
     };
     userFunctions.findUser(userInfo).then(function(user) {
-
         userFunctions.validatePassword(userInfo.plain_password, user.password)
         .then(function(r) {
             console.log('After password validation');
-            console.log(r);
+            // console.log(r);
 
             //validatePassword returns boolean
             //send back the user document

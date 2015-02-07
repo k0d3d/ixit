@@ -2,7 +2,7 @@ var expressJWT = require('../lib/node_modules/express-jwt'),
     appConfig = require('config').express,
     cors = require('cors');
 
-module.exports.routes = function (app) {
+module.exports.routes = function (app, redis_client) {
 
   app.route('/api/v1/*')
   .all(cors(appConfig.cors.options), function (req, res, next) {
@@ -10,15 +10,17 @@ module.exports.routes = function (app) {
     //authentication route, please skip
     //to the next route..
     //should be handled
-    if (req.url === '/api/v1/users/session' && req.method === 'POST') {
+    if ((req.url === '/api/v1/users/auth' || req.url === '/api/v1/users') && req.method === 'POST') {
       next();
     } else {
-      console.log('esle');
       if (req.headers.authorization) {
-        expressJWT({secret: appConfig.secret, skip: ['/api/v1/users/session', '/api/v1/routetest']})
+        expressJWT({
+          secret: appConfig.secret,
+          skip: ['/api/v1/users/session', '/api/v1/routetest']
+        })
         .call(null, req, res, next);
       } else {
-        res.json(401, {status: 'not authd'});
+        res.json(403, {status: 'not authd'});
       }
     }
   });
@@ -28,6 +30,6 @@ module.exports.routes = function (app) {
     res.json(200, true);
   });
 
-  //load the api routes from orders.js
-  require('./api/user').routes(app);
+  //load the api routes
+  require('./api/user').routes(app, redis_client);
 };

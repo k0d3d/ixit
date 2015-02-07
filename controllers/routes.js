@@ -18,22 +18,28 @@ module.exports = function (app, passport, redis_client) {
   /*
   API Authentication and User routes
    */
-  var users = require('../controllers/users');
-  users.routes(app);
 
-  var dashboard = require('../controllers/dashboard');
+  var apiV1 = require('./api-v1');
+  apiV1.routes(app, redis_client, isLoggedIn);
+
+  var apiV2 = require('./api-v2');
+  apiV2.routes(app, redis_client, isLoggedIn);
+
+  // var users = require('./users');
+  // users.routes(app, redis_client);
+
+  var dashboard = require('./dashboard');
   dashboard.routes(app, isLoggedIn, passport);
 
-  var keeper = require('../controllers/k33per');
+  var keeper = require('./k33per');
   keeper.routes(app, redis_client, isLoggedIn);
 
-  var external = require('../controllers/external');
-  external.routes(app, redis_client, isLoggedIn);
+  var tokenRequest = require('../lib/middlewares/dk33pTokenRequest');
 
   /**
    * Views and template routes
    */
-  require('./site.js')(app, isLoggedOut, passport);
+  require('./site.js')(app, isLoggedOut, passport, tokenRequest);
 
 
   app.get('/:hashrid', function(req, res, next){
@@ -67,12 +73,13 @@ module.exports = function (app, passport, redis_client) {
 
   app.get('/img/filetype/:filename', function(req, res, next){
       var filename = req.params.filename;
+      console.log(filename);
       fs.exists('/public/img/filetype/'+filename, function(itdz){
           if(itdz){
               res.sendfile('/public/img/filetype/'+filename);
           }else{
               res.sendfile(path.resolve('./public/img/no-img.png'));
           }
-      })
+      });
   });
-}
+};

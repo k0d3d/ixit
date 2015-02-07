@@ -61,35 +61,62 @@ angular.module('flow.provider', [])
   };
 });
 angular.module('flow.init', ['flow.provider'])
-  .controller('flowCtrl', ['$scope', '$attrs', '$parse', 'flowFactory',
-  function ($scope, $attrs, $parse, flowFactory) {
+  .controller('flowCtrl', ['$scope', '$attrs', '$parse', 'flowFactory', '$rootScope', '$cookies',
+  function ($scope, $attrs, $parse, flowFactory, $rootScope, $cookies) {
 
-    var options = angular.extend({}, $scope.$eval($attrs.flowInit));
-
-    // use existing flow object or create a new one
-    var flow  = $scope.$eval($attrs.flowObject) || flowFactory.create(options);
-
-    flow.on('catchAll', function (eventName) {
-      var args = Array.prototype.slice.call(arguments);
-      args.shift();
-      var event = $scope.$broadcast.apply($scope, ['flow::' + eventName, flow].concat(args));
-      if ({
-        'progress':1, 'filesSubmitted':1, 'fileSuccess': 1, 'fileError': 1, 'complete': 1
-      }[eventName]) {
-        $scope.$apply();
+    var options = angular.extend({
+      generateUniqueIdentifier: function (file) {
+        return $cookies['ixid-anon-session'] + '_' + file.name + '_' + file.size + '_' + file.type;
       }
-      if (event.defaultPrevented) {
-        return false;
+    }, $scope.$eval($attrs.flowInit));
+
+    function __initFlowOptions () {
+      // use existing flow object or create a new one
+      var flow  = $scope.$eval($attrs.flowObject) || flowFactory.create(options);
+
+      flow.on('catchAll', function (eventName) {
+        var args = Array.prototype.slice.call(arguments);
+        args.shift();
+        var event = $scope.$broadcast.apply($scope, ['flow::' + eventName, flow].concat(args));
+        if ({
+          'progress':1, 'filesSubmitted':1, 'fileSuccess': 1, 'fileError': 1, 'complete': 1
+        }[eventName]) {
+          $scope.$apply();
+        }
+        if (event.defaultPrevented) {
+          return false;
+        }
+      });
+
+      $scope.$flow = flow;
+      if ($attrs.hasOwnProperty('flowName')) {
+        $parse($attrs.flowName).assign($scope, flow);
+        $scope.$on('$destroy', function () {
+          $parse($attrs.flowName).assign($scope);
+        });
+      }
+
+    }
+
+    $scope.$watch('currentFolder', function (n) {
+      if (n) {
+        $scope.$flow.opts.query = {
+          'folder': $scope.currentFolder,
+          'x-Authr' : $scope.cuser
+        };
       }
     });
 
-    $scope.$flow = flow;
-    if ($attrs.hasOwnProperty('flowName')) {
-      $parse($attrs.flowName).assign($scope, flow);
-      $scope.$on('$destroy', function () {
-        $parse($attrs.flowName).assign($scope);
-      });
-    }
+    $scope.$watch('$flow.files.length', function (n) {
+      if (n) {
+        $scope.$flow.opts.headers =  {
+          'dkeep-agent-id-token': $rootScope.dkeepToken
+        };
+      }
+    });
+
+    __initFlowOptions(options);
+
   }])
   .directive('flowInit', [function() {
     return {
