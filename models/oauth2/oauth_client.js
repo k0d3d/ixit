@@ -18,7 +18,7 @@ var OAuthClientSchema = new Schema({
     callbackUrl: {type: String},
     clientKey: {type: String, unique: true},
     clientSecret: String,
-    deviceId: {type: String}
+    deviceId: {type: String, unique: true}
 });
 
 /**

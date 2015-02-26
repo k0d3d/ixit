@@ -12,13 +12,36 @@ module.exports.routes = function (app, redis_client) {
   //   }
   //   next();
   // });
-  app.route('/api/v2/*')
-  .all(cors(appConfig.cors.options), passport.isAPIAuthenticated, function (req, res, next) {
-    if (req.xhr) {
-      res.set('WWW-Authenticate',  'xBasic realm="Users"');
-    }
-    next();
+  // app.route('/api/v2/*')
+  // .all(cors(appConfig.cors.options), passport.isAPIAuthenticated, function (req, res, next) {
+  //   if (req.xhr) {
+  //     res.set('WWW-Authenticate',  'xBasic realm="Users"');
+  //   }
+  //   next();
+  // });
+
+  app.route('/api/v1/*')
+  .all(cors(appConfig.cors.options),
+    function(req, res, next){
+      if (
+        (req.url == '/api/v1/users' && req.method == 'POST')
+      ) {
+        next();
+      } else {
+        passport.isAPIAuthenticated.call(null, req, res, next);
+      }
+    },
+    // passport.isAPIAuthenticated,
+    function (req, res, next) {
+      if (req.xhr) {
+        res.set('WWW-Authenticate',  'xBasic realm="Users"');
+      }
+      next();
   });
+
+
+
+
 
   //testing if server is online...
   app.get('/api/v2/routetest', function (req, res) {
