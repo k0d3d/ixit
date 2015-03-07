@@ -20,11 +20,11 @@ module.exports.routes = function (app, redis_client) {
   //   next();
   // });
 
-  app.route('/api/v1/*')
+  app.route('/api/v2/*')
   .all(cors(appConfig.cors.options),
     function(req, res, next){
       if (
-        (req.url == '/api/v1/users' && req.method == 'POST')
+        (req.url === '/api/v2/users' && req.method === 'POST')
       ) {
         next();
       } else {

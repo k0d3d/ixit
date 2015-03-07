@@ -23,6 +23,19 @@ module.exports.routes = function (app, redis_client) {
 
 
   //Authentication Api Routes
+  app.route('/api/v2/users/auth')
+  .post(function (req, res) {
+    if (req.user) {
+      // redis_client.hmset(token, req.user);
+      res.json({
+        authorizationToken: true
+      });
+    } else {
+      res.json(401, {message: 'Authorized only.'});
+    }
+  });
+
+  //Authentication Api Routes
   app.route('/api/v1/users/auth')
   .post(passport.authenticate('local', { session: false }), function (req, res) {
     if (req.user) {
@@ -43,7 +56,9 @@ module.exports.routes = function (app, redis_client) {
   //
   //User Profile
   //
-  app.route('/api/v1/users/profile')
+  app.route('/api/:apiVersion/users')
+  //gets the profile information for the curently logged
+  //in user
   .get(function (req, res, next) {
     var userId = req.user._id;
     var account_type = req.user.account_type;
@@ -57,10 +72,20 @@ module.exports.routes = function (app, redis_client) {
     }, function (err) {
       next(err);
     });
-  });
-
-  //Setting up the users api
-  app.post('/api/v1/users', function (req, res) {
+  })
+  //updates the profile for the currently
+  //logged in user
+  .put(function (req, res, next) {
+    var userId = req.user._id;
+    users.updateUserProfile(userId, _.extend({scope: 'PROFILE'}, req.body))
+    .then(function (r) {
+      res.json(r);
+    }, function (err) {
+      next(err);
+    });
+  })
+  //creates a new user account
+  .post(function (req, res) {
     var createUser = users.create(req.body);
     createUser.then(function (r) {
       return res.json(200, r);
@@ -70,7 +95,7 @@ module.exports.routes = function (app, redis_client) {
   });
 
   //logs out a currently logged in user
-  // app.delete('/api/v1/users/auth', users.signout);
+  // app.delete('/api/:apiVersion/users/auth', users.signout);
 
   // app.param('userId', users.user);
 };

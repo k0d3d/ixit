@@ -584,6 +584,29 @@ var userFunctions = {
         console.log('in before send of email');
         return sendTemplateEmail(_conf.general.systemEmail, config.fromDefaultEmailAddress,
         config.userAuthFailureEmailSubject, "views/email-templates/user-auth-failure.jade", props);
+    },
+    updateUserProfile: function updateUserProfile (data) {
+      var q = Q.defer();
+
+      UserModel.update({
+        _id: data._id
+      }, {
+        firstname: data.firstname,
+        lastname: data.lastname,
+        phoneNumber: data.phoneNumber
+      }, function (err, i ) {
+          if (err) {
+              q.reject(err);
+          }
+          if (i > 0) {
+              q.resolve(true);
+          }
+          if(i === 0 ) {
+              q.reject(errors.nounce('UpdateFailed'));
+          }
+      });
+
+      return q.promise;
     }
 
 };
@@ -1011,6 +1034,37 @@ User.prototype.findUser = function(id) {
         userId: id
     });
 };
+
+User.prototype.updateUserAccount = function (userId, userData) {
+  var q = Q.defer(), task, taskData;
+
+  switch (userData.scope) {
+    case 'PROFILE':
+    task = userFunctions.updateUserProfile;
+    taskData = {
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        phoneNumber: userData.phoneNumber
+      };
+    break;
+    case 'ACCOUNT':
+    task = userFunctions.updateUserAccountPassword;
+    break;
+    default:
+    break;
+  }
+
+  task(taskData)
+  .then(function (did) {
+    return q.resolve(did);
+  }, function (err) {
+    return q.reject(err);
+  });
+
+
+  return q.promise;
+};
+
 //http://underscorejs.org/#bindAll
 _.bindAll(userFunctions, 'saveFailedLoginAttempt');
 

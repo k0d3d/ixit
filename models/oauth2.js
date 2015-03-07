@@ -17,7 +17,7 @@ oAuthFunctions = {
         // .populate('roles', null, 'roles')
         .exec(function (error, client) {
             if (error) {
-                return d.reject(err);
+                return d.reject(error);
             }
             if (client) {
                 return d.resolve(client);
@@ -33,7 +33,7 @@ oAuthFunctions = {
 
         OAuthClient.findOne({ clientKey: key }, function (error, client) {
             if (error) {
-                return d.reject(err);
+                return d.reject(error);
             }
             if (client) {
                 return d.resolve(client);
@@ -49,7 +49,7 @@ oAuthFunctions = {
 
         OAuthClient.findOne({ deviceId: id }, function (error, client) {
             if (error) {
-                return d.reject(err);
+                return d.reject(error);
             }
             if (client) {
                 return d.resolve(client);
@@ -227,7 +227,7 @@ oAuthFunctions = {
 
         return clients.promise;
     }
-}
+};
 
 /**
  * OAuth Class
@@ -245,10 +245,10 @@ oAuthModel.prototype.listOfClients = function (options) {
         return list.resolve(result);
     }, function (err) {
         return list.reject(err);
-    })
+    });
 
     return list.promise;
-}
+};
 
 oAuthModel.prototype.create = function (options) {
     console.log('Creating Client');
