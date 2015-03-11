@@ -4,7 +4,8 @@
         "database": "client-db",
         "port": 27017,
         "user": "",
-        "pass": ""
+        "pass": "",
+        "url": "mongo://localhost:27017"
     },
     "redis": {
       "port": 6379,

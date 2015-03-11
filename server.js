@@ -133,8 +133,9 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
         //     collection: "mongoStoreSessions"
         // })
         store: new MongoStore({
-            auto_reconnect: true,
-            mongooseConnection: mongooseConnection,
+            autoReconnect: true,
+            url: config.db.url,
+            // mongooseConnection: mongooseConnection,
             collection: "mongoStoreSessions",
             db: config.db.database,
         })
