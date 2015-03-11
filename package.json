@@ -76,6 +76,7 @@
     "redis": "~0.10.0",
     "static-asset": "^0.5.5",
     "static-favicon": "^1.0.2",
+    "restler": "latest",
     "underscore": "latest",
     "view-helpers": "latest"
   },
