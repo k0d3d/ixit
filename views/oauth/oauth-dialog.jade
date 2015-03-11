@@ -1,22 +1,25 @@
-extends ../layouts/default
+extends ../layouts/local-assets
 
 block body
-  .logo
-    img(src='/app/img/bn-logo-small-bw.png', alt='')
-  .content
-    h1.text-center(style="color: black") Action Required!
-    p.text-center
-      | Hello #{user.email}
-    p.text-center
-      | An application (#{oauth_client.name}) is requesting permission.
-    form(action="/oauth/authorize/decision",method="post")
-      input(name="transaction_id" ,type="hidden", value="#{transactionId}")
-      div
-        button#allow.btn.btn-success.btn-block(type="submit", value="Allow") Allow
-        button#deny.btn.btn-danger.btn-block(type="submit", value="Deny", name="cancel") Deny
-        //
-          input(type="submit",value="Allow",id="allow")
-          input(type="submit",value="Deny",name="cancel",id="deny")
+  .container
+    .row
+      .col-md-4.col-xm-12.col-xs-12
+        .logo
+          img(src='/img/logo.png', alt='')
+        .content
+          h1.text-center(style="color: black") Action Required!
+          p.text-center
+            | Hello #{user.email}
+          p.text-center
+            | Grant (#{oauth_client.name}) authorization to your tagChief account.
+          form(action="/oauth/authorize/decision",method="post")
+            input(name="transaction_id" ,type="hidden", value="#{transactionId}")
+
+            input(type="hidden",value="#{queryAuth.email}", name="email")
+            input(type="hidden",value="#{queryAuth.password}",name="password")
+            div
+              button#allow.btn.btn-success.btn-block(type="submit", value="Allow") Allow
+              button#deny.btn.btn-danger.btn-block(type="submit", value="Deny", name="cancel") Deny
 
     script(type="text/javascript").
       window.user = !{user};

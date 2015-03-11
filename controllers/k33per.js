@@ -1,9 +1,7 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    User = require('../models/user.js'),
-    passport = require('passport'),
+var
     rest = require('restler'),
     hashr = require('../lib/hash.js'),
     _ = require('lodash'),
@@ -375,7 +373,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   //Request all files in a folder belonging to a user
   //Using the req.query.id to determine what folder is
   //'current'
-  app.get('/api/v1/users/folder', function(req, res, next){
+  app.get('/api/:apiVersion/users/folder', function(req, res, next){
     var currentFolder;
     //The parent folder if any
     var parent = req.query.parent;
@@ -423,7 +421,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Request all files uploaded by a user
-  app.get('/api/v1/users/files', function(req, res, next){
+  app.get('/api/:apiVersion/users/files', function(req, res, next){
     var owner = hashr.hashOid(req.user._id);
     k33per.getUsersFiles(owner, function(r){
       if( r instanceof Error){
@@ -434,7 +432,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.get('/api/v1/users/queue', function(req, res, next){
+  app.get('/api/:apiVersion/users/queue', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.getUserQueue(owner, function(r){
       if( r instanceof Error){
@@ -445,7 +443,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
   //Searches for files using filenames and tags
-  app.get('/api/v1/search/:queryString', function(req, res, next){
+  app.get('/api/:apiVersion/search/:queryString', function(req, res, next){
     k33per.search(req.params.queryString, function(r){
       if(util.isError(r)){
         next(r);
@@ -455,7 +453,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.get('/api/v1/media/:mediaId/request/', function(req, res, next){
+  app.get('/api/:apiVersion/media/:mediaId/request/', function(req, res, next){
     k33per.requestFileDownload(req.params.mediaId, redis_client, function(r){
       if(util.isError(r)){
         next(r);
@@ -466,7 +464,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //calls the method which creates a new folder or subfolder
-  app.post('/api/v1/users/folder', function(req, res, next){
+  app.post('/api/:apiVersion/users/folder', function(req, res, next){
     // return res.json(500, false);
     var owner = hashr.hashOid(req.session.passport.user);
     k33per.createFolder( req.body.name, req.body.parentId, req.body.type, owner, function(r){
@@ -479,7 +477,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Update tags for a file
-  app.put('/api/v1/users/files/:fileId/tags', function(req, res, next){
+  app.put('/api/:apiVersion/users/files/:fileId/tags', function(req, res, next){
     var tags = req.body.tags;
     var file_id = req.params.fileId;
     var owner = hashr.hashOid(req.session.passport.user);
@@ -493,7 +491,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
 
-  app.del('/api/v1/users/files/:fileId', function(req, res, next){
+  app.del('/api/:apiVersion/users/files/:fileId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
@@ -505,7 +503,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.del('/api/v1/users/folder/:folderId', function(req, res, next){
+  app.del('/api/:apiVersion/users/folder/:folderId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
@@ -518,7 +516,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Delete a file on the upload queue
-  app.del('/api/v1/users/queue/:queueId', function(req, res, next){
+  app.del('/api/:apiVersion/users/queue/:queueId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){

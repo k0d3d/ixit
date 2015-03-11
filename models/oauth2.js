@@ -17,7 +17,7 @@ oAuthFunctions = {
         // .populate('roles', null, 'roles')
         .exec(function (error, client) {
             if (error) {
-                return d.reject(err);
+                return d.reject(error);
             }
             if (client) {
                 return d.resolve(client);
@@ -33,7 +33,23 @@ oAuthFunctions = {
 
         OAuthClient.findOne({ clientKey: key }, function (error, client) {
             if (error) {
-                return d.reject(err);
+                return d.reject(error);
+            }
+            if (client) {
+                return d.resolve(client);
+            } else {
+                return d.resolve(false);
+            }
+        });
+
+        return d.promise;
+    },
+    findByClientDeviceId : function (id) {
+        var d = Q.defer();
+
+        OAuthClient.findOne({ deviceId: id }, function (error, client) {
+            if (error) {
+                return d.reject(error);
             }
             if (client) {
                 return d.resolve(client);
@@ -94,6 +110,24 @@ oAuthFunctions = {
         });
         return d.promise;
     },
+    removeClientByDeviceId : function(id) {
+        var d = Q.defer();
+
+        OAuthClient.remove({
+            deviceId : id
+        }, function (err, affectedRows) {
+            if (err) {
+                return d.reject(err);
+            }
+            if(affectedRows > 0) {
+                return d.resolve(true);
+            } else {
+                return d.resolve(new Error ('failed to remove client'));
+            }
+
+        });
+        return d.promise;
+    },
     saveNewRequestToken : function (doc) {
         var d = Q.defer(),
             token = new RequestToken(doc);
@@ -115,7 +149,7 @@ oAuthFunctions = {
      */
     findOneRequestToken : function (doc) {
         console.log('Searching for Request Token');
-        console.log(doc);
+        // console.log(doc);
         var d = Q.defer();
 
         RequestToken.findOne({
@@ -136,7 +170,7 @@ oAuthFunctions = {
     },
     createNewAccessToken : function (doc) {
         console.log('Creating new access token');
-        console.log(doc);
+        // console.log(doc);
         var d = Q.defer();
 
         var token = new AccessToken();
@@ -193,7 +227,7 @@ oAuthFunctions = {
 
         return clients.promise;
     }
-}
+};
 
 /**
  * OAuth Class
@@ -211,10 +245,10 @@ oAuthModel.prototype.listOfClients = function (options) {
         return list.resolve(result);
     }, function (err) {
         return list.reject(err);
-    })
+    });
 
     return list.promise;
-}
+};
 
 oAuthModel.prototype.create = function (options) {
     console.log('Creating Client');
@@ -252,6 +286,15 @@ oAuthModel.prototype.findClient  = function (option)  {
 
     if (option.key) {
         oAuthFunctions.findByClientKey(option.key)
+        .then(function (result) {
+            d.resolve(result);
+        })
+        .catch(function (err) {
+            d.reject(err);
+        });
+    }
+    if (option.device) {
+        oAuthFunctions.findByClientDeviceId(option.device)
         .then(function (result) {
             d.resolve(result);
         })
@@ -318,7 +361,7 @@ oAuthModel.prototype.switchTokens = function (client, request_token, redirectUri
 
 
     return d.promise;
-}
+};
 
 oAuthModel.prototype.findToken = function (accessToken) {
     var d = Q.defer();
@@ -333,7 +376,42 @@ oAuthModel.prototype.findToken = function (accessToken) {
     });
 
     return d.promise;
-}
+};
+
+oAuthModel.prototype.removeAClient = function (accessToken) {
+    var d = Q.defer();
+
+    if(option.id) {
+        oAuthFunctions.removeClientById(option.id)
+        .then(function (result) {
+            d.resolve(result);
+        })
+        .catch(function (err) {
+            d.reject(err);
+        });
+    }
+
+    if (option.key) {
+        oAuthFunctions.removeClientByKey(option.key)
+        .then(function (result) {
+            d.resolve(result);
+        })
+        .catch(function (err) {
+            d.reject(err);
+        });
+    }
+    if (option.device) {
+        oAuthFunctions.removeClientByDeviceId(option.device)
+        .then(function (result) {
+            d.resolve(result);
+        })
+        .catch(function (err) {
+            d.reject(err);
+        });
+    }
+
+    return d.promise;
+};
 
 module.exports = oAuthModel;
 

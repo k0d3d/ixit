@@ -19,14 +19,19 @@ module.exports = function (app, passport, redis_client) {
   API Authentication and User routes
    */
 
+
+
   var apiV1 = require('./api-v1');
   apiV1.routes(app, redis_client, isLoggedIn);
 
   var apiV2 = require('./api-v2');
-  apiV2.routes(app, redis_client, isLoggedIn);
+  apiV2.routes(app, redis_client);
 
   // var users = require('./users');
   // users.routes(app, redis_client);
+
+  //load the api routes
+  require('./api/user').routes(app, redis_client);
 
   var dashboard = require('./dashboard');
   dashboard.routes(app, isLoggedIn, passport);

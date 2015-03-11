@@ -2,7 +2,7 @@ var expressJWT = require('../lib/node_modules/express-jwt'),
     appConfig = require('config').express,
     cors = require('cors');
 
-module.exports.routes = function (app, redis_client) {
+module.exports.routes = function (app) {
 
   app.route('/api/v1/*')
   .all(cors(appConfig.cors.options), function (req, res, next) {
@@ -30,6 +30,4 @@ module.exports.routes = function (app, redis_client) {
     res.json(200, true);
   });
 
-  //load the api routes
-  require('./api/user').routes(app, redis_client);
 };

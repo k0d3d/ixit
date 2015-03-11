@@ -3,15 +3,15 @@
 	[
 		{
 			"follow_symlinks": true,
-			"path": "/home/kingkoded/Projects/dk33p"
-		},
-		{
-			"follow_symlinks": true,
 			"path": "."
 		},
 		{
 			"follow_symlinks": true,
 			"path": "/home/kingkoded/FedProjects/ixit_mobile"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/home/kingkoded/FedProjects/dk33p"
 		}
 	]
 }

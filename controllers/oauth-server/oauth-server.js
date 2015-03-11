@@ -98,6 +98,7 @@ var OAuth2Middleware = {
             transactionId: req.oauth2.transactionID,
             user: req.user,
             oauth_client: req.oauth2.client,
+            queryAuth: req.query
         });
     },
     // user decision endpoint
@@ -107,8 +108,8 @@ var OAuth2Middleware = {
     // client, the above grant middleware configured above will be invoked to send
     // a response.
     decision : [
-        passport.isAPIAuthenticated, function (req, res, next) {
-            console.log(req.body);
+        passport.isLocalAuthenticated, function (req, res, next) {
+            // console.log(req.body);
             next();
         },
         oauthServer.decision()
@@ -141,7 +142,7 @@ var OAuth2Middleware = {
     // first, and rendering the login view.
 
     authorization : [
-        passport.isAPIAuthenticated,
+        passport.isLocalAuthenticated,
         oauthServer.authorization(function (key, redirectUri, done) {
             console.log('Server Authorization');
             var oauth2 = new OAuth2();
@@ -172,9 +173,14 @@ function coreOAuth(app) {
     app.route('/api/v2/clients')
     //fetches all clients
     .get(function (req, res) {
-        var oauth2 = new OAuth2();
-        oauth2.findClient({id : req.params.clientId})
-        .then(function (r) {
+        var oauth2 = new OAuth2(), task;
+        if (utils.testIfObjId) {
+            task = oauth2.findClient({id : req.params.clientId});
+        } else {
+
+            task = oauth2.findClient({deviceId : req.params.clientId});
+        }
+        task.then(function (r) {
             res.json(200, r);
         }, function (err) {
             console.log(err);
@@ -182,7 +188,6 @@ function coreOAuth(app) {
         });
     })
     .post(function (req, res, next) {
-        console.log('message');
         var oauth2 = new OAuth2();
         oauth2.create(req.body)
         .then(function (r) {
@@ -194,9 +199,15 @@ function coreOAuth(app) {
 
 
     //fetches more infomation on a client application
-    app.get('/api/v2/clients/:clientId', function (req, res) {
-        var oauth2 = new OAuth2();
-        oauth2.findClient({id : req.params.clientId})
+    app.route('/api/v2/clients/:clientId')
+    .get(function (req, res) {
+        var oauth2 = new OAuth2(), params;
+        if (utils.testIfObjId(req.params.clientId)) {
+            params = {id : req.params.clientId};
+        } else {
+            params = {device: req.params.clientId};
+        }
+        oauth2.findClient(params)
         .then(function (r) {
             res.json(200, r);
         }, function (err) {
@@ -208,9 +219,9 @@ function coreOAuth(app) {
 
     // Set up OAuth2 routes handling
     app.route('/oauth/authorize')
-    .get(OAuth2Middleware.authorization, OAuth2Middleware.dialog)
-    .post(OAuth2Middleware.decision);
-    // app.post('/oauth/authorize/decision', OAuth2Middleware.decision);
+    .get(OAuth2Middleware.authorization, OAuth2Middleware.dialog);
+    // .post(OAuth2Middleware.decision);
+    app.post('/oauth/authorize/decision', OAuth2Middleware.decision);
     app.post('/oauth/token', OAuth2Middleware.token);
 
 //

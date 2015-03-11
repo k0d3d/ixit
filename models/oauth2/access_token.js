@@ -17,8 +17,6 @@ var AccessTokenSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
-    //Client here is the bncApp
-    //clientKey
     client: {
         type: String
     }
