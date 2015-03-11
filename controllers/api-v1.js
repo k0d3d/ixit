@@ -1,4 +1,4 @@
-var expressJWT = require('../lib/node_modules/express-jwt'),
+var expressJWT = require('../lib/node_modules/express-jwt/lib/index.js'),
     appConfig = require('config').express,
     cors = require('cors');
 
