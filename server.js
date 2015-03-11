@@ -252,7 +252,9 @@ console.log('Running Environment: %s', process.env.NODE_ENV);
 
 console.log('Creating connection to redis server...');
 var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {});
-
+if (config.redis.password) {
+    redis_client.auth(config.redis.password);
+}
 redis_client.on('ready', function (data) {
   console.log('Redis connection is....ok');
 });

@@ -1,25 +1,28 @@
 {
     "db": {
-        "server": "localhost",
-        "database": "client-db",
-        "port": 27017,
-        "user": "",
-        "pass": ""
+        "url": "mongodb://heroku_app34759309:slia2tuokl1kio85fvvsnpa0qf@ds033059.mongolab.com:33059/heroku_app34759309",
+        "server": "ds033059.mongolab.com",
+        "database": "heroku_app34759309",
+        "port": 33059,
+        "user": "heroku_app34759309",
+        "pass": "slia2tuokl1kio85fvvsnpa0qf"
     },
     "redis": {
-      "port": 6379,
-      "host": "127.0.0.1"
+      "port": 12198,
+      "host": "pub-redis-12198.us-east-1-2.4.ec2.garantiadata.com",
+      "password": "5RGmKR3o8tXg72LL",
+      "user": "rediscloud"
       },
     "app": {
         "name": "IXIT - File Sharing and Hosting",
         "user_agent": "IXIT Client",
-        "http_app_domain": "http://localhost"
+        "http_app_domain": "http://thawing-wave-1121.herokuapp.com"
     },
     "express": {
         "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509",
         "cors" : {
           "options" : {
-            "origin": "http://localhost:8100",
+            "origin": "http://thawing-wave-1121.herokuapp.com",
             "methods": [
               "GET",
               "POST",
@@ -31,7 +34,7 @@
           }
         }
     },
-    "dkeep_api_url": "http://127.0.0.1:3001",
+    "dkeep_api_url": "http://dk33p.herokuapp.com",
     "appID": "08E54688615982ADB5D8E3FEB8DCE2C",
     "appSecret": "xynl7HycdsRulJ3IDvzernI8fsywclxod334lRFUIcKjkNJLEH6UFgVk7epXT9O",
     "mail" : {

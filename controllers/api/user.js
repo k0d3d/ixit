@@ -7,9 +7,9 @@ var
     passport = require('passport');
 
 module.exports.routes = function (app, redis_client) {
-  var users = new User();
 
   app.param('userId', function (req, res, next, id) {
+    var users = new User();
     users.findUser(id)
     .then(function (r) {
       req.user = r;
@@ -61,8 +61,9 @@ module.exports.routes = function (app, redis_client) {
   //in user
   .get(function (req, res, next) {
     var userId = req.user._id;
-    var account_type = req.user.account_type;
-    users.getProfile(userId, account_type).then(function (r) {
+    var users = new User();
+    users.getProfile(userId, 'BASIC')
+    .then(function (r) {
       res.json(200, r);
       // res.json(200, _.extend(req.user.toJSON(), r));
       // res.render('user/profile', {
@@ -77,7 +78,8 @@ module.exports.routes = function (app, redis_client) {
   //logged in user
   .put(function (req, res, next) {
     var userId = req.user._id;
-    users.updateUserProfile(userId, _.extend({scope: 'PROFILE'}, req.body))
+    var users = new User();
+    users.updateUserAccount(userId, _.extend({scope: 'PROFILE'}, req.body))
     .then(function (r) {
       res.json(r);
     }, function (err) {
@@ -86,6 +88,7 @@ module.exports.routes = function (app, redis_client) {
   })
   //creates a new user account
   .post(function (req, res) {
+    var users = new User();
     var createUser = users.create(req.body);
     createUser.then(function (r) {
       return res.json(200, r);

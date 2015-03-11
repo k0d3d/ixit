@@ -607,6 +607,34 @@ var userFunctions = {
       });
 
       return q.promise;
+    },
+    returnUserProfile: function  returnUserProfile (data) {
+      var q = Q.defer(), fields;
+
+      if (data.scope === 'BASIC') {
+        fields = 'firstname lastname photo phoneNumber username email createdOn';
+      } else if (data.scope === 'EXTENDED') {
+        fields = 'firstname lastname photo phoneNumber username email createdOn';
+      } else {
+        q.reject(errors.nounce('InvalidParams'));
+      }
+      UserModel.findOne({
+        _id: data._id,
+        enabled: true
+      }, fields)
+      .exec(function (err, i) {
+          if (err) {
+              return q.reject(err);
+          }
+          if (i) {
+              return q.resolve(i);
+          } else {
+              return q.reject(errors.nounce('DocumentNotFound'));
+          }
+        });
+
+
+      return q.promise;
     }
 
 };
@@ -1063,6 +1091,14 @@ User.prototype.updateUserAccount = function (userId, userData) {
 
 
   return q.promise;
+};
+
+
+User.prototype.getProfile = function getProfile (userId, scope) {
+  return userFunctions.returnUserProfile({
+    _id: userId,
+    scope: scope
+  });
 };
 
 //http://underscorejs.org/#bindAll
