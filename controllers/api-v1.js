@@ -1,5 +1,5 @@
-var path = require('path'),
-    expressJWT = require(path.join(process.cwd(), 'lib/node_modules/express-jwt/lib/index.js')),
+// var path = require('path'),
+var expressJWT = require('../lib/node_modules/express-jwt/lib/index.js'),
     appConfig = require('config').express,
     cors = require('cors');
 
