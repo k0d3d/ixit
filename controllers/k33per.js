@@ -491,7 +491,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
 
-  app.del('/api/:apiVersion/users/files/:fileId', function(req, res, next){
+  app.delete('/api/:apiVersion/users/files/:fileId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var file = req.params.fileId;
     k33per.deleteUserFile(owner, file, function(r){
@@ -503,7 +503,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
-  app.del('/api/:apiVersion/users/folder/:folderId', function(req, res, next){
+  app.delete('/api/:apiVersion/users/folder/:folderId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
@@ -516,7 +516,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
   //Delete a file on the upload queue
-  app.del('/api/:apiVersion/users/queue/:queueId', function(req, res, next){
+  app.delete('/api/:apiVersion/users/queue/:queueId', function(req, res, next){
     var owner = hashr.hashOid(req.session.passport.user);
     var mediaNumber = req.params.queueId;
     k33per.removeUserQueue(mediaNumber, owner, function(r){

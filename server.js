@@ -295,21 +295,18 @@ require('./lib/db').open()
   // actual application start
   app.listen(port);
   console.log('IXIT API Server started on port '+port);
+  // CATASTROPHIC ERROR
+  app.use(function(err, req, res){
 
+    console.error(err.stack);
+
+    // make this a nicer error later
+    res.status(500).send('Ewww! Something got broken on IXIT. Getting some tape and glue');
+
+  });
 })
 .catch(function (e) {
   console.log(e);
 });
 
 
-// expose app
-exports = module.exports = app;
-// CATASTROPHIC ERROR
-app.use(function(err, req, res){
-
-  console.error(err.stack);
-
-  // make this a nicer error later
-  res.send(500, 'Ewww! Something got broken on IXIT. Getting some tape and glue');
-
-});
