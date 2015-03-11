@@ -255,12 +255,13 @@ var redis_client = require('redis').createClient( config.redis.port, config.redi
 if (config.redis.password) {
     redis_client.auth(config.redis.password);
 }
-redis_client.on('ready', function (data) {
+redis_client.on('ready', function () {
   console.log('Redis connection is....ok');
 });
-redis_client.on('error', function (data) {
-  console.log(data);
-  console.log('Redis connection failure...%s:%s', config.redis.host, config.redis.port);
+redis_client.on('error', function () {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Redis connection failure...%s:%s', config.redis.host, config.redis.port);
+  }
 });
 
 console.log("Checking connection to IXIT Document Server...");
@@ -281,17 +282,18 @@ console.log("Setting up database communication...");
 require('./lib/db').open()
 .then(function () {
   console.log('Database Connection open...');
+  //load resources
+  afterResourceFilesLoad(redis_client);
+
+  // actual application start
+  app.listen(port);
+  console.log('IXIT Document Client started on port '+port);
+
 })
 .catch(function (e) {
   console.log(e);
 });
 
-//load resources
-afterResourceFilesLoad(redis_client);
-
-// actual application start
-app.listen(port);
-console.log('IXIT Document Client started on port '+port);
 
 // expose app
 exports = module.exports = app;
