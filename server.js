@@ -7,7 +7,7 @@ Main application entry point
 
 // pull in the package json
 var pjson = require('./package.json');
-console.log('ixit document client version: ' + pjson.version);
+console.log('ixit api server version: ' + pjson.version);
 
 // REQUIRE SECTION
 var express = require('express'),
@@ -294,7 +294,7 @@ require('./lib/db').open()
 
   // actual application start
   app.listen(port);
-  console.log('IXIT Document Client started on port '+port);
+  console.log('IXIT API Server started on port '+port);
 
 })
 .catch(function (e) {
