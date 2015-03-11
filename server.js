@@ -55,7 +55,7 @@ function isApiUri (url) {
 }
 
 
-function afterResourceFilesLoad(redis_client) {
+function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
     console.log('configuring application, please wait...');
 
@@ -123,14 +123,20 @@ function afterResourceFilesLoad(redis_client) {
         secret: config.express.secret,
         saveUninitialized: true,
         resave: true,
+        // store: new MongoStore({
+        //     db: config.db.database,
+        //     host: config.db.server,
+        //     port: config.db.port,
+        //     auto_reconnect: true,
+        //     username: config.db.user,
+        //     password: config.db.password,
+        //     collection: "mongoStoreSessions"
+        // })
         store: new MongoStore({
-            db: config.db.database,
-            host: config.db.server,
-            port: config.db.port,
             auto_reconnect: true,
-            username: config.db.user,
-            password: config.db.password,
-            collection: "mongoStoreSessions"
+            mongooseConnection: mongooseConnection,
+            collection: "mongoStoreSessions",
+            db: config.db.database,
         })
     }));
 
@@ -280,10 +286,10 @@ restler.get(config.dkeep_api_url + '/ping')
 console.log("Setting up database communication...");
 // setup database connection
 require('./lib/db').open()
-.then(function () {
+.then(function (mongooseConnection) {
   console.log('Database Connection open...');
   //load resources
-  afterResourceFilesLoad(redis_client);
+  afterResourceFilesLoad(mongooseConnection, redis_client);
 
   // actual application start
   app.listen(port);
