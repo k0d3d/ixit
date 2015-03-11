@@ -743,7 +743,8 @@ User.prototype.create = function(options) {
     catch (function(err) {
 
         // something went wrong with the signup - return error screen
-        d.resolve(err);
+        console.log(err);
+        d.reject(err);
 
     }
 

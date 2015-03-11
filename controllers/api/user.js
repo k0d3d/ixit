@@ -91,6 +91,7 @@ module.exports.routes = function (app, redis_client) {
     var users = new User();
     var createUser = users.create(req.body);
     createUser.then(function (r) {
+      console.log('register user');
       return res.json(200, r);
     }, function (err) {
       return res.json(400, err );
