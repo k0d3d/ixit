@@ -1,11 +1,11 @@
 {
     "db": {
-        "url": "mongodb://heroku_app34759309:slia2tuokl1kio85fvvsnpa0qf@ds033059.mongolab.com:33059/heroku_app34759309",
+        "url": "mongodb://api_server_admin:slia2tuokl1kio85fvvsnpa0qf@ds033059.mongolab.com:33059/heroku_app34759309",
         "server": "ds033059.mongolab.com",
-        "database": "heroku_app34759309",
+        "database": "api_server_admin",
         "port": 33059,
-        "user": "heroku_app34759309",
-        "pass": "slia2tuokl1kio85fvvsnpa0qf"
+        "user": "api_server_admin",
+        "pass": "Qwzxas1"
     },
     "redis": {
       "port": 12198,
