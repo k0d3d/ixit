@@ -2,7 +2,7 @@
     "db": {
         "url": "mongodb://api_server_admin:Qwzxas1@ds033059.mongolab.com:33059/heroku_app34759309",
         "server": "ds033059.mongolab.com",
-        "database": "api_server_admin",
+        "database": "heroku_app34759309",
         "port": 33059,
         "user": "api_server_admin",
         "pass": "Qwzxas1"
