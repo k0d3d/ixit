@@ -22,7 +22,7 @@
         "secret": "fwse^$NHJNH922A^Nm9s))*Z&B!@g7509",
         "cors" : {
           "options" : {
-            "origin": "http://thawing-wave-1121.herokuapp.com",
+            "origin": "*",
             "methods": [
               "GET",
               "POST",
