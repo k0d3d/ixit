@@ -77,12 +77,14 @@ module.exports.routes = function (app, redis_client) {
   //updates the profile for the currently
   //logged in user
   .put(function (req, res, next) {
+    console.log(req.body);
     var userId = req.user._id;
     var users = new User();
-    users.updateUserAccount(userId, _.extend({scope: 'PROFILE'}, req.body))
+    users.updateUserAccount(userId, _.extend({scope: 'PROFILE'}, _.pick(req.body, ['firstname', 'lastname', 'phoneNumber'])))
     .then(function (r) {
       res.json(r);
     }, function (err) {
+      console.log(err);
       next(err);
     });
   })

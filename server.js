@@ -113,7 +113,10 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
     app.use(useragent.express());
 
-    app.use(bodyParser());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+      extended: true
+    }));
     app.use(methodOverride());
 
 

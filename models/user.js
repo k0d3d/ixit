@@ -589,7 +589,7 @@ var userFunctions = {
       var q = Q.defer();
 
       UserModel.update({
-        _id: data._id
+        _id: data.userId
       }, {
         firstname: data.firstname,
         lastname: data.lastname,
@@ -1073,7 +1073,8 @@ User.prototype.updateUserAccount = function (userId, userData) {
     taskData = {
         firstname: userData.firstname,
         lastname: userData.lastname,
-        phoneNumber: userData.phoneNumber
+        phoneNumber: userData.phoneNumber,
+        userId: userId
       };
     break;
     case 'ACCOUNT':
