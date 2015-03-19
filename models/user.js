@@ -75,6 +75,7 @@ var userFunctions = {
     },
 
     findUser: function findUser(data) {
+        console.log(data);
         console.log('Finding User');
 
         var d = Q.defer();
