@@ -75,7 +75,6 @@ var userFunctions = {
     },
 
     findUser: function findUser(data) {
-        console.log(data);
         console.log('Finding User');
 
         var d = Q.defer();
@@ -94,7 +93,7 @@ var userFunctions = {
                 _id: data.userId
             }]
         }).exec(function(err, i) {
-            console.log(err, i);
+
 
 
             if (err) {
@@ -611,7 +610,7 @@ var userFunctions = {
     },
     returnUserProfile: function  returnUserProfile (data) {
       var q = Q.defer(), fields;
-      console.log(data);
+
       if (data.scope === 'BASIC') {
         fields = 'firstname lastname photo phoneNumber username email createdOn';
       } else if (data.scope === 'EXTENDED') {
@@ -624,7 +623,6 @@ var userFunctions = {
         enabled: true
       }, fields)
       .exec(function (err, i) {
-        console.log(err, i);
           if (err) {
               return q.reject(err);
           }

@@ -64,7 +64,6 @@ module.exports.routes = function (app, redis_client) {
     var users = new User();
     users.getProfile(userId, 'BASIC')
     .then(function (r) {
-      console.log('should reolve promise');
       res.json(200, r);
       // res.json(200, _.extend(req.user.toJSON(), r));
       // res.render('user/profile', {
