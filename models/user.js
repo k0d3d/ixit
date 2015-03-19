@@ -94,7 +94,7 @@ var userFunctions = {
                 _id: data.userId
             }]
         }).exec(function(err, i) {
-
+            console.log(err, i);
 
 
             if (err) {
