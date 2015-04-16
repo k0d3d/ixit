@@ -7,11 +7,11 @@ block body
         .logo
           img(src='/img/logo.png', alt='')
         .content
-          h1.text-center(style="color: black") Action Required!
+          h1.text-center(style="color: black") Permission Required!
           p.text-center
             | Hello #{user.email}
           p.text-center
-            | Grant (#{oauth_client.name}) authorization to your tagChief account.
+            | Please grant (#{oauth_client.name}) authorization to your iXit account.
           form(action="/oauth/authorize/decision",method="post")
             input(name="transaction_id" ,type="hidden", value="#{transactionId}")
 

@@ -36,7 +36,7 @@ var UserSchema = new Schema({
     verifiedEmailOn: { type: Date },
     verifiedEmailAddress: { type: Boolean, default: false},
     disabledOn: { type: Date },
-    enabled: { type: Boolean, default: false },
+    enabled: { type: Boolean, default: true },
     /*
     oauth2
      */
