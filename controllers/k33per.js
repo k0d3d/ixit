@@ -256,7 +256,7 @@ K33per.prototype.getUserQueue = function(userId, callback){
       return callback({}, response);
     }
     //Remove unecessary propertied and has the mongooseid;
-    console.log(data);
+    // console.log(data);
     strip_queue_result(data, function(r){
       callback(r, response);
     });

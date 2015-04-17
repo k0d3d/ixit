@@ -213,8 +213,8 @@ var userFunctions = {
 
         var config = _conf.users;
 
-        console.log(config);
-        console.log(data);
+        // console.log(config);
+        // console.log(data);
 
         var userToFind = {};
         userToFind.userId = data.userId;
@@ -228,7 +228,7 @@ var userFunctions = {
 
     },
     findUserActivationToken : function findUserActivationToken (doc) {
-        console.log(doc);
+        // console.log(doc);
       var activate = Q.defer(), config = configuration.users;
 
       VerificationModel.findOne({

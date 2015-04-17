@@ -67,7 +67,7 @@ module.exports = function (app, passport, redis_client) {
           };
 
         redis_client.hmset('downloadId:'+r.mediaNumber, od, function(err, i){
-          console.log(err, i);
+          // console.log(err, i);
         });
         res.render('public/download', od);
       }
@@ -78,7 +78,7 @@ module.exports = function (app, passport, redis_client) {
 
   app.get('/img/filetype/:filename', function(req, res, next){
       var filename = req.params.filename;
-      console.log(filename);
+      // console.log(filename);
       fs.exists('/public/img/filetype/'+filename, function(itdz){
           if(itdz){
               res.sendfile('/public/img/filetype/'+filename);

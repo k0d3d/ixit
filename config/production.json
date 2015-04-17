@@ -34,7 +34,7 @@
           }
         }
     },
-    "dkeep_api_url": "http://dk33p.herokuapp.com",
+    "dkeep_api_url": "http://ec2-54-191-53-79.us-west-2.compute.amazonaws.com:3333",
     "appID": "08E54688615982ADB5D8E3FEB8DCE2C",
     "appSecret": "xynl7HycdsRulJ3IDvzernI8fsywclxod334lRFUIcKjkNJLEH6UFgVk7epXT9O",
     "mail" : {

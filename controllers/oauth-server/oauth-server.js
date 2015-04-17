@@ -33,7 +33,6 @@ oauthServer.serializeClient(function (client, done) {
 
 oauthServer.deserializeClient(function (id, done) {
     console.log('Deserializing Client');
-    console.log(id);
     var d = Q.defer(),
         oauth2 = new OAuth2();
 
