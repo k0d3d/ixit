@@ -30,8 +30,9 @@ var express = require('express'),
     staticAsset = require('static-asset'),
     useragent = require('express-useragent'),
     crashProtector = require('common-errors').middleware.crashProtector,
+    url = require('url'),
     Q = require('q');
-var MongoStore = require('connect-mongo')(session);
+var RedisStore = require('connect-redis')(session);
 
 Q.longStackSupport = true;
 
@@ -122,6 +123,12 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
     // setup session management
     console.log('setting up session management, please wait...');
+    var REDIS = url.parse(process.env.REDIS_URL || 'redis://127.0.0.1:6379');
+    var redis_pass;
+    if (REDIS.auth) {
+      var REDIS_AUTH = REDIS.auth.split(':');
+      redis_pass = REDIS_AUTH[1];
+    }
     app.use(session({
         secret: config.express.secret,
         saveUninitialized: true,
@@ -135,12 +142,14 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
         //     password: config.db.password,
         //     collection: "mongoStoreSessions"
         // })
-        store: new MongoStore({
+        store: new RedisStore({
             autoReconnect: true,
-            url: config.db.url,
+            port: REDIS.port,
+            host: REDIS.hostname,
+            pass: redis_pass
+            // url: process.env.MONGO_URI || config.MONGO_URI,
             // mongooseConnection: mongooseConnection,
-            collection: "mongoStoreSessions",
-            db: config.db.database,
+            // collection: "mongoStoreSessions",
         })
     }));
 
@@ -261,16 +270,19 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 console.log('Running Environment: %s', process.env.NODE_ENV);
 
 console.log('Creating connection to redis server...');
-var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {});
-if (config.redis.password) {
-    redis_client.auth(config.redis.password);
+var REDIS = url.parse(process.env.REDIS_URL);
+var redis_client = require('redis').createClient( REDIS.port, REDIS.hostname, {});
+if (REDIS.auth) {
+  var REDIS_AUTH = REDIS.auth.split(':');
+
+  redis_client.auth(REDIS_AUTH[1]);
 }
 redis_client.on('ready', function () {
   console.log('Redis connection is....ok');
 });
 redis_client.on('error', function () {
   if (process.env.NODE_ENV !== 'production') {
-    console.log('Redis connection failure...%s:%s', config.redis.host, config.redis.port);
+    console.log('Redis connection failure...%s:%s', REDIS.hostname, REDIS.port);
   }
 });
 
@@ -309,7 +321,7 @@ require('./lib/db').open()
   });
 })
 .catch(function (e) {
-  console.log(e);
+  console.log(e.stack);
 });
 
 

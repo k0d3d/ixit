@@ -7,7 +7,7 @@ var UserModel = require('./user/user.js').UserModel,
     VerificationModel = require('./user/user.js').UserVerification,
     Q = require('q'),
     utils = require('../lib/commons.js'),
-    _ = require('underscore'),
+    _ = require('lodash'),
     sendMessage = require('../lib/email/mailer.js'),
     moment = require('moment'),
     EventRegister = require('../lib/event_register.js').register,
@@ -650,7 +650,7 @@ function filterForOutput(users) {
     if (users === null) {
         return null;
     }
-    var _ = require("underscore");
+    var _ = require("lodash");
     var filterImpl = function(u) {
         if (u === null) {
             return u;
@@ -1103,7 +1103,7 @@ User.prototype.getProfile = function getProfile (userId, scope) {
   });
 };
 
-//http://underscorejs.org/#bindAll
+//http://lodashjs.org/#bindAll
 _.bindAll(userFunctions, 'saveFailedLoginAttempt');
 
 module.exports = User;

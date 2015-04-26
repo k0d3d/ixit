@@ -24,7 +24,8 @@
   ],
   "dependencies": {
     "async": "latest",
-    "bcrypt": "~0.7.7",
+    "aws-sdk": "^2.1.25",
+    "bcrypt": "^0.8.2",
     "body-parser": "^1.0.1",
     "colors": "~0.6.2",
     "common-errors": "latest",
@@ -33,6 +34,7 @@
     "connect-ensure-login": "~0.1.1",
     "connect-flash": "latest",
     "connect-mongo": "latest",
+    "connect-redis": "^2.2.0",
     "cookie-parser": "^1.0.1",
     "cookie-session": "^1.0.1",
     "cors": "~2.4.1",
@@ -40,7 +42,7 @@
     "errors": "~0.1.0",
     "express": "latest",
     "express-jwt": "~0.3.1",
-    "express-session": "^1.0.2",
+    "express-session": "^1.11.1",
     "express-useragent": "^0.1.2",
     "forever": "latest",
     "grunt": "latest",
@@ -75,10 +77,9 @@
     "passport-twitter": "latest",
     "q": "~1.0.1",
     "redis": "~0.10.0",
+    "restler": "latest",
     "static-asset": "^0.5.5",
     "static-favicon": "^1.0.2",
-    "restler": "latest",
-    "underscore": "latest",
     "view-helpers": "latest"
   },
   "devDependencies": {

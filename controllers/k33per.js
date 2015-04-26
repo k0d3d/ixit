@@ -350,6 +350,18 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
   });
 };
 
+K33per.prototype.requestSignedUrl = function(mediaId, token, cb){
+  //todo, add token..
+  //
+  rest.get(config.dkeep_api_url+'/users/media/'+ mediaId + '/uri',{
+    headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
+  })
+  .on('complete', function(rz, rs){
+    if(rs.statusCode === 404 ||rs.statusCode === 400 || rs.length < 1) return cb(new Error('not found'));
+    return cb(rz);
+  });
+};
+
 /**
  * counts the number of files and the amount of diskspace used.
  * Excluding files in the trash can.
@@ -458,6 +470,17 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
 
   app.get('/api/:apiVersion/media/:mediaId/request/', function(req, res, next){
     k33per.requestFileDownload(req.params.mediaId, redis_client, function(r){
+      if(util.isError(r)){
+        next(r);
+      }else{
+        res.redirect(r);
+      }
+    });
+  });
+
+
+  app.get('/api/:apiVersion/media/:mediaId/files/', function(req, res, next){
+    k33per.requestSignedUrl(req.params.mediaId, redis_client, function(r){
       if(util.isError(r)){
         next(r);
       }else{

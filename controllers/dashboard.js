@@ -3,9 +3,9 @@
  */
 var User = require('../models/user.js'),
     util = require('util'),
-    _ = require('underscore'),
+    _ = require('lodash'),
     Keeper = require('./k33per').K33per,
-    hashr = require('../lib/hash.js'),  
+    hashr = require('../lib/hash.js'),
     commons = require('../lib/commons');
 
 //Initialize Dashboard Object
@@ -33,21 +33,21 @@ module.exports.routes = function(app, isLoggedIn, passport){
   app.all('/dash/*', isLoggedIn(), function (req, res, next) {
     res.cookie('throne',hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
     console.log('yes is');
-    return next(); 
+    return next();
   });
 
 	app.get('/dash', isLoggedIn(), function(req, res){
 		// var keeper = new Keeper();
 		// var owner = hashr.hashOid(req.session.passport.user);
-		res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});		
+		res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 		res.locals.current_user = hashr.hashOid(req.session.passport.user);
-		res.render('dashboard');		
+		res.render('dashboard');
 		// keeper.loadHome(owner, function(d){
 		// 	res.cookie('throne', hashr.hashOid(req.session.passport.user), {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 		// 	res.render('dashboard', {
 		// 		home_folder: hashr.hashOid(d)
 		// 	});
-		// });		
+		// });
 	});
 
 	// app.get('/dashboard/developer', function(req, res){
@@ -60,7 +60,7 @@ module.exports.routes = function(app, isLoggedIn, passport){
 	// 		}
 	// 		res.render('dashboard/developer', {
 	// 			key: key
-	// 		});			
+	// 		});
 	// 	});
 	// });
 
