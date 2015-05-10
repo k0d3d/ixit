@@ -16,7 +16,7 @@ var
 function strip_files_result(m){
   //if its an array use the map function to loop
   //over the process
-  var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'id', 'folder'];
+  var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'folder'];
   try {
     if(util.isArray(m)){
       return _.map(m, function(v){
@@ -266,12 +266,14 @@ K33per.prototype.getUserQueue = function(userId, callback){
 };
 
 K33per.prototype.deleteUserFile = function(userId, fileId, callback){
-  fileId = hashr.unhashInt(fileId);
+  if (!commons.testIfObjId(fileId)) {
+    fileId = hashr.unhashInt(fileId);
+  }
   rest.del(config.dkeep_api_url+'/users/'+userId+'/file/'+fileId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
-  }).on('fail', function(err){
+  }).on('error', function(err){
     callback(err);
   });
 };
@@ -351,14 +353,16 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
 };
 
 K33per.prototype.requestSignedUrl = function(mediaId, token, cb){
-  //todo, add token..
-  //
+  mediaId = hashr.unhashInt(mediaId);
   rest.get(config.dkeep_api_url+'/users/media/'+ mediaId + '/uri',{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   })
   .on('complete', function(rz, rs){
-    if(rs.statusCode === 404 ||rs.statusCode === 400 || rs.length < 1) return cb(new Error('not found'));
-    return cb(rz);
+    if (rs instanceof Error) {
+      return cb(rs);
+    } else {
+      return cb(rz);
+    }
   });
 };
 
@@ -479,12 +483,13 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
   });
 
 
-  app.get('/api/:apiVersion/media/:mediaId/files/', function(req, res, next){
+  app.get('/api/:apiVersion/media/:mediaId/uri', function(req, res, next){
+    console.log('here in uri');
     k33per.requestSignedUrl(req.params.mediaId, redis_client, function(r){
       if(util.isError(r)){
         next(r);
       }else{
-        res.redirect(r);
+        res.status(200).json(r);
       }
     });
   });
@@ -536,6 +541,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     // var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
+      console.log(r);
       if( r instanceof Error){
         next(r);
       }else{
