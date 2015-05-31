@@ -38,6 +38,7 @@
     "cookie-parser": "^1.0.1",
     "cookie-session": "^1.0.1",
     "cors": "~2.4.1",
+    "debug": "^2.2.0",
     "easyimage": "~0.1.4",
     "errors": "~0.1.0",
     "express": "latest",
