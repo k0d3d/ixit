@@ -27,9 +27,7 @@ module.exports.routes = function (app, redis_client) {
   .post(function (req, res) {
     if (req.user) {
       // redis_client.hmset(token, req.user);
-      res.json({
-        authorizationToken: true
-      });
+      res.json({userId: req.user._id});
     } else {
       res.json(401, {message: 'Authorized only.'});
     }
@@ -64,6 +62,7 @@ module.exports.routes = function (app, redis_client) {
     var users = new User();
     users.getProfile(userId, 'BASIC')
     .then(function (r) {
+      console.log(Date.now());
       res.json(200, r);
       // res.json(200, _.extend(req.user.toJSON(), r));
       // res.render('user/profile', {

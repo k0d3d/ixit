@@ -10,8 +10,10 @@ var pjson = require('./package.json');
 console.log('ixit api server version: ' + pjson.version);
 
 // REQUIRE SECTION
-var express = require('express'),
-    router = express.Router(),
+var
+    debug = require('debug')('api-server:boot'),
+    express = require('express'),
+    // router = express.Router(),
     config = require('config'),
     app = express(),
     passport = require('passport'),
@@ -30,8 +32,9 @@ var express = require('express'),
     staticAsset = require('static-asset'),
     useragent = require('express-useragent'),
     crashProtector = require('common-errors').middleware.crashProtector,
+    url = require('url'),
     Q = require('q');
-var MongoStore = require('connect-mongo')(session);
+var RedisStore = require('connect-redis')(session);
 
 Q.longStackSupport = true;
 
@@ -57,14 +60,14 @@ function isApiUri (url) {
 
 function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
-    console.log('configuring application, please wait...');
+    debug('configuring application, please wait...');
 
     app.set('showStackError', true);
 
-    console.log('Enabling crash protector...');
+    debug('Enabling crash protector...');
     app.use(crashProtector());
 
-    console.log('Enabling error handling...');
+    debug('Enabling error handling...');
     app.use(errors.init());
 
 
@@ -90,10 +93,10 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
     app.set('view engine', 'jade');
 
 
-    console.log('Loading ' + 'passport'.inverse + ' config...');
+    debug('Loading ' + 'passport'.inverse + ' config...');
     // try {
     // } catch(e) {
-    //   console.log('Error Loading Passport Config...');
+    //   debug('Error Loading Passport Config...');
     //   console.trace(e);
     // }
     require('./lib/auth/passport.js')(passport, redis_client);
@@ -121,7 +124,13 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
 
     // setup session management
-    console.log('setting up session management, please wait...');
+    debug('setting up session management, please wait...');
+    var REDIS = url.parse(process.env.REDIS_URL || 'redis://127.0.0.1:6379');
+    var redis_pass;
+    if (REDIS.auth) {
+      var REDIS_AUTH = REDIS.auth.split(':');
+      redis_pass = REDIS_AUTH[1];
+    }
     app.use(session({
         secret: config.express.secret,
         saveUninitialized: true,
@@ -135,17 +144,19 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
         //     password: config.db.password,
         //     collection: "mongoStoreSessions"
         // })
-        store: new MongoStore({
+        store: new RedisStore({
             autoReconnect: true,
-            url: config.db.url,
+            port: REDIS.port,
+            host: REDIS.hostname,
+            pass: redis_pass
+            // url: process.env.MONGO_URI || config.MONGO_URI,
             // mongooseConnection: mongooseConnection,
-            collection: "mongoStoreSessions",
-            db: config.db.database,
+            // collection: "mongoStoreSessions",
         })
     }));
 
     app.use(function (req, res, next) {
-      // console.log(req.cookies);
+      // debug(req.cookies);
       // check if client sent cookie
       var cookie = req.cookies['ixid-anon-session'];
       if (cookie === undefined && !req.xhr)
@@ -189,7 +200,7 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
 
     // test route - before anything else
-    console.log('setting up test route /routetest');
+    debug('setting up test route /routetest');
 
     app.route('/routetest')
     .get(function(req, res) {
@@ -198,7 +209,7 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
 
     // our routes
-    console.log('setting up routes, please wait...');
+    debug('setting up routes, please wait...');
     routes(app, passport, redis_client);
 
 
@@ -217,7 +228,7 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
       // log it
       // send emails if you want
-      console.log('Error Stack....');
+      debug('Error Stack....');
       console.error(err.stack);
 
       // error page
@@ -251,47 +262,50 @@ function afterResourceFilesLoad(mongooseConnection, redis_client) {
 
 
     // development env config
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV === 'development') {
       app.locals.pretty = true;
     }
 
 }
 
 
-console.log('Running Environment: %s', process.env.NODE_ENV);
+debug('Running Environment: %s', process.env.NODE_ENV);
 
-console.log('Creating connection to redis server...');
-var redis_client = require('redis').createClient( config.redis.port, config.redis.host, {});
-if (config.redis.password) {
-    redis_client.auth(config.redis.password);
+debug('Creating connection to redis server...');
+var REDIS = url.parse(process.env.REDIS_URL);
+var redis_client = require('redis').createClient( REDIS.port, REDIS.hostname, {});
+if (REDIS.auth) {
+  var REDIS_AUTH = REDIS.auth.split(':');
+
+  redis_client.auth(REDIS_AUTH[1]);
 }
 redis_client.on('ready', function () {
-  console.log('Redis connection is....ok');
+  debug('Redis connection is....ok');
 });
 redis_client.on('error', function () {
   if (process.env.NODE_ENV !== 'production') {
-    console.log('Redis connection failure...%s:%s', config.redis.host, config.redis.port);
+    debug('Redis connection failure...%s:%s', REDIS.hostname, REDIS.port);
   }
 });
 
-console.log("Checking connection to IXIT Document Server...");
+debug('Checking connection to IXIT Document Server...');
 restler.get(config.dkeep_api_url + '/ping')
 .on('success', function (data) {
-  // console.log(data);
+  // debug(data);
   if (data === 'ready' ) {
-    console.log('Connected to IXIT Document Server'.green + ' running on ' + config.dkeep_api_url);
+    debug('Connected to IXIT Document Server'.green + ' running on ' + config.dkeep_api_url);
   }
 })
-.on('error', function (data) {
-  console.log('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.dkeep_api_url);
+.on('error', function () {
+  debug('Error Connecting to '+ 'IXIT Document Server'.red + ' on ' + config.dkeep_api_url);
 });
 
 
-console.log("Setting up database communication...");
+debug('Setting up database communication...');
 // setup database connection
 require('./lib/db').open()
 .then(function (mongooseConnection) {
-  console.log('Database Connection open...');
+  debug('Database Connection open...');
   //load resources
   afterResourceFilesLoad(mongooseConnection, redis_client);
 
@@ -309,7 +323,7 @@ require('./lib/db').open()
   });
 })
 .catch(function (e) {
-  console.log(e);
+  debug(e.stack);
 });
 
 

@@ -39,12 +39,12 @@ module.exports = function (app, passport, redis_client) {
   var keeper = require('./k33per');
   keeper.routes(app, redis_client, isLoggedIn);
 
-  var tokenRequest = require('../lib/middlewares/dk33pTokenRequest');
+  // var tokenRequest = require('../lib/middlewares/dk33pTokenRequest');
 
   /**
    * Views and template routes
    */
-  require('./site.js')(app, isLoggedOut, passport, tokenRequest);
+  require('./site.js')(app, isLoggedOut);
 
 
   app.get('/:hashrid', function(req, res, next){

@@ -4,7 +4,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     encrypt = require('../../lib/commons.js').encrypt,
-    _ = require('underscore'),
+    _ = require('lodash'),
     uniqueValidator = require('mongoose-unique-validator');
 
 

@@ -1,4 +1,5 @@
 {
+    "MONGO_URI": "mongodb://api_server_admin:Qwzxas1@ds033059.mongolab.com:33059/heroku_app34759309",
     "db": {
         "url": "mongodb://api_server_admin:Qwzxas1@ds033059.mongolab.com:33059/heroku_app34759309",
         "server": "ds033059.mongolab.com",

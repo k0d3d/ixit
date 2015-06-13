@@ -16,7 +16,7 @@ var
 function strip_files_result(m){
   //if its an array use the map function to loop
   //over the process
-  var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'id', 'folder'];
+  var omit = ['_id', 'chunkCount', 'progress', 'identifier', '__v', 'mediaNumber', 'folder'];
   try {
     if(util.isArray(m)){
       return _.map(m, function(v){
@@ -35,7 +35,7 @@ function strip_files_result(m){
 }
 function strip_folder_result(m){
   //If its an array
-  var omit = ['_id', 'folderId', 'visible', '__v', 'id'];
+  var omit = ['_id', 'folderId', 'visible', '__v'];
   try {
 
     if(util.isArray(m)){
@@ -266,12 +266,14 @@ K33per.prototype.getUserQueue = function(userId, callback){
 };
 
 K33per.prototype.deleteUserFile = function(userId, fileId, callback){
-  fileId = hashr.unhashInt(fileId);
+  if (!commons.testIfObjId(fileId)) {
+    fileId = hashr.unhashInt(fileId);
+  }
   rest.del(config.dkeep_api_url+'/users/'+userId+'/file/'+fileId,{
     headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
   }).on('success', function(result, response){
     callback(result, response);
-  }).on('fail', function(err){
+  }).on('error', function(err){
     callback(err);
   });
 };
@@ -350,6 +352,20 @@ K33per.prototype.requestFileDownload = function(mediaId, redis_client, cb){
   });
 };
 
+K33per.prototype.requestSignedUrl = function(mediaId, token, cb){
+  mediaId = hashr.unhashInt(mediaId);
+  rest.get(config.dkeep_api_url+'/users/media/'+ mediaId + '/uri',{
+    headers: { 'Accept': '*/*', 'User-Agent': config.app.user_agent }
+  })
+  .on('complete', function(rz, rs){
+    if (rs instanceof Error) {
+      return cb(rs);
+    } else {
+      return cb(rz);
+    }
+  });
+};
+
 /**
  * counts the number of files and the amount of diskspace used.
  * Excluding files in the trash can.
@@ -371,17 +387,18 @@ var k33per = new K33per();
 
 module.exports.routes = function(app, redis_client, isLoggedIn){
   //Request all files in a folder belonging to a user
-  //Using the req.query.id to determine what folder is
+  //Using the req.params.id to determine what folder is
   //'current'
-  app.get('/api/:apiVersion/users/folder', function(req, res, next){
+  app.get('/api/:apiVersion/users/folder/:folderId', function(req, res, next){
     var currentFolder;
     //The parent folder if any
     var parent = req.query.parent;
 
     //Users are always stored as hashes on the vault
-    var owner = hashr.hashOid(req.session.passport.user);
+    // var owner = hashr.hashOid(req.user._id);
+    var owner = req.user._id;
 
-    if (req.query.id === 'home') {
+    if (req.params.folderId === 'home' ) {
       //load home fetches the ObjectId of
       //the currently logged-in user's
       //home folder
@@ -466,6 +483,18 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     });
   });
 
+
+  app.get('/api/:apiVersion/media/:mediaId/uri', function(req, res, next){
+    console.log('here in uri');
+    k33per.requestSignedUrl(req.params.mediaId, redis_client, function(r){
+      if(util.isError(r)){
+        next(r);
+      }else{
+        res.status(200).json(r);
+      }
+    });
+  });
+
   //calls the method which creates a new folder or subfolder
   app.post('/api/:apiVersion/users/folder', function(req, res, next){
     // return res.json(500, false);
@@ -513,6 +542,7 @@ module.exports.routes = function(app, redis_client, isLoggedIn){
     // var owner = hashr.hashOid(req.session.passport.user);
     var folderId = req.params.folderId;
     k33per.deleteUserFolder(owner, folderId, function(r){
+      console.log(r);
       if( r instanceof Error){
         next(r);
       }else{
