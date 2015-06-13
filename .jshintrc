@@ -21,7 +21,8 @@
     "globals": { // Globals variables.
         "angular": true,
         "$": true,
-        "jQuery": true
+        "jQuery": true,
+        "ImgCache": true
     },
     "predef": [ // Extra globals.
         "define",
@@ -36,7 +37,7 @@
         "it"
     ],
     "indent": 2, // Specify indentation spacing
-    "maxlen": 120, // Max line lenght
+    "maxlen": 130, // Max line lenght
     "devel": true, // Allow development statements e.g. `console.log();`.
     "noempty": true // Prohibit use of empty blocks.
 }

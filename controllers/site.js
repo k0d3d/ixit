@@ -1,6 +1,6 @@
 var config = require('config');
 // routes for app views and templates
-module.exports = function (app, isLoggedOut, passport, tokenRequest) {
+module.exports = function (app, isLoggedOut) {
   // home route
   app.use(function (req, res, next) {
     res.locals.dk33p_api_url = config.dkeep_api_url + '/upload';
@@ -8,7 +8,7 @@ module.exports = function (app, isLoggedOut, passport, tokenRequest) {
   });
 
   // home route
-  app.get('/', tokenRequest(), isLoggedOut('/dash'), function(req, res){
+  app.get('/', isLoggedOut('/dash'), function(req, res){
     res.render('index');
 
   });
@@ -45,7 +45,7 @@ module.exports = function (app, isLoggedOut, passport, tokenRequest) {
   );
 
   // home route
-  app.get('/:parent/:child', tokenRequest(), function(req, res){
+  app.get('/:parent/:child', function(req, res){
     var parent = req.params.parent;
     var child = req.params.child;
     res.render(parent+'/'+child);

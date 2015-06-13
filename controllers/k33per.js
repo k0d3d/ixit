@@ -35,7 +35,7 @@ function strip_files_result(m){
 }
 function strip_folder_result(m){
   //If its an array
-  var omit = ['_id', 'folderId', 'visible', '__v', 'id'];
+  var omit = ['_id', 'folderId', 'visible', '__v'];
   try {
 
     if(util.isArray(m)){
@@ -387,17 +387,18 @@ var k33per = new K33per();
 
 module.exports.routes = function(app, redis_client, isLoggedIn){
   //Request all files in a folder belonging to a user
-  //Using the req.query.id to determine what folder is
+  //Using the req.params.id to determine what folder is
   //'current'
-  app.get('/api/:apiVersion/users/folder', function(req, res, next){
+  app.get('/api/:apiVersion/users/folder/:folderId', function(req, res, next){
     var currentFolder;
     //The parent folder if any
     var parent = req.query.parent;
 
     //Users are always stored as hashes on the vault
-    var owner = hashr.hashOid(req.session.passport.user);
+    // var owner = hashr.hashOid(req.user._id);
+    var owner = req.user._id;
 
-    if (req.query.id === 'home') {
+    if (req.params.folderId === 'home' ) {
       //load home fetches the ObjectId of
       //the currently logged-in user's
       //home folder

@@ -596,14 +596,12 @@ var userFunctions = {
         phoneNumber: data.phoneNumber
       }, function (err, i ) {
           if (err) {
-              q.reject(err);
+              return q.reject(err);
           }
-          if (i > 0) {
-              q.resolve(true);
+          if(!i.ok) {
+              return q.reject(errors.nounce('UpdateFailed'));
           }
-          if(i === 0 ) {
-              q.reject(errors.nounce('UpdateFailed'));
-          }
+          return q.resolve(true);
       });
 
       return q.promise;
